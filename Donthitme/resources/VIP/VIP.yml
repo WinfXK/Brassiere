@@ -1,0 +1,68 @@
+#特权ID，这个应该是唯一的！不能与其他特权ID重复
+ID: VIP
+#特权名称
+name: §4VIP
+#特权最低等级
+MinLevel: 0
+#特权最高等级
+MaxLevel: 9
+#升级算法
+#Simple：简单算法，容易升级
+#General：一般算法，升级速度一般
+#Hard：困难算法，升级较为困难
+#Impossib：恶魔算法，升级极为困难
+LevelAlg: Simple
+#是否允许飞行
+Flight: false
+#获得特权后将会持续得到的药水效果
+Effect: []
+#是否允许用游戏币购买
+EconomyBuy: true
+#购买时使用的货币
+Economy: EconomyAPI
+#购买价格
+Money: 100000
+#能用游戏币购买的次数，为零时不显示，小于零时无法使用游戏币购买
+BuyCount: 0
+#购买时能获得的时长，单位是小时
+BuyTime: 744
+#新购的默认等级
+DefaultLevel: 0
+#签到能获得的经验值
+SignExp: 10
+#每次签到能获得的金币
+SignMoney: 1000
+#签到给钱的货币
+SignEconomy: EconomyAPI
+#每次签到会获得的物品
+SignItem: []
+#玩家能更换的游戏模式
+gamemode: []
+#是否允许普通TP
+SimpleTP: true;
+#是否允许强制TP
+TP: false
+#是否开启传送音效
+TPSound: false
+#传送音效名称，具体参考Nukkit
+TPSoundName: null
+#是否允许使用云端仓库
+CloudStorage: false
+#是否允许挖掘时随机增加掉落物
+ExcavateIncrease: false
+#掉落物增幅倍率，最高为10（100%）小于等于零时不开启
+Increases: 0
+#进服是否全服公报
+JoinTip: false
+#进服全服公报内容
+JoinMsg: null
+#进服公报类型，包含Msg，Tip，Title，Popup
+JoinMsgType: null
+#玩家进服是否播放音乐
+JoinSound: false
+#玩家进服播放音乐的名称，具体名称参考：Nukkit
+JoinSoundName: null
+#是否为玩家生成粒子跟随
+Particle: false
+#粒子类型，包含：LAVA、WATER
+ParticleType: null

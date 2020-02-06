@@ -87,6 +87,8 @@ public class ResCheck {
 				}
 		for (String s : Activate.defaultFile) {
 			file = new File(kis.getDataFolder(), s);
+			if (!file.getParentFile().exists())
+				file.getParentFile().mkdirs();
 			if (!file.exists())
 				try {
 					Utils.writeFile(file, Utils.readFile(getClass().getResourceAsStream("/resources/" + s)));
@@ -179,9 +181,11 @@ public class ResCheck {
 			e.printStackTrace();
 			log.info(ac.message.getMessage("无法效验语言文件"));
 		}
-		file = new File(kis.getDataFolder(), Activate.PlayerDataDirName);
-		if (!file.exists())
-			file.mkdirs();
+		for (String dir : Activate.Mkdir) {
+			file = new File(kis.getDataFolder(), dir);
+			if (!file.exists())
+				file.mkdirs();
+		}
 		ac.config = new Config(new File(kis.getDataFolder(), Activate.ConfigFileName), Config.YAML);
 		ac.message = new Message(ac);
 		ac.CommandConfig = new Config(new File(kis.getDataFolder(), Activate.CommandFileName), Config.YAML);

@@ -25,7 +25,8 @@ public class Activate {
 	public final static String[] FormIDs = {};
 	public final static String MessageFileName = "Message.yml", ConfigFileName = "Config.yml",
 			CommandFileName = "Command.yml", EconomyListConfigName = "EconomyList.yml", FormIDFileName = "FormID.yml",
-			PlayerDataDirName = "Players", LanguageDirName = "language";
+			PlayerDataDirName = "Players", LanguageDirName = "language", VipFileName = "VIP/VIP.yml",
+			SVIPFileName = "VIP/SVIP.yml", VIPDirName = "VIP";
 	private Donthitme mis;
 	private MyEconomy economy;
 	private EconomyManage money;
@@ -34,8 +35,16 @@ public class Activate {
 	protected FormID FormID;
 	protected Message message;
 	protected Config config, CommandConfig;
+	/**
+	 * 默认要加载的配置文件，这些文件将会被用于与插件自带数据匹配
+	 */
 	protected static final String[] loadFile = { ConfigFileName, CommandFileName };
-	protected static final String[] defaultFile = { ConfigFileName, CommandFileName, MessageFileName };
+	/**
+	 * 插件基础配置文件
+	 */
+	protected static final String[] defaultFile = { VipFileName, SVIPFileName, ConfigFileName, CommandFileName,
+			MessageFileName };
+	protected static final String[] Mkdir = { VIPDirName, PlayerDataDirName };
 
 	/**
 	 * 插件数据的集合类
