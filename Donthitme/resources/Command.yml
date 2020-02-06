@@ -1,0 +1,26 @@
+PlayerCommand:
+   VIP:
+   - vip
+   - dmvip
+   - dv
+   Sign:
+   - sign
+   - dms
+   - ds
+   Team:
+   - team
+   - dmt
+   - dt
+   Tip:
+   - dmtip
+   - dtip
+   - dp
+AdminCommand:
+   VIP:
+   - dva
+   Sign:
+   - dsa
+   Team:
+   - dta
+   Tip:
+   - dpa
