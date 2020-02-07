@@ -10,7 +10,7 @@ public class Simple extends LevelAlg {
 	public int getMaxExp(int exp) {
 		int i = 50;
 		for (int j = 0; j < exp; j++)
-			i *= 1.5;
+			i = Double.valueOf(Math.sqrt(i + j * 50) * Math.sqrt(j) + 50 * (j + 1)).intValue();
 		return i;
 	}
 }

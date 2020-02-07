@@ -18,7 +18,7 @@ public class EconomyManage {
 	public EconomyManage() {
 		Economy = new LinkedHashMap<>();
 		config = new Config(
-				new File(Activate.getActivate().getDonthitme().getDataFolder(), Activate.EconomyListConfigName),
+				new File(Activate.getActivate().getPluginBase().getDataFolder(), Activate.EconomyListConfigName),
 				Config.YAML);
 	}
 

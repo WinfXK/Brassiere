@@ -1,28 +1,34 @@
 package cn.epicfx.winfxk.donthitme.vip;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.yaml.snakeyaml.DumperOptions;
-import org.yaml.snakeyaml.Yaml;
+import com.google.common.base.Preconditions;
 
 import cn.epicfx.winfxk.donthitme.Activate;
 import cn.epicfx.winfxk.donthitme.money.MyEconomy;
+import cn.epicfx.winfxk.donthitme.tool.MyParticle;
+import cn.epicfx.winfxk.donthitme.tool.Tool;
 import cn.epicfx.winfxk.donthitme.vip.alg.LevelAlg;
+import cn.epicfx.winfxk.donthitme.vip.joinmsg.JoinMsg;
+import cn.epicfx.winfxk.donthitme.vip.joinmsg.Message;
+import cn.epicfx.winfxk.donthitme.vip.joinmsg.Popup;
+import cn.epicfx.winfxk.donthitme.vip.joinmsg.Tip;
+import cn.epicfx.winfxk.donthitme.vip.joinmsg.Title;
+import cn.nukkit.Player;
 import cn.nukkit.item.Item;
-import cn.nukkit.level.Sound;
 import cn.nukkit.level.particle.Particle;
+import cn.nukkit.network.protocol.PlaySoundPacket;
 import cn.nukkit.potion.Effect;
 import cn.nukkit.utils.Config;
-import you.sb.Utils;
 
 /**
  * @author Winfxk
  */
 public class Vip {
-	public static DumperOptions dumperOptions = null;
-	public static Yaml yaml = null;
 	private Activate ac;
 	private File file;
 	/**
@@ -56,7 +62,7 @@ public class Vip {
 	/**
 	 * 会否允许使用游戏币购买
 	 */
-	private boolean EconomyBuy;
+	private boolean BuyEconomy;
 	/**
 	 * 能用游戏币购买的次数，为零时不显示，小于零时无法使用游戏币购买
 	 */
@@ -128,7 +134,7 @@ public class Vip {
 	/**
 	 * 进服公报类型，包含Msg，Tip，Title，Popup
 	 */
-	private String JoinMsgType;
+	private JoinMsg JoinMsgType;
 	/**
 	 * 玩家进服是否播放音乐
 	 */
@@ -136,7 +142,7 @@ public class Vip {
 	/**
 	 * 玩家进服播放音乐的名称，具体名称参考：Nukkit
 	 */
-	private Sound JoinSoundName;
+	private String JoinSoundName;
 	/**
 	 * 是否为玩家生成粒子跟随
 	 */
@@ -152,26 +158,107 @@ public class Vip {
 	/**
 	 * 传送音效名称，具体参考Nukkit
 	 */
-	private Sound TPSoundName;
+	private String TPSoundName;
 
 	public Vip(Activate activate, File file) throws Exception {
 		this.file = file;
 		ac = activate;
-		if (dumperOptions == null || yaml == null) {
-			dumperOptions = new DumperOptions();
-			dumperOptions.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
-			yaml = new Yaml(dumperOptions);
-		}
 		load();
 	}
 
 	protected void load() throws Exception {
 		Config config = new Config(file, Config.YAML);
-		Map<String, Object> map = yaml.loadAs(
-				Utils.readFile(getClass()
-						.getResourceAsStream("/resources/" + Activate.VIPDirName + "/" + Activate.VipFileName)),
-				Map.class);
-
+		List<?> list;
+		String s;
+		ID = config.getString("ID");
+		if (ID == null || ID.isEmpty())
+			throw new VipException("Unable to read privilege ID!");
+		ID = ID.toLowerCase();
+		Name = config.getString("name");
+		if (Name == null || Name.isEmpty())
+			throw new VipException("Unable to read privilege Name!");
+		MinLevel = config.getInt("MinLevel");
+		MinLevel = MinLevel <= 0 ? 0 : MinLevel;
+		MaxLevel = config.getInt("MaxLevel");
+		MaxLevel = MaxLevel <= 1 ? 1 : MaxLevel;
+		MaxLevel = MaxLevel <= MinLevel ? MinLevel + 9 : MaxLevel;
+		alg = LevelAlg.getAlg(config.getString("LevelAlg"));
+		Flight = config.getBoolean("Flight");
+		list = config.getList("Effect");
+		effects = new ArrayList<>();
+		Effect effect;
+		if (list != null && list.size() >= 1)
+			for (Object obj : list)
+				if (Tool.isInteger(obj)) {
+					effect = Effect.getEffect(Tool.ObjectToInt(obj, 1));
+					effect.setColor(Tool.getRand(0, 255), Tool.getRand(0, 255), Tool.getRand(0, 255));
+					if (!effects.contains(effect))
+						effects.add(effect);
+				}
+		BuyEconomy = config.getBoolean("EconomyBuy");
+		economy = ac.getEconomyManage().getEconomy(config.getString("Economy"));
+		Money = config.getDouble("Money");
+		BuyCount = config.getInt("BuyCount");
+		BuyTime = config.getInt("BuyTime");
+		DefaultLevel = config.getInt("DefaultLevel");
+		SignExp = config.getInt("SignExp");
+		SignMoney = config.getDouble("SignMoney");
+		SignEconomy = ac.getEconomyManage().getEconomy(config.getString("SignEconomy"));
+		Object object = config.get("SignItem");
+		SignItem = new ArrayList<>();
+		Map<?, ?> map = object != null && object instanceof Map ? (HashMap<?, ?>) object : new HashMap<>();
+		Map<String, ?> map2;
+		for (Object obj : map.values())
+			try {
+				map2 = obj != null && obj instanceof Map ? (HashMap<String, ?>) obj : new HashMap<>();
+				Item item = new Item(Tool.ObjectToInt(map2.get("ID")), Tool.ObjectToInt(map2.get("Damage")),
+						Tool.ObjectToInt(map2.get("Count")), String.valueOf(map2.get("Name")));
+				item.setCompoundTag((byte[]) map2.get("Nbt"));
+				SignItem.add(item);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		list = config.getList("gamemode");
+		Gamemode = new ArrayList<>();
+		int i = 0;
+		if (list != null && list.size() >= 1)
+			for (Object obj : list) {
+				i = Tool.ObjectToInt(obj);
+				if (i > 0 && i <= 3)
+					Gamemode.add(i);
+			}
+		SimpleTP = config.getBoolean("SimpleTP");
+		TP = config.getBoolean("TP");
+		TPSound = config.getBoolean("TPSound");
+		TPSoundName = config.getString("TPSoundName");
+		CloudStorage = config.getBoolean("CloudStorage");
+		ExcavateIncrease = config.getBoolean("ExcavateIncrease");
+		Increases = config.getInt("Increases");
+		Increases = Increases <= 0 ? 0 : Increases >= 10 ? 10 : Increases;
+		ExcavateIncrease = Increases > 0 && ExcavateIncrease;
+		JoinTip = config.getBoolean("JoinTip");
+		JoinMsg = config.getString("JoinMsg");
+		JoinTip = JoinTip && JoinMsg != null && !JoinMsg.isEmpty();
+		s = config.getString("JoinMsgType");
+		s = s == null ? "Msg" : s;
+		switch (s.toLowerCase()) {
+		case "popup":
+			JoinMsgType = new Popup();
+			break;
+		case "title":
+			JoinMsgType = new Title();
+			break;
+		case "tip":
+			JoinMsgType = new Tip();
+		case "msg":
+		default:
+			JoinMsgType = new Message();
+			break;
+		}
+		JoinSound = config.getBoolean("JoinSound");
+		JoinSoundName = config.getString("JoinSoundName");
+		isParticle = config.getBoolean("Particle");
+		ParticleType = MyParticle.Unknown(config.get("ParticleType"));
 	}
 
 	/**
@@ -179,8 +266,20 @@ public class Vip {
 	 *
 	 * @return
 	 */
-	public Sound getJoinSoundName() {
+	public String getJoinSoundName() {
 		return JoinSoundName;
+	}
+
+	/**
+	 * 发送进服音效
+	 *
+	 * @param player
+	 * @return
+	 */
+	public boolean sendJoinSoundName(Player player) {
+		if (isJoinSound())
+			sendSound(player, JoinSoundName);
+		return true;
 	}
 
 	/**
@@ -197,8 +296,43 @@ public class Vip {
 	 *
 	 * @return
 	 */
-	public Sound getTPSoundName() {
+	public String getTPSoundName() {
 		return TPSoundName;
+	}
+
+	/**
+	 * 播放传送音效
+	 *
+	 * @param player
+	 * @return
+	 */
+	public boolean sendTPSoundName(Player player) {
+		if (isTPSound())
+			sendSound(player, TPSoundName);
+		return true;
+	}
+
+	/**
+	 * 播放音效
+	 *
+	 * @param player
+	 * @param name
+	 * @return
+	 */
+	public boolean sendSound(Player player, String name) {
+		float volume = 1;
+		float pitch = 1;
+		Preconditions.checkArgument(volume >= 0 && volume <= 1, "Sound volume must be between 0 and 1");
+		Preconditions.checkArgument(pitch >= 0, "Sound pitch must be higher than 0");
+		PlaySoundPacket packet = new PlaySoundPacket();
+		packet.name = name;
+		packet.volume = volume;
+		packet.pitch = pitch;
+		packet.x = player.getFloorX();
+		packet.y = player.getFloorY();
+		packet.z = player.getFloorZ();
+		player.getLevel().addChunkPacket(player.getFloorX() >> 4, player.getFloorZ() >> 4, packet);
+		return true;
 	}
 
 	/**
@@ -242,8 +376,8 @@ public class Vip {
 	 *
 	 * @return
 	 */
-	public String getJoinMsgType() {
-		return JoinTip ? JoinMsgType == null || JoinMsgType.isEmpty() ? "Msg" : JoinMsgType : null;
+	public JoinMsg getJoinMsgType() {
+		return JoinTip ? JoinMsgType == null ? null : JoinMsgType : null;
 	}
 
 	/**
@@ -324,7 +458,7 @@ public class Vip {
 	 * @return
 	 */
 	public boolean isGamemode() {
-		return Gamemode.size() > 1 || (Gamemode.size() == 1 && Gamemode.get(0) != 0);
+		return Gamemode.size() > 1 || Gamemode.size() == 1 && Gamemode.get(0) != 0;
 	}
 
 	/**
@@ -396,7 +530,7 @@ public class Vip {
 	 * @return
 	 */
 	public boolean isEconomyBuy() {
-		return EconomyBuy && BuyCount >= 0;
+		return BuyEconomy && BuyCount >= 0;
 	}
 
 	/**

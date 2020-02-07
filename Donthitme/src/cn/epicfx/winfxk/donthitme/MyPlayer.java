@@ -12,6 +12,7 @@ public class MyPlayer {
 	private Activate ac;
 	public Config config;
 	private Player player;
+	public MakeBase makeBase;
 
 	/**
 	 * 记录存储玩家的一些数据
@@ -63,18 +64,6 @@ public class MyPlayer {
 	}
 
 	/**
-	 * 增加攻击数
-	 *
-	 * @param attack
-	 * @return
-	 */
-	public MyPlayer addAttack(int attack) {
-		config.set("攻击数", config.getInt("攻击数") + attack);
-		config.save();
-		return this;
-	}
-
-	/**
 	 * 得到一个玩家的配置文件对象
 	 *
 	 * @param player 玩家名称
@@ -90,7 +79,7 @@ public class MyPlayer {
 	 * @return
 	 */
 	public File getFile() {
-		return new File(new File(ac.getDonthitme().getDataFolder(), Activate.PlayerDataDirName),
+		return new File(new File(ac.getPluginBase().getDataFolder(), Activate.PlayerDataDirName),
 				player.getName() + ".yml");
 	}
 
@@ -101,7 +90,7 @@ public class MyPlayer {
 	 * @return
 	 */
 	public static File getFile(String player) {
-		return new File(new File(Activate.getActivate().getDonthitme().getDataFolder(), Activate.PlayerDataDirName),
+		return new File(new File(Activate.getActivate().getPluginBase().getDataFolder(), Activate.PlayerDataDirName),
 				player + ".yml");
 	}
 }

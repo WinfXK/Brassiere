@@ -42,13 +42,18 @@ public class PlayerEvent implements Listener {
 	@EventHandler
 	public void onFormResponded(PlayerFormRespondedEvent e) {
 		FormResponse data = e.getResponse();
+		Player player = e.getPlayer();
+		if (player == null || e.wasClosed() || data == null || !(data instanceof FormResponseCustom)
+				&& !(data instanceof FormResponseSimple) && !(data instanceof FormResponseModal))
+			return;
+		MyPlayer myPlayer = ac.getPlayers(player.getName());
+		if (myPlayer == null)
+			return;
 		int ID = e.getFormID();
 		FormID f = ac.getFormID();
-		Player player = e.getPlayer();
-		if (player == null || e.wasClosed() || e.getResponse() == null
-				|| (!(e.getResponse() instanceof FormResponseCustom) && !(e.getResponse() instanceof FormResponseSimple)
-						&& !(e.getResponse() instanceof FormResponseModal)))
-			return;
+		if ((ID == f.getID(0) || ID == f.getID(1)) && myPlayer.makeBase != null)
+			myPlayer.makeBase.disMain();
+
 	}
 
 	/**
@@ -58,8 +63,10 @@ public class PlayerEvent implements Listener {
 	 */
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
-		if (!ac.getDonthitme().isEnabled())
+		if (!ac.getPluginBase().isEnabled())
 			return;
+		Player player = e.getPlayer();
+		ac.setPlayers(player.getName(), new MyPlayer(player));
 	}
 
 	/**
@@ -69,7 +76,7 @@ public class PlayerEvent implements Listener {
 	 */
 	@EventHandler
 	public void onRespawn(PlayerRespawnEvent e) {
-		if (!ac.getDonthitme().isEnabled())
+		if (!ac.getPluginBase().isEnabled())
 			return;
 	}
 
@@ -80,8 +87,11 @@ public class PlayerEvent implements Listener {
 	 */
 	@EventHandler
 	public void onQuit(PlayerQuitEvent e) {
-		if (!ac.getDonthitme().isEnabled())
+		if (!ac.getPluginBase().isEnabled())
 			return;
+		Player player = e.getPlayer();
+		if (ac.isPlayers(player))
+			ac.removePlayers(player);
 	}
 
 	/**
@@ -91,7 +101,7 @@ public class PlayerEvent implements Listener {
 	 */
 	@EventHandler
 	public void onDeath(PlayerDeathEvent e) {
-		if (!ac.getDonthitme().isEnabled())
+		if (!ac.getPluginBase().isEnabled())
 			return;
 	}
 
@@ -102,7 +112,7 @@ public class PlayerEvent implements Listener {
 	 */
 	@EventHandler
 	public void onDamage(EntityDamageEvent e) {
-		if (!ac.getDonthitme().isEnabled())
+		if (!ac.getPluginBase().isEnabled())
 			return;
 	}
 
@@ -113,7 +123,7 @@ public class PlayerEvent implements Listener {
 	 */
 	@EventHandler
 	public void onClick(PlayerInteractEvent e) {
-		if (!ac.getDonthitme().isEnabled())
+		if (!ac.getPluginBase().isEnabled())
 			return;
 	}
 
@@ -124,7 +134,7 @@ public class PlayerEvent implements Listener {
 	 */
 	@EventHandler
 	public void onBlockPlace(BlockPlaceEvent e) {
-		if (!ac.getDonthitme().isEnabled())
+		if (!ac.getPluginBase().isEnabled())
 			return;
 	}
 
@@ -135,7 +145,7 @@ public class PlayerEvent implements Listener {
 	 */
 	@EventHandler
 	public void onBreak(BlockBreakEvent e) {
-		if (!ac.getDonthitme().isEnabled())
+		if (!ac.getPluginBase().isEnabled())
 			return;
 	}
 }

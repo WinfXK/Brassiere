@@ -10,9 +10,11 @@ import cn.epicfx.winfxk.donthitme.money.EconomyManage;
 import cn.epicfx.winfxk.donthitme.money.MyEconomy;
 import cn.epicfx.winfxk.donthitme.money.Snowmn;
 import cn.epicfx.winfxk.donthitme.tool.Tool;
+import cn.epicfx.winfxk.donthitme.vip.VipMang;
 import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.plugin.Plugin;
+import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.utils.Config;
 
 /**
@@ -22,11 +24,11 @@ public class Activate {
 	public Player setPlayer;
 	public MakeForm makeForm;
 	public ResCheck resCheck;
-	public final static String[] FormIDs = {};
+	public final static String[] FormIDs = { /* 0 */"主页", /* 1 */"备用主页" };
 	public final static String MessageFileName = "Message.yml", ConfigFileName = "Config.yml",
 			CommandFileName = "Command.yml", EconomyListConfigName = "EconomyList.yml", FormIDFileName = "FormID.yml",
 			PlayerDataDirName = "Players", LanguageDirName = "language", VipFileName = "VIP/VIP.yml",
-			SVIPFileName = "VIP/SVIP.yml", VIPDirName = "VIP";
+			SVIPFileName = "VIP/SVIP.yml", RVIPFileName = "VIP/RVIP.yml", VIPDirName = "VIP";
 	private Donthitme mis;
 	private MyEconomy economy;
 	private EconomyManage money;
@@ -35,6 +37,7 @@ public class Activate {
 	protected FormID FormID;
 	protected Message message;
 	protected Config config, CommandConfig;
+	protected VipMang vipMang;
 	/**
 	 * 默认要加载的配置文件，这些文件将会被用于与插件自带数据匹配
 	 */
@@ -42,8 +45,8 @@ public class Activate {
 	/**
 	 * 插件基础配置文件
 	 */
-	protected static final String[] defaultFile = { VipFileName, SVIPFileName, ConfigFileName, CommandFileName,
-			MessageFileName };
+	protected static final String[] defaultFile = { RVIPFileName, VipFileName, SVIPFileName, ConfigFileName,
+			CommandFileName, MessageFileName };
 	protected static final String[] Mkdir = { VIPDirName, PlayerDataDirName };
 
 	/**
@@ -67,15 +70,16 @@ public class Activate {
 			money.addEconomyAPI(new EconomyAPI(this));
 		economy = money.getEconomy(config.getString("默认货币"));
 		makeForm = new MakeForm(this);
+		vipMang = new VipMang(this);
 		kis.getServer().getPluginManager().registerEvents(new PlayerEvent(this), kis);
 		kis.getLogger().info(message.getMessage("插件启动", new String[] { "{loadTime}" },
-				new Object[] { ((float) Duration.between(mis.loadTime, Instant.now()).toMillis()) + "ms" }));
+				new Object[] { (float) Duration.between(mis.loadTime, Instant.now()).toMillis() + "ms" }));
 	}
 
 	/**
 	 * 得到默认经济插件
 	 *
-	 * @return
+	 * @reaturn
 	 */
 	public MyEconomy getEconomy() {
 		return economy;
@@ -119,7 +123,7 @@ public class Activate {
 	 *
 	 * @return
 	 */
-	public Donthitme getDonthitme() {
+	public PluginBase getPluginBase() {
 		return mis;
 	}
 

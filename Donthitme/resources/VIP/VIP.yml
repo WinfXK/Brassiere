@@ -35,16 +35,23 @@ SignMoney: 1000
 #签到给钱的货币
 SignEconomy: EconomyAPI
 #每次签到会获得的物品
-SignItem: []
+SignItem:
+   Item1:
+      Nbt: !!binary |-
+         CgAACQQAZW5jaAoBAAAAAgMAbHZsAQACAgBpZBsAAAA=
+      ID: 263
+      Count: 1
+      Damage: 0
+      Name: 黑黑的不明物体
 #玩家能更换的游戏模式
 gamemode: []
 #是否允许普通TP
-SimpleTP: true;
+SimpleTP: true
 #是否允许强制TP
 TP: false
 #是否开启传送音效
 TPSound: false
-#传送音效名称，具体参考Nukkit
+#传送音效名称
 TPSoundName: null
 #是否允许使用云端仓库
 CloudStorage: false

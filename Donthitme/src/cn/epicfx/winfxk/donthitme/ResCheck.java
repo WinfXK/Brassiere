@@ -12,6 +12,7 @@ import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 
 import cn.epicfx.winfxk.donthitme.tool.Tool;
+import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.plugin.PluginLogger;
 import cn.nukkit.utils.Config;
 import cn.nukkit.utils.ConfigSection;
@@ -22,13 +23,13 @@ import cn.nukkit.utils.Utils;
  */
 public class ResCheck {
 	private Activate ac;
-	private Donthitme kis;
+	private PluginBase kis;
 	private PluginLogger log;
 	private final static String[] s = { "得分", "恶意度", "荣誉", "死亡", "游戏局数", "攻击数" };
 
 	public ResCheck(Activate activate) {
 		this.ac = activate;
-		kis = activate.getDonthitme();
+		kis = activate.getPluginBase();
 		log = kis.getLogger();
 	}
 
@@ -112,7 +113,7 @@ public class ResCheck {
 			}
 		ac.config = new Config(new File(kis.getDataFolder(), Activate.ConfigFileName), Config.YAML);
 		ac.message = new Message(ac, false);
-		file = new File(ac.getDonthitme().getDataFolder(), Activate.LanguageDirName);
+		file = new File(ac.getPluginBase().getDataFolder(), Activate.LanguageDirName);
 		if (!file.exists())
 			file.mkdirs();
 		try {
@@ -134,20 +135,20 @@ public class ResCheck {
 					continue;
 				JN = Jf.getName();
 				if (JP.equals("language")) {
-					JFB = new File(new File(ac.getDonthitme().getDataFolder(), Activate.LanguageDirName), JN);
+					JFB = new File(new File(ac.getPluginBase().getDataFolder(), Activate.LanguageDirName), JN);
 					if (!JFB.exists())
 						try {
 							Utils.writeFile(JFB, Utils.readFile(getClass().getResourceAsStream("/language/" + JN)));
 						} catch (Exception e) {
 							e.printStackTrace();
-							ac.getDonthitme().getLogger().warning(ac.getMessage().getMessage("无法获取已支持的语言列表"));
+							ac.getPluginBase().getLogger().warning(ac.getMessage().getMessage("无法获取已支持的语言列表"));
 						}
 				}
 			}
 			localJarFile.close();
 		} catch (IOException e2) {
 			e2.printStackTrace();
-			ac.getDonthitme().getLogger().warning(
+			ac.getPluginBase().getLogger().warning(
 					ac.getMessage().getMessage("无法加载资源", new String[] { "{Error}" }, new Object[] { e2.getMessage() }));
 		}
 		Config config;
@@ -266,7 +267,7 @@ public class ResCheck {
 				}
 				if (obj.getClass().getName().equals(obj2.getClass().getName()) && !(obj instanceof Map))
 					continue;
-				else if ((obj instanceof Map) && (obj2 instanceof Map)) {
+				else if (obj instanceof Map && obj2 instanceof Map) {
 					m1 = (Map<String, Object>) obj2;
 					m2 = (Map<String, Object>) obj;
 					if (m1.equals(m2))

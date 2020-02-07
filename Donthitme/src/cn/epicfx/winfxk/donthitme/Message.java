@@ -49,7 +49,7 @@ public class Message {
 		this.ac = ac;
 		Message = new Config(getFile(), 2);
 		if (isLog)
-			ac.getDonthitme().getLogger().info("§6Load the language: §e" + Message.getString("lang"));
+			ac.getPluginBase().getLogger().info("§6Load the language: §e" + Message.getString("lang"));
 		load();
 	}
 
@@ -58,7 +58,7 @@ public class Message {
 	 */
 	public void reload() {
 		Message = new Config(getFile(), 2);
-		ac.getDonthitme().getLogger().info("§6Load the language: §e" + Message.getString("lang"));
+		ac.getPluginBase().getLogger().info("§6Load the language: §e" + Message.getString("lang"));
 		load();
 	}
 
@@ -68,14 +68,14 @@ public class Message {
 	 * @return
 	 */
 	public static File getFile() {
-		return new File(Activate.getActivate().getDonthitme().getDataFolder(), Activate.MessageFileName);
+		return new File(Activate.getActivate().getPluginBase().getDataFolder(), Activate.MessageFileName);
 	}
 
 	/**
 	 * 刷新全局变量的数据
 	 */
 	private void load() {
-		Data = new String[] { "\n", ac.getDonthitme().getServer().getMotd(), ac.getDonthitme().getName(),
+		Data = new String[] { "\n", ac.getPluginBase().getServer().getMotd(), ac.getPluginBase().getName(),
 				ac.getMoneyName(), Tool.getTime(), Tool.getDate() };
 	}
 

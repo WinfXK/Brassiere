@@ -9,6 +9,31 @@ public abstract class LevelAlg {
 	public int exp;
 	public Vip vip;
 
+	/**
+	 * 获取一个计算器
+	 *
+	 * @param string
+	 * @return
+	 */
+	public static LevelAlg getAlg(String string) {
+		string = string == null ? "" : string;
+		LevelAlg alg;
+		switch (string.toLowerCase()) {
+		case "impossib":
+			alg = new Impossib();
+			break;
+		case "hard":
+			alg = new Hard();
+		case "general":
+			alg = new General();
+			break;
+		default:
+			alg = new Simple();
+			break;
+		}
+		return alg;
+	}
+
 	public LevelAlg setPlayer(int exp, Vip vip) {
 		this.exp = exp;
 		this.vip = vip;
