@@ -1,10 +1,13 @@
 package cn.epicfx.winfxk.donthitme;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Properties;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -186,6 +189,23 @@ public class ResCheck {
 			file = new File(kis.getDataFolder(), dir);
 			if (!file.exists())
 				file.mkdirs();
+		}
+		Properties properties = new Properties();
+		file = new File(ac.getPluginBase().getDataFolder(), Activate.SystemFileName);
+		try {
+			if (!file.exists())
+				properties.storeToXML(new FileOutputStream(file), null);
+			properties.loadFromXML(new FileInputStream(file));
+			if (properties.getProperty("Vip") == null || !properties.getProperty("Vip").equals("OK")) {
+				for (String string : Activate.ForOnce)
+					Utils.writeFile(new File(ac.getPluginBase().getDataFolder(), string),
+							Utils.readFile(getClass().getResourceAsStream("/resources/" + string)));
+				properties.put("Vip", "OK");
+				properties.storeToXML(new FileOutputStream(file), null);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+			log.error(ac.message.getMessage("无法加载系统数据"));
 		}
 		ac.config = new Config(new File(kis.getDataFolder(), Activate.ConfigFileName), Config.YAML);
 		ac.message = new Message(ac);

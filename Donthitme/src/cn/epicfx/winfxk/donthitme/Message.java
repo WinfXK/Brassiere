@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.epicfx.winfxk.donthitme.money.MyEconomy;
 import cn.epicfx.winfxk.donthitme.tool.Tool;
 import cn.nukkit.Player;
 import cn.nukkit.utils.Config;
@@ -22,6 +23,7 @@ public class Message {
 	public static final List<String> dLk = new ArrayList<>();
 	public static final List<Object> dLd = new ArrayList<>();
 	public static final List<String> Dk = new ArrayList<>();
+	public static final String EconomyKey = "Economy}";
 	static {
 		Dk.add("{Player}");
 		Dk.add("{Money}");
@@ -116,9 +118,9 @@ public class Message {
 	 * @return
 	 */
 	public String getSun(String t, String Son, String Sun, List<String> k, List<Object> d) {
-		if (Message.exists(t) && (Message.get(t) instanceof Map)) {
+		if (Message.exists(t) && Message.get(t) instanceof Map) {
 			HashMap<String, Object> map = (HashMap<String, Object>) Message.get(t);
-			if (map.containsKey(Son) && (map.get(Son) instanceof Map)) {
+			if (map.containsKey(Son) && map.get(Son) instanceof Map) {
 				map = (HashMap<String, Object>) map.get(Son);
 				if (map.containsKey(Sun))
 					return getText(map.get(Sun).toString(), k, d);
@@ -211,7 +213,7 @@ public class Message {
 	 * @return
 	 */
 	public String getSon(String t, String Son, List<String> k, List<Object> d) {
-		if (Message.exists(t) && (Message.get(t) instanceof Map)) {
+		if (Message.exists(t) && Message.get(t) instanceof Map) {
 			HashMap<String, Object> map = (HashMap<String, Object>) Message.get(t);
 			if (map.containsKey(Son))
 				return getText(map.get(Son).toString(), k, d);
@@ -339,7 +341,7 @@ public class Message {
 		for (int i = 0; i < Key.length; i++)
 			if (text.contains(Key[i]))
 				text = text.replace(Key[i], Data[i]);
-		for (int i = 0; (i < k.size() && i < d.size()); i++)
+		for (int i = 0; i < k.size() && i < d.size(); i++)
 			if (text.contains(k.get(i)))
 				text = text.replace(k.get(i), String.valueOf(d.get(i)));
 		if (text.contains("{RandColor}")) {
@@ -362,7 +364,15 @@ public class Message {
 					rgb += rgbString;
 			text = rgb;
 		}
-		return text;
+		return getEconomy(text);
+	}
+
+	public String getEconomy(String string) {
+		if (!string.contains(EconomyKey))
+			return string;
+		for (MyEconomy economy : ac.getEconomyManage().getEconomys())
+			string = string.replace(economy.getEconomyName() + EconomyKey, economy.getMoneyName());
+		return string;
 	}
 
 	public List<Object> getList(Player player) {

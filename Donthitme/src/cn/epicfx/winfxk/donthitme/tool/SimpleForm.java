@@ -3,94 +3,85 @@ package cn.epicfx.winfxk.donthitme.tool;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.nukkit.Player;
 import cn.nukkit.form.element.ElementButton;
 import cn.nukkit.form.element.ElementButtonImageData;
+import cn.nukkit.form.window.FormWindow;
 import cn.nukkit.form.window.FormWindowSimple;
 
 /**
  * @author Winfxk
  */
-public class SimpleForm {
-	private ArrayList<ElementButton> list = new ArrayList<>();
-	private int ID;
-	private String Title = "";
+public class SimpleForm extends RootForm {
+	private List<ElementButton> buttons = new ArrayList<>();
 	private String Content = "";
 	public List<String> Keys = new ArrayList<>();
 
 	/**
-	 * @param ID    表单ID
-	 * @param Title 表单标题
-	 */
-	public SimpleForm(int ID, String Title) {
-		this.ID = ID;
-		this.Title = Title;
-	}
-
-	/**
-	 * 
+	 *
 	 * @param ID      表单ID
 	 * @param Title   表单标题
 	 * @param Content 表单内容
 	 */
 	public SimpleForm(int ID, String Title, String Content) {
-		this.ID = ID;
-		this.Title = Title;
+		super(ID, Title);
 		this.Content = Content;
 	}
 
 	/**
-	 * @param ID 表单ID
+	 *
+	 * @param ID      表单ID
+	 * @param Title   表单标题
+	 * @param Content 表单内容
 	 */
-	public SimpleForm(int ID) {
-		this.ID = ID;
-	}
-
-	public SimpleForm() {
-		this.ID = getID();
-	}
-
-	/**
-	 * 获取按钮数量
-	 * 
-	 * @return
-	 */
-	public int getButtonSize() {
-		return list.size();
+	public SimpleForm(int ID, String Title, String Content, ButtonData... Buttons) {
+		super(ID, Title);
+		this.Content = Content;
+		for (ButtonData data : Buttons)
+			addButton(data);
 	}
 
 	/**
-	 * 获取按钮列表
-	 * 
-	 * @return
+	 *
+	 * @param ID      表单ID
+	 * @param Title   表单标题
+	 * @param Content 表单内容
 	 */
-	public ArrayList<ElementButton> getButtonList() {
-		return list;
+	public SimpleForm(int ID, String Title, String Content, String... Buttons) {
+		super(ID, Title);
+		this.Content = Content;
+		for (String string : Buttons)
+			addButton(string);
 	}
 
-	/**
-	 * 获取文字内容
-	 * 
-	 * @return
-	 */
-	public String getContent() {
-		return Content;
+	@Override
+	public FormWindow getFormWindow() {
+		return new FormWindowSimple(Title, Content, buttons);
 	}
 
 	/**
 	 * 添加一个按钮
-	 * 
+	 *
 	 * @param Text 按钮内容
 	 * @return
 	 */
 	public SimpleForm addButton(String Text) {
-		list.add(new ElementButton(Text));
+		buttons.add(new ElementButton(Text));
 		return this;
 	}
 
 	/**
+	 *
 	 * 添加一个按钮
-	 * 
+	 *
+	 * @param data 按钮数据
+	 */
+	public void addButton(ButtonData data) {
+		addButton(data.Button, data.isLocal, data.Icon);
+	}
+
+	/**
+	 * 添加一个按钮
+	 *
 	 * @param Text    按钮内容
 	 * @param isLocal 是否为本地贴图
 	 * @param Path    贴图路径
@@ -99,78 +90,93 @@ public class SimpleForm {
 	public SimpleForm addButton(String Text, boolean isLocal, String Path) {
 		if (Path == null || Path.isEmpty())
 			return addButton(Text);
-		list.add(new ElementButton(Text, new ElementButtonImageData(
+		buttons.add(new ElementButton(Text, new ElementButtonImageData(
 				isLocal ? ElementButtonImageData.IMAGE_DATA_TYPE_PATH : ElementButtonImageData.IMAGE_DATA_TYPE_URL,
 				Path)));
 		return this;
 	}
 
 	/**
-	 * 设置表单标题
-	 * 
-	 * @param Title
+	 * 获取按钮数量
+	 *
 	 * @return
 	 */
-	public SimpleForm setTitle(String Title) {
-		this.Title = Title;
-		return this;
+	public int getButtonSize() {
+		return buttons.size();
 	}
 
 	/**
-	 * 设置表单ID
-	 * 
-	 * @param ID
+	 * 获取按钮列表
+	 *
 	 * @return
 	 */
-	public SimpleForm setID(int ID) {
-		this.ID = ID;
-		return this;
+	public List<ElementButton> getButtons() {
+		return buttons;
 	}
 
-	private int getID() {
-		int length = getRand(1, 5);
-		String ID = "";
-		for (int i = 0; i < length; i++)
-			ID += getRand(0, 9);
-		return Integer.valueOf(ID);
-	}
+	public static class ButtonData {
+		private boolean isLocal = true;
+		private String Button, Icon;
+		/**
+		 * 本地图片
+		 */
+		public static final boolean LocalImage = true;
+		/**
+		 * 网络图片
+		 */
+		public static final boolean UrlImage = false;
 
-	private int getRand(int min, int max) {
-		return (int) (min + Math.random() * (max - min + 1));
-	}
+		/**
+		 *
+		 * @param Button 按钮文本
+		 * @param Icon   按钮图标
+		 */
+		public ButtonData(String Button, String Icon) {
+			this(Button, true, Icon);
+		}
 
-	/**
-	 * 设置表单内容
-	 * 
-	 * @param Content
-	 * @return
-	 */
-	public SimpleForm setContent(String Content) {
-		this.Content = Content;
-		return this;
-	}
+		/**
+		 *
+		 * @param Button 按钮文本
+		 */
+		public ButtonData(String Button) {
+			this(Button, true, null);
+		}
 
-	/**
-	 * 将表单发送给指定玩家列表
-	 * 
-	 * @param players
-	 * @return
-	 */
-	public int sendPlayer(Player... player) {
-		for (Player p : player)
-			p.showFormWindow(new FormWindowSimple(Title, Content, list), ID);
-		return ID;
-	}
+		/**
+		 *
+		 * @param Button  按钮文本
+		 * @param isLocal 是否为本地资源
+		 * @param Icon    按钮图标
+		 */
+		public ButtonData(String Button, boolean isLocal, String Icon) {
+			this.Button = Button;
+			this.Icon = Icon;
+			this.isLocal = isLocal;
+		}
 
-	/**
-	 * 添加一些按钮
-	 * 
-	 * @param Text
-	 * @return
-	 */
-	public SimpleForm addButtons(String... Text) {
-		for (String string : Text)
-			addButton(string);
-		return this;
+		public void setButton(String button) {
+			Button = button;
+		}
+
+		public void setIcon(String icon) {
+			Icon = icon;
+		}
+
+		public void setLocal(boolean isLocal) {
+			this.isLocal = isLocal;
+		}
+
+		public String getButton() {
+			return Button;
+		}
+
+		public String getIcon() {
+			return Icon;
+		}
+
+		public boolean isLocal() {
+			return isLocal;
+		}
 	}
 }

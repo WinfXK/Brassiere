@@ -79,7 +79,7 @@ public class Tool implements X509TrustManager, HostnameVerifier {
 		if (cp.length > 0) {
 			string += "§f/" + command.getName() + " §b";
 			for (int i = 0; i < cp.length; i++)
-				string += (i == 0 ? cp[i].enumData.getValues().get(0) : "§6 " + cp[i].name);
+				string += i == 0 ? cp[i].enumData.getValues().get(0) : "§6 " + cp[i].name;
 			string += "§f： §9" + cp[0].name;
 		}
 		return string;
@@ -146,7 +146,7 @@ public class Tool implements X509TrustManager, HostnameVerifier {
 		if (list == null || block == null)
 			return;
 		BlockEntity blockEntity = block.getLevel().getBlockEntity(block);
-		BlockEntitySign sign = (blockEntity instanceof BlockEntitySign) ? (BlockEntitySign) blockEntity
+		BlockEntitySign sign = blockEntity instanceof BlockEntitySign ? (BlockEntitySign) blockEntity
 				: new BlockEntitySign(block.getLevel().getChunk(block.getFloorX() >> 4, block.getFloorZ() >> 4),
 						BlockEntity.getDefaultCompound(block, BlockEntity.SIGN));
 		String[] Tile = { " ", " ", " ", " " };
@@ -424,7 +424,7 @@ public class Tool implements X509TrustManager, HostnameVerifier {
 		for (int k = 0; k < floatLength; k++)
 			Fenmu *= 10;
 		long Fenzi = Long.parseLong(sint + sfloat);
-		long lXs = (Fenzi < Fenmu) ? Fenzi : Fenmu, j = 1;
+		long lXs = Fenzi < Fenmu ? Fenzi : Fenmu, j = 1;
 		for (j = lXs; j > 1; j--)
 			if (Fenzi % j == 0 && Fenmu % j == 0)
 				break;
@@ -557,8 +557,15 @@ public class Tool implements X509TrustManager, HostnameVerifier {
 	 * @param max 随机数的最大值
 	 * @return
 	 */
-	public static int getRand(int min, int max) {
-		return (int) (min + Math.random() * (max - min + 1));
+	public static int getRand(int Min, int Max) {
+		int Rand, Fn = Min;
+		Min = Min <= 0 ? 0 : Min;
+		Rand = (int) (Min + Math.random() * (Max - Min + 1));
+		if (Fn < 0) {
+			int x = (int) (Math.random() * (Fn * -1 + 1));
+			Rand = (int) (Math.random() * 2) == 1 ? Rand : x * -1;
+		}
+		return Rand;
 	}
 
 	/**
@@ -567,7 +574,7 @@ public class Tool implements X509TrustManager, HostnameVerifier {
 	 * @return
 	 */
 	public static int getRand() {
-		return getRand(0, (Integer.MAX_VALUE - 1) / 2);
+		return getRand(Integer.MIN_VALUE, Integer.MAX_VALUE);
 	}
 
 	/**
@@ -1094,7 +1101,7 @@ public class Tool implements X509TrustManager, HostnameVerifier {
 		Collections.sort(list, new Comparator<Map.Entry<K, V>>() {
 			@Override
 			public int compare(Map.Entry<K, V> o1, Map.Entry<K, V> o2) {
-				int compare = (o1.getValue()).compareTo(o2.getValue());
+				int compare = o1.getValue().compareTo(o2.getValue());
 				return compare;
 			}
 		});
@@ -1117,7 +1124,7 @@ public class Tool implements X509TrustManager, HostnameVerifier {
 		Collections.sort(list, new Comparator<Map.Entry<K, V>>() {
 			@Override
 			public int compare(Map.Entry<K, V> o1, Map.Entry<K, V> o2) {
-				int compare = (o1.getValue()).compareTo(o2.getValue());
+				int compare = o1.getValue().compareTo(o2.getValue());
 				return -compare;
 			}
 		});

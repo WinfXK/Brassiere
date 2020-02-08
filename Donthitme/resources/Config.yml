@@ -3,3 +3,5 @@ Snowmn货币名称: 雪花
 默认货币: EconomyAPI
 自动更新: true
 更新间隔: 86400
+创建队伍价格: 50000
+创建队伍币种: EconomyAPI

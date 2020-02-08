@@ -11,7 +11,6 @@
 # 进服若是检测没有快捷菜单将提示的内容，可用变量：Player：玩家名
 lang: chs-中文
 权限不足: §4你无权限执行此操作！
-金币不足: §4您的{MoneyName}不足！
 插件启动: '{RGBTextStart}{PluginName}启动(耗时: {loadTime})...{RGBTextEnd}        §6欢迎{RGBTextStart}使用{PluginName}{RGBTextEnd}§f(*￣︶￣)'
 无法初始化配置: §4无法初始化配置文件：{FileName}，请检查!
 无法效验语言文件: §4无法效验语言文件！请检查！
@@ -22,6 +21,34 @@ lang: chs-中文
 无法加载资源: §4无法加载资源
 无法加载特权配置: §4无法加载VIP配置（{FileName}）！{Error}
 加载特权规则: §6已加载§9{Count}§6种特权配置
+无法加载系统数据: §4无法加载系统数据
+无法获取币种: §4无法获取对应的币种！请联系服务器管理员！
+金币不足: §4您的财产不足以完成此操作！
+Team:
+   MakeTeam:
+      Title: '{RandColor}创建队伍'
+      TeamName: §6请输入队伍名称
+      AllowedJoin: §6允许玩家申请加入
+      AllowedChat: §6允许玩家加入聊天室
+      AllowedMakeShop: §6允许玩家上架物品到队伍商城
+      AllowedShop: §6允许玩家使用队伍商城
+      AllowedGain: §6允许玩家享用队伍增益(如果有)
+      AllowedSign: §6允许玩家获取队伍称号
+      NotName: §4请输入队伍名称！
+      CreatingSuccessful: §6队伍创建成功！
+   JoinTeam:
+      Title: '{RandColor}加入队伍'
+      Content: '{RandColor}请创建或加入一个队伍！'
+      Join: '{RandColor}加入队伍'
+      已加入队伍: §4您已加入队伍！不能重复加入
+      Make: '{RandColor}创建队伍'
+   Main:
+      Title: '{RandColor}组队系统'
+      Content: §6欢迎使用由{RandColor}帅逼凯§6开发的组队系统
+      队伍列表: '{RandColor}队伍列表'
+      我的队伍: '{RandColor}我的队伍'
+      加入队伍: '{RandColor}加入队伍'
+      队伍社区: '{RandColor}队伍聊天室'
 Update:
    Start: §6检查更新中！若不想使用该功能或出现问题，请关闭该功能.
    Update: §6已检测到更新！{Msg} §4相关数据以储存到§5{ConfigName}

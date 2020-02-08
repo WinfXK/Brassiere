@@ -2,6 +2,8 @@ package cn.epicfx.winfxk.donthitme;
 
 import java.io.File;
 
+import cn.epicfx.winfxk.donthitme.form.FormBase;
+import cn.epicfx.winfxk.donthitme.vip.Vip;
 import cn.nukkit.Player;
 import cn.nukkit.utils.Config;
 
@@ -12,7 +14,9 @@ public class MyPlayer {
 	private Activate ac;
 	public Config config;
 	private Player player;
-	public MakeBase makeBase;
+	public FormBase makeBase;
+	public Vip vip;
+	public int ID = 0;
 
 	/**
 	 * 记录存储玩家的一些数据
@@ -61,6 +65,18 @@ public class MyPlayer {
 		config.set("游戏局数", config.getInt("游戏局数") + 1);
 		config.save();
 		return this;
+	}
+
+	/**
+	 * 判断玩家是否加入了一个组队
+	 *
+	 * @return
+	 */
+	public boolean isTeam() {
+		String ID = config.getString("Team");
+		if (ID == null || ID.isEmpty())
+			return false;
+		return ac.team.isTeam(ID);
 	}
 
 	/**

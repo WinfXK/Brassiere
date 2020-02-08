@@ -52,7 +52,7 @@ public class PlayerEvent implements Listener {
 		int ID = e.getFormID();
 		FormID f = ac.getFormID();
 		if ((ID == f.getID(0) || ID == f.getID(1)) && myPlayer.makeBase != null)
-			myPlayer.makeBase.disMain();
+			myPlayer.makeBase.disMain(data);
 
 	}
 

@@ -1,8 +1,8 @@
 name: null
 Vip: null
+VipLevel: 0
 VipTime: 0
 VipSign: null
 useSign: null
 Signs: []
 Team: null
-TeamMsg: false

@@ -27,7 +27,10 @@ public class Donthitme extends PluginBase {
 
 	@Override
 	public void onDisable() {
-		getLogger().info(ac.getMessage().getMessage("插件关闭"));
+		try {
+			getLogger().info(ac.getMessage().getMessage("插件关闭"));
+		} catch (Exception e) {
+		}
 		super.onDisable();
 	}
 

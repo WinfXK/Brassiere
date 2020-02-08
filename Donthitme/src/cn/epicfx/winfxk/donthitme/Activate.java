@@ -5,10 +5,12 @@ import java.time.Instant;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import cn.epicfx.winfxk.donthitme.form.MakeForm;
 import cn.epicfx.winfxk.donthitme.money.EconomyAPI;
 import cn.epicfx.winfxk.donthitme.money.EconomyManage;
 import cn.epicfx.winfxk.donthitme.money.MyEconomy;
 import cn.epicfx.winfxk.donthitme.money.Snowmn;
+import cn.epicfx.winfxk.donthitme.team.Team;
 import cn.epicfx.winfxk.donthitme.tool.Tool;
 import cn.epicfx.winfxk.donthitme.vip.VipMang;
 import cn.nukkit.Player;
@@ -24,20 +26,22 @@ public class Activate {
 	public Player setPlayer;
 	public MakeForm makeForm;
 	public ResCheck resCheck;
-	public final static String[] FormIDs = { /* 0 */"主页", /* 1 */"备用主页" };
+	public final static String[] FormIDs = { /* 0 */"主页", /* 1 */"备用主页", /* 2 */"次页", /* 3 */"备用次页" };
 	public final static String MessageFileName = "Message.yml", ConfigFileName = "Config.yml",
 			CommandFileName = "Command.yml", EconomyListConfigName = "EconomyList.yml", FormIDFileName = "FormID.yml",
 			PlayerDataDirName = "Players", LanguageDirName = "language", VipFileName = "VIP/VIP.yml",
-			SVIPFileName = "VIP/SVIP.yml", RVIPFileName = "VIP/RVIP.yml", VIPDirName = "VIP";
+			SVIPFileName = "VIP/SVIP.yml", RVIPFileName = "VIP/RVIP.yml", VIPDirName = "VIP",
+			SystemFileName = "System.xml", TeamDirName = "Team";
 	private Donthitme mis;
 	private MyEconomy economy;
 	private EconomyManage money;
 	private static Activate activate;
 	private LinkedHashMap<String, MyPlayer> Players;
+	protected Team team;
 	protected FormID FormID;
 	protected Message message;
-	protected Config config, CommandConfig;
 	protected VipMang vipMang;
+	protected Config config, CommandConfig;
 	/**
 	 * 默认要加载的配置文件，这些文件将会被用于与插件自带数据匹配
 	 */
@@ -45,9 +49,12 @@ public class Activate {
 	/**
 	 * 插件基础配置文件
 	 */
-	protected static final String[] defaultFile = { RVIPFileName, VipFileName, SVIPFileName, ConfigFileName,
-			CommandFileName, MessageFileName };
-	protected static final String[] Mkdir = { VIPDirName, PlayerDataDirName };
+	protected static final String[] defaultFile = { CommandFileName, MessageFileName };
+	/**
+	 * 只加载一次的数据
+	 */
+	protected static final String[] ForOnce = { RVIPFileName, VipFileName, SVIPFileName, ConfigFileName };
+	protected static final String[] Mkdir = { TeamDirName, VIPDirName, PlayerDataDirName };
 
 	/**
 	 * 插件数据的集合类
@@ -71,9 +78,14 @@ public class Activate {
 		economy = money.getEconomy(config.getString("默认货币"));
 		makeForm = new MakeForm(this);
 		vipMang = new VipMang(this);
+		team = new Team(this);
 		kis.getServer().getPluginManager().registerEvents(new PlayerEvent(this), kis);
 		kis.getLogger().info(message.getMessage("插件启动", new String[] { "{loadTime}" },
 				new Object[] { (float) Duration.between(mis.loadTime, Instant.now()).toMillis() + "ms" }));
+	}
+
+	public Team getTeam() {
+		return team;
 	}
 
 	/**
@@ -165,6 +177,16 @@ public class Activate {
 	public void setPlayers(String player, MyPlayer myPlayer) {
 		if (!Players.containsKey(player))
 			Players.put(player, myPlayer);
+	}
+
+	/**
+	 * 设置玩家数据
+	 *
+	 * @param player
+	 * @return
+	 */
+	public MyPlayer getPlayers(Player player) {
+		return isPlayers(player.getName()) ? Players.get(player.getName()) : null;
 	}
 
 	/**

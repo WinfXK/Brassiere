@@ -88,6 +88,15 @@ public class EconomyManage {
 	}
 
 	/**
+	 * 返回已经兼容添加的经济插件对应列表
+	 *
+	 * @return
+	 */
+	public List<MyEconomy> getEconomys() {
+		return new ArrayList<>(Economy.values());
+	}
+
+	/**
 	 * 写入已经支持了的经济插件
 	 */
 	public void Write() {
