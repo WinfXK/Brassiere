@@ -34,6 +34,9 @@ Team:
       AllowedShop: §6允许玩家使用队伍商城
       AllowedGain: §6允许玩家享用队伍增益(如果有)
       AllowedSign: §6允许玩家获取队伍称号
+      JoinTariff: §6入队资费
+      JoinTariffEconomy: §6资费类型
+      JoinTariffEconomyText: '{RandColor}{EconomyName}§6>§e>{RandColor}{EconomyMoney}'
       NotName: §4请输入队伍名称！
       CreatingSuccessful: §6队伍创建成功！
    JoinTeam:
@@ -42,6 +45,15 @@ Team:
       Join: '{RandColor}加入队伍'
       已加入队伍: §4您已加入队伍！不能重复加入
       Make: '{RandColor}创建队伍'
+      无队伍: §4当前没有任何队伍可以加入
+      TeamList: '{TeamName}§f>>§6队长{Captain}{AllowedJoin}§f(§6资费：§4{JoinTariff}§f)§6>§e>§4{TeamSize}§6/§3{TeamMaxCount}'
+      AllowedJoinOK: ' '
+      AllowedJoinNo: §f>>§9(拒绝申请§9)
+      NotMoney: §4您无法支付入队费用！
+      TeamFull: §4您想加入的队伍已满！
+      RefusedJoin: §4该队伍拒绝玩家加入
+      isApplyFor: §4您已向该队发出申请！
+      ApplyFor: §6您已成功发出请求
    Main:
       Title: '{RandColor}组队系统'
       Content: §6欢迎使用由{RandColor}帅逼凯§6开发的组队系统

@@ -23,6 +23,10 @@ public class MakeForm {
 		return Tip(player, Content, false);
 	}
 
+	public boolean Tip(Player player, String Content, String Title) {
+		return Tip(player, Tool.getRandColor() + ac.getPluginBase().getName(), Content, false);
+	}
+
 	public boolean Tip(Player player, String Content, boolean Return) {
 		return Tip(player, Tool.getRandColor() + ac.getPluginBase().getName(), Content, Return);
 	}

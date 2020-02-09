@@ -2,6 +2,7 @@ package cn.epicfx.winfxk.donthitme.team.join;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import cn.epicfx.winfxk.donthitme.form.FormBase;
@@ -20,6 +21,7 @@ import cn.nukkit.utils.Config;
 public class MakeTeam extends FormBase {
 	private double Money;
 	private MyEconomy economy;
+	private List<MyEconomy> economies = new ArrayList<>();
 
 	public MakeTeam(Player player) {
 		super(player);
@@ -33,6 +35,12 @@ public class MakeTeam extends FormBase {
 			return ac.makeForm.Tip(player, msg.getMessage("无法获取币种", myPlayer));
 		if (economy.getMoney(player) < Money)
 			return ac.makeForm.Tip(player, msg.getMessage("金币不足", myPlayer));
+		economies = ac.getEconomyManage().getEconomys();
+		List<String> list = new ArrayList<>();
+		for (MyEconomy economy : economies)
+			list.add(msg.getSun("Team", "MakeTeam", "JoinTariffEconomyText",
+					new String[] { "{EconomyName}", "{EconomyMoney}", "{Player}", "{Money}" }, new Object[] {
+							economy.getEconomyName(), economy.getMoneyName(), player.getName(), myPlayer.getMoney() }));
 		CustomForm form = new CustomForm(getID(), msg.getSun("Team", "MakeTeam", "Title", myPlayer));
 		form.addInput(msg.getSun("Team", "MakeTeam", "TeamName", myPlayer));
 		form.addToggle(msg.getSun("Team", "MakeTeam", "AllowedJoin", myPlayer), true);
@@ -41,6 +49,9 @@ public class MakeTeam extends FormBase {
 		form.addToggle(msg.getSun("Team", "MakeTeam", "AllowedShop", myPlayer), true);
 		form.addToggle(msg.getSun("Team", "MakeTeam", "AllowedGain", myPlayer), true);
 		form.addToggle(msg.getSun("Team", "MakeTeam", "AllowedSign", myPlayer), true);
+		form.addInput(msg.getSun("Team", "MakeTeam", "JoinTariff", myPlayer), 0,
+				msg.getSun("Team", "MakeTeam", "JoinTariff", myPlayer));
+		form.addDropdown(msg.getSun("Team", "MakeTeam", "JoinTariffEconomy", myPlayer), list);
 		form.sendPlayer(player);
 		return true;
 	}
@@ -61,6 +72,16 @@ public class MakeTeam extends FormBase {
 		map.put("name", player.getName());
 		map.put("Prestige", (int) Money / 100);
 		map.put("date", Tool.getDate() + " " + Tool.getTime());
+		String JoinTariffs = d.getInputResponse(7);
+		double JoinTariff = 0;
+		if (!Tool.isInteger(JoinTariffs) || (JoinTariff = Tool.ObjectToDouble(JoinTariffs, 0d)) <= 0)
+			JoinTariff = 0;
+		String JoinTariffEconomy;
+		int JoinTariffEconomyID = d.getDropdownResponse(8).getElementID();
+		if (economies.size() <= 0)
+			JoinTariffEconomy = null;
+		else
+			JoinTariffEconomy = economies.get(JoinTariffEconomyID).getEconomyName();
 		players.put(player.getName(), map);
 		Config config = ac.getTeam().getConfig(ID);
 		config.set("ID", ID);
@@ -68,6 +89,8 @@ public class MakeTeam extends FormBase {
 		config.set("Name", TeamName);
 		config.set("Prestige", 0);
 		config.set("Money", Money / 100);
+		config.set("MaxCounts", ac.getConfig().getInt("队伍初始人数上限"));
+		config.set("MaxShopItem", ac.getConfig().getInt("队伍商城数量上限"));
 		config.set("AllowedJoin", d.getToggleResponse(1));
 		config.set("AllowedChat", d.getToggleResponse(2));
 		config.set("AllowedMakeShop", d.getToggleResponse(3));
@@ -76,9 +99,12 @@ public class MakeTeam extends FormBase {
 		config.set("AllowedSign", d.getToggleResponse(6));
 		config.set("Admin", new ArrayList<String>());
 		config.set("Players", players);
+		config.set("Effects", new HashMap<Integer, Object>());
 		config.set("Shop", new HashMap<String, Object>());
 		config.set("Message", new HashMap<String, Object>());
 		config.set("ApplyFor", new HashMap<String, Object>());
+		config.set("JoinTariff", JoinTariff);
+		config.set("JoinTariffEconomy", JoinTariffEconomy);
 		config.save();
 		ac.getTeam().reload();
 		myPlayer.makeBase = new MyTeam(player);

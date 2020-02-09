@@ -210,4 +210,8 @@ public abstract class MyEconomy {
 	 */
 	public abstract double setMoney(String player, double Money);
 
+	@Override
+	public String toString() {
+		return getClass().getSimpleName() + ">>{EconomyName: " + EconomyName + ", MoneyName: " + MoneyName + "}";
+	}
 }

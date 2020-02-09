@@ -30,6 +30,10 @@ public class Team {
 		return teams.containsKey(ID);
 	}
 
+	public TeamConfig getTeam(String ID) {
+		return teams.get(ID);
+	}
+
 	public LinkedHashMap<String, TeamConfig> getTeams() {
 		return new LinkedHashMap<>(teams);
 	}

@@ -1,6 +1,7 @@
 package cn.epicfx.winfxk.donthitme;
 
 import java.io.File;
+import java.util.List;
 
 import cn.epicfx.winfxk.donthitme.form.FormBase;
 import cn.epicfx.winfxk.donthitme.vip.Vip;
@@ -108,5 +109,18 @@ public class MyPlayer {
 	public static File getFile(String player) {
 		return new File(new File(Activate.getActivate().getPluginBase().getDataFolder(), Activate.PlayerDataDirName),
 				player + ".yml");
+	}
+
+	/**
+	 * 获取玩家曾经加入过的队伍
+	 *
+	 * @return
+	 */
+	public List<String> getOnceJoined() {
+		return config.getList("OnceJoined");
+	}
+
+	public String getName() {
+		return player.getName();
 	}
 }
