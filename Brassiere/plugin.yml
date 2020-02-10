@@ -1,0 +1,18 @@
+name: Brassiere
+main: cn.winfxk.brassiere.Brassiere
+api:
+- 1.0.0
+version: 1.0
+website: http://Winfxk.EpicFX.cn
+description: 一个不知道会不会有人用的聊天集合插件
+author: Winfxk
+loadbefore:
+- EconomyAPI
+- Snowmn
+permissions:
+   Brassiere.Command.main:
+      description: Brassiere-Player
+      default: true
+   Brassiere.Command.Admin:
+      description: Brassiere-Admin
+      default: op
