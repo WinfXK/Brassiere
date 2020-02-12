@@ -25,6 +25,13 @@ lang: chs-中文
 无法获取币种: §4无法获取对应的币种！请联系服务器管理员！
 金币不足: §4您的财产不足以完成此操作！
 Team:
+   TeamManage:
+      Title: '{RandColor}{TeamName}'
+      Content: '{RandColor}{TeamName}管理'
+      setAdmin: §6设置管理员
+      ApplyFor: §6查看入队申请
+      Setting: §6队伍设置
+      BuyEffect: §6为队伍购买Buff
    MyTeam:
       Title: '{RandColor}{TeamName}'
       NotTeam: §4你还是个流浪汉！

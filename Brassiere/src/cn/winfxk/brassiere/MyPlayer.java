@@ -1,7 +1,9 @@
 package cn.winfxk.brassiere;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import cn.nukkit.Player;
 import cn.nukkit.utils.Config;
@@ -28,8 +30,27 @@ public class MyPlayer {
 	public MyPlayer(Player player) {
 		this.player = player;
 		ac = Activate.getActivate();
-		config = getConfig(player.getName());
+		config = getConfig(getName());
+		config = ac.resCheck.Check(this);
 		config.set("name", player.getName());
+		config.save();
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+
+	/**
+	 * 给忘记生成一个加入队伍的申请记录
+	 *
+	 * @param team
+	 * @return
+	 */
+	public MyPlayer addApplyFor(Team team) {
+		List<String> list = config.getList("ApplyFor");
+		if (!list.contains(team.getName()))
+			list.add(team.getName());
+		return this;
 	}
 
 	public Player getPlayer() {
@@ -89,7 +110,7 @@ public class MyPlayer {
 	 * @return
 	 */
 	public static Config getConfig(String player) {
-		return Activate.getActivate().resCheck.Check(new Config(getFile(player), Config.YAML));
+		return new Config(getFile(player), Config.YAML);
 	}
 
 	/**
@@ -118,8 +139,11 @@ public class MyPlayer {
 	 *
 	 * @return
 	 */
-	public List<String> getOnceJoined() {
-		return config.getList("OnceJoined");
+	public Map<String, Object> getOnceJoined() {
+		Object obj = config.get("OnceJoined");
+		Map<String, Object> map = obj == null || !(obj instanceof Map) ? new HashMap<>()
+				: (HashMap<String, Object>) obj;
+		return map;
 	}
 
 	public String getName() {

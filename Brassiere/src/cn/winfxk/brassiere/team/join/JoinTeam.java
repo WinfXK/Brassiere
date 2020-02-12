@@ -64,7 +64,8 @@ public class JoinTeam extends FormBase {
 				return ac.makeForm.Tip(player, msg.getSun("Team", "JoinTeam", "NotMoney", myPlayer));
 			economy.reduceMoney(player, Money);
 		}
-
+		team.sendApplyFor(myPlayer);
+		myPlayer.addApplyFor(team);
 		return ac.makeForm.Tip(player, msg.getSun("Team", "JoinTeam", "ApplyFor", myPlayer), true);
 	}
 

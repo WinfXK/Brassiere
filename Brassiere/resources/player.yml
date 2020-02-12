@@ -1,8 +1,22 @@
+#玩家的昵称
 name: null
+#玩家拥有的VIP特权
 Vip: null
+#玩家的VIP的经验
 VipLevel: 0
+#玩家VIP剩余时间
 VipTime: 0
+#玩家VIP签到的时间
 VipSign: null
+#玩家正在使用的称号
 useSign: null
+#玩家拥有的称号列表
 Signs: []
+#玩家所属的队伍
 Team: null
+#玩家已经发出过加队申请
+ApplyFor: []
+#玩家的未读消息
+Message: []
+#玩家加入过的队伍
+OnceJoined: []

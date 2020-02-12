@@ -4,12 +4,14 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.plugin.Plugin;
 import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.utils.Config;
+import cn.nukkit.utils.Utils;
 import cn.winfxk.brassiere.form.MakeForm;
 import cn.winfxk.brassiere.money.EconomyAPI;
 import cn.winfxk.brassiere.money.EconomyManage;
@@ -94,6 +96,16 @@ public class Activate {
 	}
 
 	/**
+	 * 返回一个默认的玩家数据
+	 *
+	 * @return
+	 * @throws Exception
+	 */
+	public Map<String, Object> getPlayerConfig() throws Exception {
+		return resCheck.yaml.loadAs(Utils.readFile(getClass().getResourceAsStream("/resources/player.yml")), Map.class);
+	}
+
+	/**
 	 * 得到默认经济插件
 	 *
 	 * @reaturn
@@ -170,18 +182,10 @@ public class Activate {
 	 * @return
 	 */
 	public void setPlayers(Player player, MyPlayer myPlayer) {
-		setPlayers(player.getName(), myPlayer);
-	}
-
-	/**
-	 * 设置玩家数据
-	 *
-	 * @param player
-	 * @return
-	 */
-	public void setPlayers(String player, MyPlayer myPlayer) {
-		if (!Players.containsKey(player))
-			Players.put(player, myPlayer);
+		if (!Players.containsKey(player.getName()))
+			Players.put(player.getName(), myPlayer);
+		myPlayer = Players.get(player.getName());
+		myPlayer.setPlayer(player);
 	}
 
 	/**

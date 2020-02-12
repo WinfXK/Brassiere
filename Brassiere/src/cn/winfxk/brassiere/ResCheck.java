@@ -28,12 +28,18 @@ public class ResCheck {
 	private Activate ac;
 	private PluginBase kis;
 	private PluginLogger log;
-	private final static String[] s = { "得分", "恶意度", "荣誉", "死亡", "游戏局数", "攻击数" };
+	public Yaml yaml;
 
+	/**
+	 * 数据检查
+	 */
 	public ResCheck(Activate activate) {
 		this.ac = activate;
 		kis = activate.getPluginBase();
 		log = kis.getLogger();
+		DumperOptions dumperOptions = new DumperOptions();
+		dumperOptions.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
+		yaml = new Yaml(dumperOptions);
 	}
 
 	/**
@@ -42,14 +48,15 @@ public class ResCheck {
 	 * @param config
 	 * @return
 	 */
-	public Config Check(Config config) {
-		if (config == null)
-			return config;
-		for (String string : s)
-			if (config.get(Tool.objToString(string)) == null)
-				config.set(string, 0);
-		config.save();
-		return config;
+	public Config Check(MyPlayer player) {
+		try {
+			player.config.setAll(getMap(player.config.getAll(), yaml.loadAs(
+					Utils.readFile(getClass().getResourceAsStream("/resources/player.yml")), LinkedHashMap.class)));
+		} catch (IOException e) {
+			e.printStackTrace();
+			player.getPlayer().kick(ac.message.getMessage("无法加载资源", player));
+		}
+		return player.config;
 	}
 
 	/**
@@ -155,9 +162,6 @@ public class ResCheck {
 					ac.getMessage().getMessage("无法加载资源", new String[] { "{Error}" }, new Object[] { e2.getMessage() }));
 		}
 		Config config;
-		DumperOptions dumperOptions = new DumperOptions();
-		dumperOptions.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
-		Yaml yaml = new Yaml(dumperOptions);
 		String content;
 		for (String s : Activate.loadFile) {
 			file = new File(kis.getDataFolder(), s);
@@ -267,8 +271,8 @@ public class ResCheck {
 	/**
 	 * 效验配置文件是否匹配
 	 *
-	 * @param map1
-	 * @param map2
+	 * @param map1 要对比的数据
+	 * @param map2 这个是标本，另一个参照这个对比数据
 	 * @return
 	 */
 	public LinkedHashMap<String, Object> getMap(Map<String, Object> map1, Map<String, Object> map2) {

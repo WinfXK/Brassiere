@@ -48,7 +48,7 @@ public class Team {
 	/**
 	 * 队伍申请
 	 */
-	private Map<String, Object> ApplyFor;
+	private Map<String, Map<String, Object>> ApplyFor;
 	/**
 	 * 允许玩家获取队伍称号
 	 */
@@ -340,7 +340,7 @@ public class Team {
 	 *
 	 * @return
 	 */
-	public Map<String, Object> getApplyFor() {
+	public Map<String, Map<String, Object>> getApplyFor() {
 		return ApplyFor;
 	}
 
@@ -422,12 +422,13 @@ public class Team {
 	 * @param player
 	 * @return
 	 */
-	public Team sendJoinApplyFor(MyPlayer player) {
+	public Team sendApplyFor(MyPlayer player) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("Player", player.getName());
 		map.put("Date", Tool.getDate() + " " + Tool.getTime());
 		map.put("OnceJoined", player.getOnceJoined());
 		ApplyFor.put(player.getName(), map);
+		player.addApplyFor(this);
 		return this;
 	}
 

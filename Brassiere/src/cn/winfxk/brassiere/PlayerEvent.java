@@ -66,7 +66,7 @@ public class PlayerEvent implements Listener {
 		if (!ac.getPluginBase().isEnabled())
 			return;
 		Player player = e.getPlayer();
-		ac.setPlayers(player.getName(), new MyPlayer(player));
+		ac.setPlayers(player, new MyPlayer(player));
 	}
 
 	/**

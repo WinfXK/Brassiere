@@ -66,28 +66,28 @@ public class MyTeam extends FormBase {
 		FormResponseSimple d = getSimple(data);
 		switch (fk.get(d.getClickedButtonId())) {
 		case "msg":
-			myPlayer.makeBase = new TeamMessage(player, team);
+			setForm(new TeamMessage(player, team));
 			break;
 		case "list":
-			myPlayer.makeBase = new TeamPlayerList(player, team);
+			setForm(new TeamPlayerList(player, team));
 			break;
 		case "shop":
-			myPlayer.makeBase = new TeamShop(player, team);
+			setForm(new TeamShop(player, team));
 			break;
 		case "sign":
-			myPlayer.makeBase = new TeamSign(player, team);
+			setForm(new TeamSign(player, team));
 			break;
 		case "effects":
-			myPlayer.makeBase = new TeamEffect(player, team);
+			setForm(new TeamEffect(player, team));
 			break;
 		case "datails":
-			myPlayer.makeBase = new TeamDatails(player, team);
+			setForm(new TeamDatails(player, team));
 			break;
 		case "quit":
-			myPlayer.makeBase = new QuitTeam(player, team);
+			setForm(new QuitTeam(player, team));
 			break;
 		case "mag":
-			myPlayer.makeBase = new TeamManage(player, team);
+			setForm(new TeamManage(player, team));
 			break;
 		}
 		return myPlayer.makeBase.MakeMain();

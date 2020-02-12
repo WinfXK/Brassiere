@@ -130,4 +130,16 @@ public abstract class FormBase {
 	public void setK(String... strings) {
 		K = strings;
 	}
+
+	/**
+	 * 设置一个页面为当前玩家操作的页面
+	 *
+	 * @param base
+	 * @return
+	 */
+	public FormBase setForm(FormBase base) {
+		myPlayer.makeBase = base;
+		myPlayer.makeBase.make = this;
+		return this;
+	}
 }
