@@ -9,19 +9,41 @@ import java.util.LinkedHashMap;
 
 import cn.winfxk.brassiere.Activate;
 
-public class VipMang implements FilenameFilter {
+public class VipMag implements FilenameFilter {
 	public LinkedHashMap<String, Vip> Vips = new LinkedHashMap<>();
-	private Activate ac;
+	protected Activate ac;
+	private static VipApi vipApi;
 
-	public VipMang(Activate activate) {
+	public VipMag(Activate activate) {
 		this.ac = activate;
 		reload();
+		vipApi = new VipApi(this);
 	}
 
+	/**
+	 * 取得VIP的API
+	 *
+	 * @return
+	 */
+	public static VipApi getVipApi() {
+		return vipApi;
+	}
+
+	/**
+	 * VIP特权的数量
+	 *
+	 * @return
+	 */
 	public int VipSize() {
 		return Vips.size();
 	}
 
+	/**
+	 * 根据VIP的ID获取一个VIP
+	 *
+	 * @param ID
+	 * @return
+	 */
 	public Vip getVip(String ID) {
 		return Vips.get(ID);
 	}
@@ -41,6 +63,18 @@ public class VipMang implements FilenameFilter {
 			}
 		ac.getPluginBase().getLogger()
 				.info(ac.getMessage().getMessage("加载特权规则", new String[] { "{Count}" }, new Object[] { VipSize() }));
+	}
+
+	/**
+	 * 判断服务器是否已经加载一个VIP
+	 *
+	 * @param ID
+	 * @return
+	 */
+	public boolean isVip(String ID) {
+		if (ID == null || ID.isEmpty())
+			return false;
+		return Vips.containsKey(ID);
 	}
 
 	@Override

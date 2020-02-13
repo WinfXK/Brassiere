@@ -18,7 +18,7 @@ public class TeamMag {
 	private LinkedHashMap<String, Team> teams;
 
 	public TeamMag(Activate activate) {
-		ac = activate;
+		setAc(activate);
 		teams = new LinkedHashMap<>();
 	}
 
@@ -29,7 +29,7 @@ public class TeamMag {
 	 * @return
 	 */
 	public boolean makeMain(Player player) {
-		MyPlayer myPlayer = ac.getPlayers(player.getName());
+		MyPlayer myPlayer = getAc().getPlayers(player.getName());
 		myPlayer.makeBase = new TeamForm(player);
 		return myPlayer.makeBase.MakeMain();
 	}
@@ -89,6 +89,14 @@ public class TeamMag {
 	 * @return
 	 */
 	public File getTeamFile(String ID) {
-		return new File(new File(ac.getPluginBase().getDataFolder(), Activate.TeamDirName), ID + ".yml");
+		return new File(new File(getAc().getPluginBase().getDataFolder(), Activate.TeamDirName), ID + ".yml");
+	}
+
+	public Activate getAc() {
+		return ac;
+	}
+
+	public void setAc(Activate ac) {
+		this.ac = ac;
 	}
 }

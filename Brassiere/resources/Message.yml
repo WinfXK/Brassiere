@@ -25,6 +25,15 @@ lang: chs-中文
 无法获取币种: §4无法获取对应的币种！请联系服务器管理员！
 金币不足: §4您的财产不足以完成此操作！
 Team:
+   TeamApplyFor:
+      Title: '{RandColor}{TeamName}'
+      Content: '{RandColor}{TeamName}管理'
+      NotApplyFor: §4当前没有任何玩家申请加入队伍
+      PlayerItem: '{RandColor}{Player} {RandColor}{Date}({Valid})'
+      ValidTrue: §6有效
+      AllAccept: §6全部同意
+      AllRefuse: §4全部拒绝
+      ValidFalse: §4失效
    TeamManage:
       Title: '{RandColor}{TeamName}'
       Content: '{RandColor}{TeamName}管理'
@@ -73,6 +82,9 @@ Team:
       RefusedJoin: §4该队伍拒绝玩家加入
       isApplyFor: §4您已向该队发出申请！
       ApplyFor: §6您已成功发出请求
+      JoinTrue: §6您已成功加入{RandColor}{TeamName}
+      JoinFalse: §4您的入队申请被{RandColor}{TeamName}§4拒绝了！
+      AllAcceptApplyForTrue: §6您已经成功同意{RandColor}{Count}§6个玩家的入队申请
    Main:
       Title: '{RandColor}组队系统'
       Content: §6欢迎使用由{RandColor}帅逼凯§6开发的组队系统

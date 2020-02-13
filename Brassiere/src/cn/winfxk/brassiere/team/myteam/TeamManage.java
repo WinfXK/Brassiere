@@ -9,6 +9,7 @@ import cn.winfxk.brassiere.team.Team;
 import cn.winfxk.brassiere.team.TeamEffectShop;
 import cn.winfxk.brassiere.team.myteam.mag.TeamApplyFor;
 import cn.winfxk.brassiere.team.myteam.mag.TeamSetting;
+import cn.winfxk.brassiere.team.myteam.mag.setAdmin;
 
 /**
  * 队长或管理员管理自己的队伍
@@ -17,6 +18,7 @@ import cn.winfxk.brassiere.team.myteam.mag.TeamSetting;
  */
 public class TeamManage extends FormBase {
 	private boolean isCaptain;
+	private Team team;
 
 	/**
 	 * 玩家管理队伍的界面
@@ -26,6 +28,7 @@ public class TeamManage extends FormBase {
 	public TeamManage(Player player, Team team) {
 		super(player);
 		isCaptain = team.isCaptain(player);
+		this.team = team;
 	}
 
 	@Override
@@ -54,10 +57,10 @@ public class TeamManage extends FormBase {
 			setForm(new TeamSetting(player));
 			break;
 		case "af":
-			setForm(new TeamApplyFor(player));
+			setForm(new TeamApplyFor(player, team));
 			break;
 		case "sa":
-			setForm(new TeamApplyFor(player));
+			setForm(new setAdmin(player));
 			break;
 		case "b":
 			setForm(new TeamEffectShop(player));

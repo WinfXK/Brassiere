@@ -73,6 +73,7 @@ public class MakeTeam extends FormBase {
 		Map<String, Map<String, Object>> players = new HashMap<>();
 		Map<String, Object> map = new HashMap<>();
 		map.put("name", player.getName());
+		map.put("identity", "captain");
 		map.put("Prestige", (int) Money / 100);
 		map.put("date", Tool.getDate() + " " + Tool.getTime());
 		String JoinTariffs = d.getInputResponse(7);

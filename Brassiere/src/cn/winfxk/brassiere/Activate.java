@@ -19,7 +19,7 @@ import cn.winfxk.brassiere.money.MyEconomy;
 import cn.winfxk.brassiere.money.Snowmn;
 import cn.winfxk.brassiere.team.TeamMag;
 import cn.winfxk.brassiere.tool.Tool;
-import cn.winfxk.brassiere.vip.VipMang;
+import cn.winfxk.brassiere.vip.VipMag;
 
 /**
  * @author Winfxk
@@ -42,7 +42,7 @@ public class Activate {
 	protected TeamMag teamMag;
 	protected FormID FormID;
 	protected Message message;
-	protected VipMang vipMang;
+	protected VipMag vipMag;
 	protected Config config, CommandConfig;
 	/**
 	 * 默认要加载的配置文件，这些文件将会被用于与插件自带数据匹配
@@ -79,7 +79,7 @@ public class Activate {
 			money.addEconomyAPI(new EconomyAPI(this));
 		economy = money.getEconomy(config.getString("默认货币"));
 		makeForm = new MakeForm(this);
-		vipMang = new VipMang(this);
+		vipMag = new VipMag(this);
 		teamMag = new TeamMag(this);
 		kis.getServer().getPluginManager().registerEvents(new PlayerEvent(this), kis);
 		kis.getLogger().info(message.getMessage("插件启动", new String[] { "{loadTime}" },
@@ -93,6 +93,10 @@ public class Activate {
 	 */
 	public TeamMag getTeamMag() {
 		return teamMag;
+	}
+
+	public VipMag getVipMag() {
+		return vipMag;
 	}
 
 	/**

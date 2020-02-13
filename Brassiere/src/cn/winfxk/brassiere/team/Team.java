@@ -84,7 +84,7 @@ public class Team {
 	/**
 	 * 队伍中有的玩家列表
 	 */
-	private Map<String, String> Players = new HashMap<>();
+	private Map<String, Map<String, Object>> Players = new HashMap<>();
 	/**
 	 * 队伍的管理员列表
 	 */
@@ -268,7 +268,7 @@ public class Team {
 	 *
 	 * @return
 	 */
-	public Map<String, String> getPlayers() {
+	public Map<String, Map<String, Object>> getPlayers() {
 		return Players;
 	}
 
@@ -440,5 +440,95 @@ public class Team {
 	 */
 	public boolean isApplyFor(Player player) {
 		return ApplyFor.containsKey(player.getName());
+	}
+
+	/**
+	 * 让玩家加入队伍
+	 *
+	 * @param player
+	 * @return
+	 */
+	public boolean addPlayer(String player) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("name", player);
+		// 玩家的身份
+		map.put("identity", "player");
+		map.put("Prestige", ac.getConfig().getInt("玩家初始声望"));
+		Players.put(player, map);
+		config.set("Players", Players);
+		config.save();
+		return true;
+	}
+
+	/**
+	 * 清空队伍的所有申请
+	 *
+	 * @return
+	 */
+	public boolean clearApplyFor() {
+		for (String ike : ApplyFor.keySet()) {
+			MyPlayer.sendMessage(ike,
+					ac.getMessage().getSun("Team", "JoinTeam", "JoinFalse",
+							new String[] { "{Player}", "{Money}", "{TeamID}", "{TeamName}" },
+							new Object[] { ike, MyPlayer.getMoney(ike), getID(), getName() }));
+			MyPlayer.remoeApplyFor(ike, this);
+		}
+		ApplyFor.clear();
+		config.set("ApplyFor", ApplyFor);
+		config.save();
+		return true;
+	}
+
+	/**
+	 * 同意一个玩家的入队请求
+	 *
+	 * @param player
+	 * @return
+	 */
+	public boolean acceptApplyFor(String player) {
+		if (Players.size() >= MaxCounts)
+			return false;
+		if (player == null || player.isEmpty() || !MyPlayer.isPlayer(player))
+			return false;
+		if (ApplyFor.containsKey(player)) {
+			if (MyPlayer.isTeam(getID()))
+				return false;
+			ApplyFor.remove(player);
+			config.set("ApplyFor", ApplyFor);
+			config.save();
+			if (ac.isPlayers(player)) {
+				MyPlayer myPlayer = ac.getPlayers(player);
+				if (myPlayer != null) {
+					myPlayer.addOnceJoined(this);
+					myPlayer.clearApplyFor();
+					myPlayer.JoinTeam(this);
+					myPlayer.getPlayer()
+							.sendMessage(ac.getMessage().getSun("Team", "JoinTeam", "JoinTrue",
+									new String[] { "{Player}", "{Money}", "{TeamID}", "{TeamName}" },
+									new Object[] { myPlayer.getName(), myPlayer.getMoney(), getID(), getName() }));
+					return true;
+				}
+			}
+			MyPlayer.addOnceJoined(player, this);
+			MyPlayer.clearApplyFor(player);
+			MyPlayer.JoinTeam(player, this);
+			MyPlayer.sendMessage(player,
+					ac.getMessage().getSun("Team", "JoinTeam", "JoinTrue",
+							new String[] { "{Player}", "{Money}", "{TeamID}", "{TeamName}" },
+							new Object[] { player, MyPlayer.getMoney(player), getID(), getName() }));
+		}
+		return false;
+	}
+
+	/**
+	 * 判断玩家是否在一个队伍里面
+	 *
+	 * @param player
+	 * @return
+	 */
+	public boolean exist(String player) {
+		if (player == null || player.isEmpty())
+			return false;
+		return Players.containsKey(player);
 	}
 }

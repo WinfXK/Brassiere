@@ -10,13 +10,13 @@ VipTime: 0
 VipSign: null
 #玩家正在使用的称号
 useSign: null
-#玩家拥有的称号列表
+#玩家拥有的称号列表<List>
 Signs: []
 #玩家所属的队伍
 Team: null
-#玩家已经发出过加队申请
+#玩家已经发出过加队申请<List>
 ApplyFor: []
-#玩家的未读消息
+#玩家的未读消息<Map>
 Message: []
-#玩家加入过的队伍
+#玩家加入过的队伍<Map>
 OnceJoined: []
