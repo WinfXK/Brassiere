@@ -41,19 +41,25 @@ public class PlayerEvent implements Listener {
 	 */
 	@EventHandler
 	public void onFormResponded(PlayerFormRespondedEvent e) {
-		FormResponse data = e.getResponse();
 		Player player = e.getPlayer();
-		if (player == null || e.wasClosed() || data == null || !(data instanceof FormResponseCustom)
-				&& !(data instanceof FormResponseSimple) && !(data instanceof FormResponseModal))
-			return;
-		MyPlayer myPlayer = ac.getPlayers(player.getName());
-		if (myPlayer == null)
-			return;
-		int ID = e.getFormID();
-		FormID f = ac.getFormID();
-		if ((ID == f.getID(0) || ID == f.getID(1)) && myPlayer.makeBase != null)
-			myPlayer.makeBase.disMain(data);
-
+		try {
+			FormResponse data = e.getResponse();
+			if (player == null || e.wasClosed() || data == null || !(data instanceof FormResponseCustom)
+					&& !(data instanceof FormResponseSimple) && !(data instanceof FormResponseModal))
+				return;
+			MyPlayer myPlayer = ac.getPlayers(player.getName());
+			if (myPlayer == null)
+				return;
+			int ID = e.getFormID();
+			FormID f = ac.getFormID();
+			if ((ID == f.getID(0) || ID == f.getID(1)) && myPlayer.makeBase != null)
+				myPlayer.makeBase.disMain(data);
+		} catch (Exception e2) {
+			e2.printStackTrace();
+			if (player != null)
+				player.sendMessage(msg.getMessage("数据处理错误", new String[] { "{Player}", "{Money}", "{Error}" },
+						new Object[] { player.getName(), MyPlayer.getMoney(player.getName()), e2.getMessage() }));
+		}
 	}
 
 	/**

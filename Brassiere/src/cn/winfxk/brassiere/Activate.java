@@ -2,6 +2,7 @@ package cn.winfxk.brassiere;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,7 @@ import cn.nukkit.plugin.Plugin;
 import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.utils.Config;
 import cn.nukkit.utils.Utils;
+import cn.winfxk.brassiere.cmd.TeamCommand;
 import cn.winfxk.brassiere.form.MakeForm;
 import cn.winfxk.brassiere.money.EconomyAPI;
 import cn.winfxk.brassiere.money.EconomyManage;
@@ -81,6 +83,7 @@ public class Activate {
 		makeForm = new MakeForm(this);
 		vipMag = new VipMag(this);
 		teamMag = new TeamMag(this);
+		kis.getServer().getCommandMap().register(kis.getName() + "Team", new TeamCommand(this));
 		kis.getServer().getPluginManager().registerEvents(new PlayerEvent(this), kis);
 		kis.getLogger().info(message.getMessage("插件启动", new String[] { "{loadTime}" },
 				new Object[] { (float) Duration.between(mis.loadTime, Instant.now()).toMillis() + "ms" }));
@@ -134,8 +137,11 @@ public class Activate {
 	 * @param string
 	 * @return
 	 */
-	public String[] getCommands(String string) {
-		List<Object> list = CommandConfig.getList(string);
+	public String[] getCommands(String string, String string2) {
+		Object obj = CommandConfig.get(string);
+		Map<String, List<Object>> map = obj != null && obj instanceof Map ? (HashMap<String, List<Object>>) obj
+				: new HashMap<>();
+		List<Object> list = map.get(string2);
 		String[] s = new String[list.size()];
 		for (int i = 0; i < list.size(); i++)
 			s[i] = Tool.objToString(list.get(i));

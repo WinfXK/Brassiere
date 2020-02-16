@@ -86,7 +86,7 @@ public abstract class RootForm {
 	/**
 	 * 将表单发送给指定玩家列表
 	 *
-	 * @param players
+	 * @param player
 	 * @return
 	 */
 	public int sendPlayer(Player... player) {

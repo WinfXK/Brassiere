@@ -95,13 +95,13 @@ public class MakeForm {
 		if (Bt2 != null)
 			Bt2 = msg.getText(Bt2);
 		if (isModal) {
+			ModalForm form = new ModalForm(Tool.getRand(), Title, Content, Bt1, Bt2);
+			form.sendPlayer(player);
+		} else {
 			SimpleForm form = new SimpleForm(Tool.getRand(), Title, Content);
 			form.addButton(Bt1);
 			if (Bt2 != null && !Bt2.isEmpty())
 				form.addButton(Bt2);
-			form.sendPlayer(player);
-		} else {
-			ModalForm form = new ModalForm(Tool.getRand(), Title, Content, Bt1, Bt2);
 			form.sendPlayer(player);
 		}
 		return Return;

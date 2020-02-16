@@ -2,8 +2,13 @@ package cn.winfxk.brassiere.team.myteam.mag;
 
 import cn.nukkit.Player;
 import cn.nukkit.form.response.FormResponse;
+import cn.nukkit.form.response.FormResponseSimple;
+import cn.winfxk.brassiere.MyPlayer;
 import cn.winfxk.brassiere.form.FormBase;
 import cn.winfxk.brassiere.team.Team;
+import cn.winfxk.brassiere.tool.SimpleForm;
+import cn.winfxk.brassiere.tool.Tool;
+import cn.winfxk.brassiere.vip.VipApi;
 
 /**
  * @author Winfxk
@@ -25,11 +30,49 @@ public class ApplyForByPlayerData extends FormBase {
 
 	@Override
 	public boolean MakeMain() {
-		return false;
+		setK("{Player}", "{Money}", "{State}", "{Date-Time}", "{TeamList}", "{Vip}", "{Admin}", "{AdminMoney}");
+		setD(sb, MyPlayer.getMoney(sb),
+				MyPlayer.isTeam(sb) ? msg.getSun("Team", "ApplyForByPlayerData", "Invalid", myPlayer)
+						: msg.getSun("Team", "ApplyForByPlayerData", "Valid", myPlayer),
+				Tool.getDate() + " " + Tool.getTime(), team.getApplyFor().get(sb).get("OnceJoined"),
+				VipApi.isVip(sb) ? VipApi.getVip(sb).getName()
+						: msg.getSun("Team", "ApplyForByPlayerData", "NotVip", myPlayer),
+				player.getName(), myPlayer.getMoney());
+		SimpleForm form = new SimpleForm(getID(), msg.getSun("Team", "ApplyForByPlayerData", "Title", getK(), getD()),
+				msg.getSun("Team", "ApplyForByPlayerData", "Content", getK(), getD()));
+		form.addButton(msg.getSun("Team", "ApplyForByPlayerData", "Refuse", getK(), getD()));
+		if (!MyPlayer.isTeam(sb)) {
+			form.addButton(msg.getSun("Team", "ApplyForByPlayerData", "Accept", getK(), getD()));
+			form.setContent(form.getContent() + msg.getSun("Team", "ApplyForByPlayerData", "isOK", getK(), getD()));
+		}
+		form.sendPlayer(player);
+		return true;
 	}
 
 	@Override
 	public boolean disMain(FormResponse data) {
-		return false;
+		FormResponseSimple d = getSimple(data);
+		switch (d.getClickedButtonId()) {
+		case 1:
+			if (team.isMaxPlayer())
+				return ac.makeForm.Tip(player, msg.getSun("Team", "ApplyForByPlayerData", "CountMax", getK(), getD()),
+						true);
+			if (MyPlayer.isTeam(sb)) {
+				MyPlayer.remoeApplyFor(sb, team.retmoveApplyFor(sb));
+				return ac.makeForm.Tip(player, msg.getSun("Team", "ApplyForByPlayerData", "isInvalid", getK(), getD()),
+						true);
+			}
+			MyPlayer.JoinTeam(sb, team);
+			MyPlayer.remoeApplyFor(sb, team.retmoveApplyFor(sb));
+			ac.makeForm.Tip(player, msg.getSun("Team", "ApplyForByPlayerData", "AcceptMsg", getK(), getD()));
+			MyPlayer.sendMessage(sb, msg.getSun("Team", "ApplyForByPlayerData", "ByAcceptMsg", getK(), getD()));
+			return true;
+		case 0:
+		default:
+			MyPlayer.remoeApplyFor(sb, team.retmoveApplyFor(sb));
+			ac.makeForm.Tip(player, msg.getSun("Team", "ApplyForByPlayerData", "RefuseMsg", getK(), getD()));
+			MyPlayer.sendMessage(sb, msg.getSun("Team", "ApplyForByPlayerData", "ByRefuseMsg", getK(), getD()));
+			return true;
+		}
 	}
 }

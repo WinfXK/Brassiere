@@ -89,7 +89,9 @@ public class MyTeam extends FormBase {
 		case "mag":
 			setForm(new TeamManage(player, team));
 			break;
+		default:
+			throw new TeamException("Unable to get data type, please contact Winfxk!");
 		}
-		return myPlayer.makeBase.MakeMain();
+		return make();
 	}
 }

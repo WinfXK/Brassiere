@@ -3,6 +3,7 @@ package cn.winfxk.brassiere.team.join;
 import cn.nukkit.Player;
 import cn.nukkit.form.response.FormResponse;
 import cn.winfxk.brassiere.form.FormBase;
+import cn.winfxk.brassiere.team.TeamException;
 import cn.winfxk.brassiere.tool.SimpleForm;
 
 /**
@@ -31,12 +32,14 @@ public class JTeam extends FormBase {
 	public boolean disMain(FormResponse data) {
 		switch (getSimple(data).getClickedButtonId()) {
 		case 0:
-			myPlayer.makeBase = new JoinTeam(player);
+			setForm(new JoinTeam(player));
 			break;
 		case 1:
-			myPlayer.makeBase = new MakeTeam(player);
+			setForm(new MakeTeam(player));
 			break;
+		default:
+			throw new TeamException("Unable to get data type, please contact Winfxk!");
 		}
-		return myPlayer.makeBase.MakeMain();
+		return make();
 	}
 }

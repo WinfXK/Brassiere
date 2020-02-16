@@ -209,4 +209,22 @@ public class SimpleForm extends RootForm {
 			return isLocal;
 		}
 	}
+
+	/**
+	 * 设置界面内容
+	 *
+	 * @param content
+	 */
+	public void setContent(String content) {
+		Content = content;
+	}
+
+	/**
+	 * 得到界面内容
+	 *
+	 * @return
+	 */
+	public String getContent() {
+		return Content;
+	}
 }

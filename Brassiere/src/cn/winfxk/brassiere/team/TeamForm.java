@@ -42,18 +42,20 @@ public class TeamForm extends FormBase {
 		FormResponseSimple d = getSimple(data);
 		switch (fk.get(d.getClickedButtonId())) {
 		case "jt":
-			myPlayer.makeBase = new JTeam(player);
+			setForm(new JTeam(player));
 			break;
 		case "tl":
-			myPlayer.makeBase = new TeamList(player);
+			setForm(new TeamList(player));
 			break;
 		case "mt":
-			myPlayer.makeBase = new MyTeam(player);
+			setForm(new MyTeam(player));
 			break;
 		case "td":
-			myPlayer.makeBase = new TeamMessage(player, myPlayer.geTeam());
+			setForm(new TeamMessage(player, myPlayer.geTeam()));
 			break;
+		default:
+			throw new TeamException("Unable to get data type, please contact Winfxk!");
 		}
-		return myPlayer.makeBase == null ? false : myPlayer.makeBase.MakeMain();
+		return make();
 	}
 }

@@ -24,7 +24,38 @@ lang: chs-中文
 无法加载系统数据: §4无法加载系统数据
 无法获取币种: §4无法获取对应的币种！请联系服务器管理员！
 金币不足: §4您的财产不足以完成此操作！
+数据处理错误: §4无法处理该操作！请联系服务器管理员{n}{Error}
+Team-Command:
+   Usage: '{RandColor}组队相关命令'
 Team:
+   ExitChoose:
+      Title: '{RandColor}Creation'
+      Content: '{RandColor}请选择您的操作'
+      MOTeam: §4转让队伍
+      Dissolve: §4解散队伍
+   setAdmin:
+      Title: '{RandColor}{TeamName}'
+      Content: '{RandColor}{TeamName}管理'
+      ListItem: '{RandColor}{Player}§f({RandColor}{isAdmin}§f)'
+      NotPlayers: §4无可管理的玩家
+      Admin: 管理员
+      NotAdmin: 非管理
+      Captain: 队长
+   ApplyForByPlayerData:
+      Title: '{RandColor}{Player}'
+      Content: '{RandColor}申请人：{RandColor}{Player}\n{RandColor}申请状态：未通§f（{State}§f）\n{RandColor}申请时间：{RandColor}{Date-Time}\n{RandColor}曾经加入过的队伍：{TeamList}\n{RandColor}权限：{RandColor}{Vip}'
+      Valid: '{RandColor}有效'
+      Invalid: '{RandColor}无效'
+      NotVip: '{RandColor}无特权'
+      isOK: §6{n}{n}是否允许该玩家加入队伍？
+      Accept: §6同意
+      Refuse: §4滚他丫的
+      RefuseMsg: §6您已拒绝该玩家的请求！
+      AcceptMsg: §6您已同意该玩家的入队请求！
+      CountMax: §4您的队伍已满！
+      isInvalid: §4该玩家的入队申请已失效！
+      ByAcceptMsg: §6您已加入{RandColor}{TeamName}
+      ByRefuseMsg: §4您的入队申请已被拒绝！
    TeamApplyFor:
       Title: '{RandColor}{TeamName}'
       Content: '{RandColor}{TeamName}管理'
@@ -40,7 +71,10 @@ Team:
       setAdmin: §6设置管理员
       ApplyFor: §6查看入队申请
       Setting: §6队伍设置
+      Players: §6成员管理
       BuyEffect: §6为队伍购买Buff
+      MOTeam: §4转让队伍
+      Dissolve: §4解散队伍
    MyTeam:
       Title: '{RandColor}{TeamName}'
       NotTeam: §4你还是个流浪汉！

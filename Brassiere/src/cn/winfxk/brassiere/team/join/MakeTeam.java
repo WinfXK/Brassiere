@@ -113,9 +113,9 @@ public class MakeTeam extends FormBase {
 		config.set("Content", "");
 		config.save();
 		ac.getTeamMag().reload();
-		myPlayer.makeBase = new MyTeam(player);
+		setForm(new MyTeam(player));
 		player.sendMessage(msg.getSun("Team", "MakeTeam", "CreatingSuccessful", myPlayer));
-		return myPlayer.makeBase.MakeMain();
+		return make();
 	}
 
 	public String getRandID(int s) {

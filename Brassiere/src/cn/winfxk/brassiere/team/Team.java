@@ -179,6 +179,15 @@ public class Team {
 	}
 
 	/**
+	 * 返回队伍的人数
+	 *
+	 * @return
+	 */
+	public int size() {
+		return Players.size();
+	}
+
+	/**
 	 * 队伍的内容介绍
 	 *
 	 * @return
@@ -342,6 +351,29 @@ public class Team {
 	 */
 	public Map<String, Map<String, Object>> getApplyFor() {
 		return ApplyFor;
+	}
+
+	/**
+	 * 删除队伍里面的一个玩家的入队生亲
+	 *
+	 * @param player
+	 * @return
+	 */
+	public Team retmoveApplyFor(String player) {
+		if (ApplyFor.containsKey(player))
+			ApplyFor.remove(player);
+		config.set("ApplyFor", ApplyFor);
+		config.save();
+		return this;
+	}
+
+	/**
+	 * 判断一个队伍是否已满
+	 *
+	 * @return
+	 */
+	public boolean isMaxPlayer() {
+		return MaxCounts <= Players.size();
 	}
 
 	/**
@@ -530,5 +562,10 @@ public class Team {
 		if (player == null || player.isEmpty())
 			return false;
 		return Players.containsKey(player);
+	}
+
+	@Override
+	public String toString() {
+		return getName() + "(" + getID() + ")";
 	}
 }

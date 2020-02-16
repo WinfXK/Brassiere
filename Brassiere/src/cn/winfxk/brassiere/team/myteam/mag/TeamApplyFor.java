@@ -77,7 +77,7 @@ public class TeamApplyFor extends FormBase {
 		case "ar":
 			return team.clearApplyFor();
 		}
-		myPlayer.makeBase = new ApplyForByPlayerData(player, team, fk.get(ButtonID));
-		return myPlayer.makeBase.MakeMain();
+		setForm(new ApplyForByPlayerData(player, team, fk.get(ButtonID)));
+		return make();
 	}
 }

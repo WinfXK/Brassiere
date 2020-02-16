@@ -1,14 +1,11 @@
 PlayerCommand:
    VIP:
-   - vip
    - dmvip
    - dv
    Sign:
-   - sign
    - dms
    - ds
    Team:
-   - team
    - dmt
    - dt
    Tip:

@@ -3,18 +3,22 @@ package cn.winfxk.brassiere.team.myteam.mag;
 import cn.nukkit.Player;
 import cn.nukkit.form.response.FormResponse;
 import cn.winfxk.brassiere.form.FormBase;
+import cn.winfxk.brassiere.team.Team;
 
 /**
  * @author Winfxk
  */
-public class setAdmin extends FormBase {
+public class PlayersMag extends FormBase {
+	private Team team;
+
 	/**
-	 * 设置或取消服务器管理员
+	 * 队伍成员管理
 	 *
 	 * @param player
 	 */
-	public setAdmin(Player player) {
+	public PlayersMag(Player player, Team team) {
 		super(player);
+		this.team = team;
 	}
 
 	@Override

@@ -17,15 +17,14 @@ import cn.winfxk.brassiere.MyPlayer;
  * @author Winfxk
  */
 public abstract class FormBase {
-	public FormBase make;
 	public Player player;
 	public Message msg;
 	public FormID formID;
 	public Activate ac;
 	public MyPlayer myPlayer;
 	public List<String> fk = new ArrayList<>();
-	public Object[] D = {};
-	public String[] K = {};
+	protected Object[] D = {};
+	protected String[] K = {};
 
 	/**
 	 * 界面交互基础类
@@ -139,7 +138,22 @@ public abstract class FormBase {
 	 */
 	public FormBase setForm(FormBase base) {
 		myPlayer.makeBase = base;
-		myPlayer.makeBase.make = this;
 		return this;
+	}
+
+	/**
+	 * 构建下一个界面
+	 *
+	 * @return
+	 */
+	public boolean make() {
+		if (myPlayer.makeBase == null)
+			throw new FormException("The interface is empty, unable to display normally! Please contact Winfxk.");
+		return myPlayer.makeBase.MakeMain();
+	}
+
+	@Override
+	public String toString() {
+		return "Player: " + player.getName() + "\nForm: " + getID();
 	}
 }
