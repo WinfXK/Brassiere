@@ -119,10 +119,20 @@ public class MyPlayer {
 	 * @return
 	 */
 	public Team geTeam() {
-		String ID = config.getString("Team");
+		String ID = getTeamID();
 		if (ID == null || ID.isEmpty())
 			return null;
 		return ac.teamMag.isTeam(ID) ? ac.teamMag.getTeam(ID) : null;
+	}
+
+	/**
+	 * 返回玩家队伍的ID
+	 *
+	 * @return
+	 */
+	public String getTeamID() {
+		String ID = config.getString("Team");
+		return ID == null || ID.isEmpty() ? null : ID;
 	}
 
 	/**
@@ -131,7 +141,7 @@ public class MyPlayer {
 	 * @return
 	 */
 	public boolean isTeam() {
-		String ID = config.getString("Team");
+		String ID = getTeamID();
 		if (ID == null || ID.isEmpty())
 			return false;
 		return ac.teamMag.isTeam(ID);

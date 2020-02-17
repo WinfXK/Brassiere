@@ -131,8 +131,23 @@ public class Team {
 	public Team(String ID, File file) {
 		this.file = file;
 		this.ID = ID;
+		Object obj;
 		config = new Config(file, Config.YAML);
 		config.set("ID", ID);
+		Name = config.getString("Name");
+		Captain = config.getString("Captain");
+		Prestige = config.getInt("Prestige");
+		Money = config.getDouble("Money");
+		MaxCounts = config.getInt("MaxCounts");
+		MaxShopItem = config.getInt("MaxShopItem");
+		AllowedJoin = config.getBoolean("AllowedJoin");
+		AllowedChat = config.getBoolean("AllowedChat");
+		AllowedMakeShop = config.getBoolean("AllowedMakeShop");
+		AllowedShop = config.getBoolean("AllowedShop");
+		AllowedGain = config.getBoolean("AllowedGain");
+		AllowedSign = config.getBoolean("AllowedSign");
+		Admins = config.getList("Admin");
+
 	}
 
 	/**

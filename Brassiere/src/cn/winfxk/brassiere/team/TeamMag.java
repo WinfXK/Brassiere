@@ -17,9 +17,29 @@ public class TeamMag {
 	private Activate ac;
 	private LinkedHashMap<String, Team> teams;
 
+	/**
+	 * 队伍交互系统
+	 *
+	 * @param activate
+	 */
 	public TeamMag(Activate activate) {
-		setAc(activate);
+		this.ac = activate;
 		teams = new LinkedHashMap<>();
+	}
+
+	/**
+	 *
+	 * @param player
+	 * @return
+	 */
+	public TeamMag isLoad(MyPlayer myPlayer) {
+		if (myPlayer == null)
+			return this;
+		String ID = myPlayer.getTeamID();
+		if (ID == null || ID.isEmpty() || !myPlayer.isTeam() || teams.containsKey(ID))
+			return this;
+		teams.put(ID, new Team(ID, getTeamFile(ID)));
+		return this;
 	}
 
 	/**
@@ -29,7 +49,7 @@ public class TeamMag {
 	 * @return
 	 */
 	public boolean makeMain(Player player) {
-		MyPlayer myPlayer = getAc().getPlayers(player.getName());
+		MyPlayer myPlayer = ac.getPlayers(player.getName());
 		myPlayer.makeBase = new TeamForm(player);
 		return myPlayer.makeBase.MakeMain();
 	}
@@ -69,6 +89,8 @@ public class TeamMag {
 	 * @return
 	 */
 	public TeamMag reload() {
+		for (MyPlayer myPlayer : ac.getPlayers().values())
+			isLoad(myPlayer);
 		return this;
 	}
 
@@ -89,14 +111,6 @@ public class TeamMag {
 	 * @return
 	 */
 	public File getTeamFile(String ID) {
-		return new File(new File(getAc().getPluginBase().getDataFolder(), Activate.TeamDirName), ID + ".yml");
-	}
-
-	public Activate getAc() {
-		return ac;
-	}
-
-	public void setAc(Activate ac) {
-		this.ac = ac;
+		return new File(new File(ac.getPluginBase().getDataFolder(), Activate.TeamDirName), ID + ".yml");
 	}
 }

@@ -19,7 +19,7 @@ public class TeamApi {
 	 */
 	public TeamApi(TeamMag mag) {
 		TeamApi.mag = mag;
-		ac = mag.getAc();
+		ac = Activate.getActivate();
 		api = this;
 	}
 
