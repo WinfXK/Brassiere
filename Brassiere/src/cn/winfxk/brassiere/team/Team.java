@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import cn.nukkit.Player;
 import cn.nukkit.potion.Effect;
@@ -12,6 +13,7 @@ import cn.nukkit.utils.Config;
 import cn.winfxk.brassiere.Activate;
 import cn.winfxk.brassiere.MyPlayer;
 import cn.winfxk.brassiere.money.MyEconomy;
+import cn.winfxk.brassiere.tool.Effectrow;
 import cn.winfxk.brassiere.tool.Tool;
 
 /**
@@ -104,7 +106,7 @@ public class Team {
 	/**
 	 * 如对资费需要的币种
 	 */
-	private MyEconomy joinTariffEconomy;
+	private MyEconomy JoinTariffEconomy;
 	/**
 	 * 队伍商城
 	 */
@@ -112,7 +114,7 @@ public class Team {
 	/**
 	 * 队伍拥有的效果加成
 	 */
-	private List<Effect> effects;
+	private List<Effect> Effects;
 	/**
 	 * 是否允许队员之间互相公鸡
 	 */
@@ -132,6 +134,9 @@ public class Team {
 		this.file = file;
 		this.ID = ID;
 		Object obj;
+		int EffectID, EffectLevel;
+		Effect effect;
+		Map<?, ?> map;
 		config = new Config(file, Config.YAML);
 		config.set("ID", ID);
 		Name = config.getString("Name");
@@ -147,7 +152,28 @@ public class Team {
 		AllowedGain = config.getBoolean("AllowedGain");
 		AllowedSign = config.getBoolean("AllowedSign");
 		Admins = config.getList("Admin");
-
+		obj = config.get("Players");
+		Players = obj != null && obj instanceof Map ? (HashMap<String, Map<String, Object>>) obj : new HashMap<>();
+		obj = config.get("Effects");
+		Effects = new ArrayList<>();
+		map = obj != null && obj instanceof Map ? (HashMap<Object, Object>) obj : new HashMap<>();
+		for (Entry<?, ?> entry : map.entrySet()) {
+			EffectID = Tool.ObjectToInt(entry.getKey());
+			EffectLevel = Tool.ObjectToInt(entry.getValue());
+			effect = Effectrow.getEffect(EffectID);
+			effect.setAmplifier((EffectLevel >= 0 ? EffectLevel : 0) <= 5 ? EffectLevel : 5);
+			Effects.add(effect);
+		}
+		obj = config.get("Shop");
+		Shop = obj != null && obj instanceof Map ? (HashMap<String, Object>) obj : new HashMap<>();
+		obj = config.get("Message");
+		Message = obj != null && obj instanceof Map ? (HashMap<String, Object>) obj : new HashMap<>();
+		obj = config.get("ApplyFor");
+		ApplyFor = obj != null && obj instanceof Map ? (HashMap<String, Map<String, Object>>) obj : new HashMap<>();
+		JoinTariff = config.getDouble("JoinTariff");
+		JoinTariffEconomy = ac.getEconomyManage().getEconomy(config.getString("JoinTariffEconomy"));
+		AllowedPVP = config.getBoolean("AllowedPVP");
+		Content = config.getString("Content");
 	}
 
 	/**
@@ -163,7 +189,7 @@ public class Team {
 	 * @return
 	 */
 	public List<Effect> getEffects() {
-		return effects;
+		return Effects;
 	}
 
 	/**
@@ -406,7 +432,7 @@ public class Team {
 	 * @return
 	 */
 	public MyEconomy getJoinTariffEconomy() {
-		return joinTariffEconomy;
+		return JoinTariffEconomy;
 	}
 
 	/**

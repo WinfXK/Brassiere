@@ -106,7 +106,7 @@ public class MakeTeam extends FormBase {
 		config.set("Effects", new HashMap<Integer, Object>());
 		config.set("Shop", new HashMap<String, Object>());
 		config.set("Message", new HashMap<String, Object>());
-		config.set("ApplyFor", new HashMap<String, Object>());
+		config.set("ApplyFor", new HashMap<String, Map<String, Object>>());
 		config.set("JoinTariff", JoinTariff);
 		config.set("JoinTariffEconomy", JoinTariffEconomy);
 		config.set("AllowedPVP", d.getToggleResponse(9));
