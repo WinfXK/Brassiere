@@ -3,15 +3,16 @@ package cn.winfxk.brassiere.form;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.winfxk.brassiere.Activate;
+import cn.winfxk.brassiere.FormID;
+import cn.winfxk.brassiere.Message;
+import cn.winfxk.brassiere.MyPlayer;
+
 import cn.nukkit.Player;
 import cn.nukkit.form.response.FormResponse;
 import cn.nukkit.form.response.FormResponseCustom;
 import cn.nukkit.form.response.FormResponseModal;
 import cn.nukkit.form.response.FormResponseSimple;
-import cn.winfxk.brassiere.Activate;
-import cn.winfxk.brassiere.FormID;
-import cn.winfxk.brassiere.Message;
-import cn.winfxk.brassiere.MyPlayer;
 
 /**
  * @author Winfxk
@@ -25,7 +26,7 @@ public abstract class FormBase {
 	public List<String> fk = new ArrayList<>();
 	protected Object[] D = {};
 	protected String[] K = {};
-
+	private FormBase make;
 	/**
 	 * 界面交互基础类
 	 *
@@ -137,7 +138,7 @@ public abstract class FormBase {
 	 * @return
 	 */
 	public FormBase setForm(FormBase base) {
-		myPlayer.makeBase = base;
+		make = base;
 		return this;
 	}
 
@@ -147,9 +148,10 @@ public abstract class FormBase {
 	 * @return
 	 */
 	public boolean make() {
-		if (myPlayer.makeBase == null)
-			throw new FormException("The interface is empty, unable to display normally! Please contact Winfxk.");
-		return myPlayer.makeBase.MakeMain();
+		if (make == null)
+			throw new FormException(
+					"The interface is empty, unable to display normally! Please contact Winfxk.");
+		return (myPlayer.form = make).MakeMain();
 	}
 
 	@Override

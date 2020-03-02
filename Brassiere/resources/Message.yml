@@ -28,6 +28,39 @@ lang: chs-中文
 Team-Command:
    Usage: '{RandColor}组队相关命令'
 Team:
+   DissolveTeam:
+      Dissolve: §4您的队伍{RandColor}{TeamName}§4已经被{RandColor}{Captain}§4解散！
+      Title: §4警告！
+      Warning: §4您确定要解散您的队伍嘛？{n}确认后该操作无法撤销！
+      Cancel: §6取消
+      Confirm: §4确定
+      CancelMessage: §6退一步海阔天空
+      ApplyForMessage: §4您申请加入的队伍{RandColor}{TeamName}§4已经被{RandColor}{Captain}§4解散！
+      Succeed: §4您已经成功解散了您的队伍
+   TransferTeam:
+      PlayerItem: '{RandColor}{ByPlayer}'
+      NotAdmin: §4当前队伍还无管理员！请先设置一个管理员后再转交队伍！
+      Title: '{RandColor}{TeamName}'
+      Content: '{RandColor}请选择想要转交的玩家{n}被转交玩家需为本队伍管理员且队长支付转交费({TransferMoney})用后才可转交队伍权限'
+      无法解析玩家名: §4无法解析选择的玩家名称！
+      Confirm: §4确定
+      Warning: §4你即将将您的队伍转交给{RandColor}{ByPlayer}§4！你确认您的操作有效吗？
+      Cancel: §6取消
+      NotMoney: §6您的{MoneyName}不足！
+      TransferSucceed: §6转交队伍成功！
+      BecomeCaptain: §6您已成为{RandColor}{TeamName}§6的队长！
+   notAdmin:
+      Title: '{RandColor}{ByPlayer}'
+      Content: '{RandColor}您需要将当前玩家设置为队伍的管理员嘛？'
+      Setting: '{RandColor}设置管理员'
+      Cancel: §6取消
+      SettingMessage: §6已将{ByPlayer}设置为{RandColor}{TeamName}§6的管理员！
+   isAdmin:
+      Title: '{RandColor}{ByPlayer}'
+      Content: '{RandColor}该玩家已经是管理员！您当前可以撤销该玩家的管理员权限！'
+      Repeal: '{RandColor}撤销管理员'
+      Cancel: §6取消
+      RepealMessage: §4{ByPlayer}已不再是{RandColor}{TeamName}§4的管理员！
    ExitChoose:
       Title: '{RandColor}Creation'
       Content: '{RandColor}请选择您的操作'

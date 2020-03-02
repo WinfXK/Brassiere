@@ -1,9 +1,12 @@
 package cn.winfxk.brassiere.team.myteam.mag.captain;
 
+import cn.winfxk.brassiere.form.FormBase;
+import cn.winfxk.brassiere.team.MyTeam;
+import cn.winfxk.brassiere.team.Team;
+import cn.winfxk.brassiere.tool.ModalForm;
+
 import cn.nukkit.Player;
 import cn.nukkit.form.response.FormResponse;
-import cn.winfxk.brassiere.form.FormBase;
-import cn.winfxk.brassiere.team.Team;
 
 /**
  * @author Winfxk
@@ -23,11 +26,22 @@ public class DissolveTeam extends FormBase {
 
 	@Override
 	public boolean MakeMain() {
-		return false;
+		setK("{Prestige}", "{Player}", "{Money}", "{TeamName}", "{TeamID}");
+		setD(team.getPrestige(player.getName()), player.getName(), myPlayer.getMoney(), team.getName(), team.getID());
+		new ModalForm(getID(), msg.getSun("Team", "DissolveTeam", "Title", getK(), getD()),
+				msg.getSun("Team", "DissolveTeam", "Warning", getK(), getD()),
+				msg.getSun("Team", "DissolveTeam", "Confirm", getK(), getD()),
+				msg.getSun("Team", "DissolveTeam", "Cancel", getK(), getD())).sendPlayer(player);
+		return true;
 	}
 
 	@Override
 	public boolean disMain(FormResponse data) {
-		return false;
+		if (getModal(data).getClickedButtonId() != 0) {
+			player.sendMessage(msg.getSun("Team", "DissolveTeam", "CancelMessage", getK(), getD()));
+			return setForm(new MyTeam(player)).make();
+		}
+
+		return true;
 	}
 }

@@ -58,9 +58,9 @@ public class setAdmin extends FormBase {
 		if (team.isCaptain(name))
 			setForm(new ExitChoose(player, team));
 		else if (team.isAdmin(name))
-			setForm(new isAdmin(player, team));
+			setForm(new isAdmin(player, team, name));
 		else
-			setForm(new notAdmin(player, team));
+			setForm(new notAdmin(player, team, name));
 		return make();
 	}
 }

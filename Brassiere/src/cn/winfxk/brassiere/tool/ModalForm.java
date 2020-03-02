@@ -76,6 +76,17 @@ public class ModalForm extends RootForm {
 		this.Content = Content;
 	}
 
+	/**
+	 *
+	 * @param ID
+	 * @param Title
+	 * @param Content
+	 */
+	public ModalForm(int ID, String Title, String Content) {
+		super(ID, Title);
+		this.Content = Content;
+	}
+
 	@Override
 	public FormWindow getFormWindow() {
 		return new FormWindowModal(Title, Content, Bt1, Bt2);

@@ -3,10 +3,11 @@ package cn.winfxk.brassiere.team;
 import java.io.File;
 import java.util.LinkedHashMap;
 
-import cn.nukkit.Player;
-import cn.nukkit.utils.Config;
 import cn.winfxk.brassiere.Activate;
 import cn.winfxk.brassiere.MyPlayer;
+
+import cn.nukkit.Player;
+import cn.nukkit.utils.Config;
 
 /**
  * 这个不是界面，这儿是管理各个队伍的交互中心
@@ -50,8 +51,8 @@ public class TeamMag {
 	 */
 	public boolean makeMain(Player player) {
 		MyPlayer myPlayer = ac.getPlayers(player.getName());
-		myPlayer.makeBase = new TeamForm(player);
-		return myPlayer.makeBase.MakeMain();
+		myPlayer.form = new TeamForm(player);
+		return myPlayer.form.MakeMain();
 	}
 
 	/**
@@ -102,6 +103,16 @@ public class TeamMag {
 	 */
 	public Config getConfig(String ID) {
 		return new Config(getTeamFile(ID), Config.YAML);
+	}
+
+	/**
+	 * 从数据库卸载一个已经加载的队伍对象
+	 *
+	 * @param ID
+	 * @return
+	 */
+	public void remove(String ID) {
+		teams.remove(ID);
 	}
 
 	/**

@@ -52,8 +52,8 @@ public class PlayerEvent implements Listener {
 				return;
 			int ID = e.getFormID();
 			FormID f = ac.getFormID();
-			if ((ID == f.getID(0) || ID == f.getID(1)) && myPlayer.makeBase != null)
-				myPlayer.makeBase.disMain(data);
+			if ((ID == f.getID(0) || ID == f.getID(1)) && myPlayer.form != null)
+				myPlayer.form.disMain(data);
 		} catch (Exception e2) {
 			e2.printStackTrace();
 			if (player != null)

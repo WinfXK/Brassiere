@@ -1,9 +1,11 @@
 package cn.winfxk.brassiere.vip;
 
+import cn.winfxk.brassiere.BrassiereException;
+
 /**
  * @author Winfxk
  */
-public class VipException extends RuntimeException {
+public class VipException extends BrassiereException {
 
 	public VipException(String string) {
 		super(string);

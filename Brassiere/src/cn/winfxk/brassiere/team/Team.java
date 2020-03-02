@@ -7,14 +7,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import cn.nukkit.Player;
-import cn.nukkit.potion.Effect;
-import cn.nukkit.utils.Config;
 import cn.winfxk.brassiere.Activate;
 import cn.winfxk.brassiere.MyPlayer;
 import cn.winfxk.brassiere.money.MyEconomy;
 import cn.winfxk.brassiere.tool.Effectrow;
 import cn.winfxk.brassiere.tool.Tool;
+
+import cn.nukkit.Player;
+import cn.nukkit.potion.Effect;
+import cn.nukkit.utils.Config;
 
 /**
  * 每个队伍的数据
@@ -608,5 +609,151 @@ public class Team {
 	@Override
 	public String toString() {
 		return getName() + "(" + getID() + ")";
+	}
+
+	/**
+	 * 撤销一个管理员
+	 *
+	 * @return
+	 */
+	public Team repealAdmin(String player) {
+		Admins.remove(player);
+		config.set("Admin", Admins);
+		config.save();
+		return this;
+	}
+
+	/**
+	 * 添加一个队伍的管理员
+	 *
+	 * @param player
+	 * @return
+	 */
+	public Team addAdmin(String player) {
+		if (Admins.contains(player))
+			return this;
+		Admins.add(player);
+		config.set("Admin", Admins);
+		config.save();
+		return this;
+	}
+
+	/**
+	 * 返回队伍内一个玩家的声望
+	 *
+	 * @param name
+	 * @return
+	 */
+	public int getPrestige(String name) {
+		if (Players.containsKey(name)) {
+			Map<String, Object> map = Players.get(name);
+			if (map == null)
+				return 0;
+			return Tool.ObjectToInt(map.get("Prestige"), 0);
+		}
+		return 0;
+	}
+
+	/**
+	 * 增加玩家的声望点
+	 *
+	 * @param name
+	 * @param prestige
+	 * @return
+	 */
+	public Team addPrestige(String name, int prestige) {
+		return setPrestige(name, prestige + getPrestige(name));
+	}
+
+	/**
+	 * 减少一个玩家的声望点
+	 *
+	 * @param name
+	 * @param prestige
+	 * @return
+	 */
+	public Team reducePrestige(String name, int prestige) {
+		return setPrestige(name, getPrestige(name) - prestige);
+	}
+
+	/**
+	 * 设置玩家的声望点
+	 *
+	 * @param name
+	 * @param Prestige
+	 * @return
+	 */
+	public Team setPrestige(String name, int prestige) {
+		if (!Players.containsKey(name))
+			return this;
+		Map<String, Object> map = Players.get(name);
+		if (map == null)
+			return this;
+		map.put("Prestige", prestige);
+		Players.put(name, map);
+		config.set("Players", Players);
+		config.save();
+		return this;
+	}
+
+	/**
+	 *
+	 * @param captain 队长名称
+	 * @return
+	 */
+	public boolean setCaptain(String captain) {
+		String c = getCaptain();
+		if (!Players.containsKey(captain))
+			return false;
+		Captain = captain;
+		config.set("Captain", Captain);
+		Map<String, Object> map = Players.get(captain);
+		if (map == null)
+			return false;
+		map.put("identity", "captain");
+		map.put("Prestige", getPrestige(captain) + getPrestige(c) / 2);
+		Map<String, Object> map1 = Players.get(c);
+		if (map1 == null)
+			return false;
+		map1.put("identity", "player");
+		map1.put("Prestige", getPrestige(c) / 2);
+		Players.put(captain, map);
+		Players.put(c, map1);
+		return config.save();
+	}
+
+	/**
+	 * 解散本队伍
+	 *
+	 * @return
+	 */
+	public boolean dissolve() {
+		Config config;
+		String name;
+		String[] K = { "{Captain}", "{Player}", "{Money}", "{TeamName}", "{TeamID}" };
+		for (Map<String, Object> map : Players.values()) {
+			name = Tool.objToString(map.get("name"));
+			MyPlayer.sendMessage(name, ac.getMessage().getSun("Team", "DissolveTeam", "Dissolve", K,
+					new Object[] { Captain, name, MyPlayer.getMoney(name), Name, ID }));
+			config = MyPlayer.getConfig(name);
+			config.set("Team", null);
+			config.save();
+		}
+		for (Map<String, Object> map : ApplyFor.values()) {
+			name = Tool.objToString(map.get("Player"));
+			config = MyPlayer.getConfig(name);
+			List<String> list = config.getList("ApplyFor");
+			list.remove(ID);
+			config.set("ApplyFor", list);
+			config.save();
+			MyPlayer.sendMessage(name, ac.getMessage().getSun("Team", "DissolveTeam", "ApplyForMessage", K,
+					new Object[] { Captain, name, MyPlayer.getMoney(name), Name, ID }));
+		}
+		this.config = null;
+		ac.getTeamMag().remove(ID);
+		file.delete();
+		MyPlayer.sendMessage(Captain, ac.getMessage().getSun("Team", "DissolveTeam", "Succeed", K,
+				new Object[] { Captain, Captain, MyPlayer.getMoney(Captain), Name, ID }));
+		return true;
 	}
 }

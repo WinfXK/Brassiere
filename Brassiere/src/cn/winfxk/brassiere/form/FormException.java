@@ -1,10 +1,14 @@
 package cn.winfxk.brassiere.form;
 
+import cn.winfxk.brassiere.BrassiereException;
+
 /**
  * @author Winfxk
  */
-public class FormException extends RuntimeException {
-
+public class FormException extends BrassiereException {
+	public FormException() {
+		super();
+	}
 	/**
 	 *
 	 */

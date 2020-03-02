@@ -6,13 +6,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cn.nukkit.Player;
-import cn.nukkit.utils.Config;
 import cn.winfxk.brassiere.form.FormBase;
 import cn.winfxk.brassiere.team.Team;
 import cn.winfxk.brassiere.team.TeamApi;
 import cn.winfxk.brassiere.tool.Tool;
 import cn.winfxk.brassiere.vip.Vip;
+
+import cn.nukkit.Player;
+import cn.nukkit.utils.Config;
 
 /**
  * @author Winfxk
@@ -21,7 +22,7 @@ public class MyPlayer {
 	private Activate ac;
 	public Config config;
 	private Player player;
-	public FormBase makeBase;
+	public FormBase form;
 	public Vip vip;
 	public int ID = 0;
 
@@ -82,8 +83,8 @@ public class MyPlayer {
 	 */
 	public MyPlayer addApplyFor(Team team) {
 		List<String> list = config.getList("ApplyFor");
-		if (!list.contains(team.getName()))
-			list.add(team.getName());
+		if (!list.contains(team.getID()))
+			list.add(team.getID());
 		return this;
 	}
 

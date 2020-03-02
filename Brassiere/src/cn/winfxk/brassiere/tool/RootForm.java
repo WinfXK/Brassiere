@@ -74,12 +74,12 @@ public abstract class RootForm {
 	/**
 	 * 将表单发送给指定玩家列表
 	 *
-	 * @param players
+	 * @param player
 	 * @return
 	 */
-	public int sendPlayer(List<Player> players) {
-		for (Player player : players)
-			player.showFormWindow(getFormWindow(), ID);
+	public int sendPlayer(List<Player> player) {
+		for (Player p : player)
+			p.showFormWindow(getFormWindow(), ID);
 		return ID;
 	}
 
