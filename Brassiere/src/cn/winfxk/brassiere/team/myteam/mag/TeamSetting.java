@@ -1,21 +1,27 @@
 package cn.winfxk.brassiere.team.myteam.mag;
 
+import cn.winfxk.brassiere.form.FormBase;
+import cn.winfxk.brassiere.team.Team;
+
 import cn.nukkit.Player;
 import cn.nukkit.form.response.FormResponse;
-import cn.winfxk.brassiere.form.FormBase;
 
 /**
  * @author Winfxk
  *
  */
 public class TeamSetting extends FormBase {
+	private Team team;
+
 	/**
 	 * 组队设置
 	 *
 	 * @param player
+	 * @param team
 	 */
-	public TeamSetting(Player player) {
+	public TeamSetting(Player player, Team team) {
 		super(player);
+		this.team = team;
 	}
 
 	@Override

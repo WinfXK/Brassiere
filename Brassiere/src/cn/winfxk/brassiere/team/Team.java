@@ -324,6 +324,26 @@ public class Team {
 	}
 
 	/**
+	 * 取得某个玩家的数据
+	 *
+	 * @param name
+	 * @return
+	 */
+	public Map<String, Object> getPlayer(String name) {
+		return Players.get(name);
+	}
+
+	/**
+	 * 取得某个玩家的数据
+	 *
+	 * @param name
+	 * @return
+	 */
+	public TPlayerdata getPlayerdata(String name) {
+		return new TPlayerdata(getPlayer(name), this);
+	}
+
+	/**
 	 * 队伍名称
 	 *
 	 * @return
@@ -527,6 +547,7 @@ public class Team {
 		map.put("name", player);
 		// 玩家的身份
 		map.put("identity", "player");
+		map.put("JoinDate", Tool.getDate() + " " + Tool.getTime());
 		map.put("Prestige", ac.getConfig().getInt("玩家初始声望"));
 		Players.put(player, map);
 		config.set("Players", Players);
@@ -751,9 +772,24 @@ public class Team {
 		}
 		this.config = null;
 		ac.getTeamMag().remove(ID);
-		file.delete();
-		MyPlayer.sendMessage(Captain, ac.getMessage().getSun("Team", "DissolveTeam", "Succeed", K,
-				new Object[] { Captain, Captain, MyPlayer.getMoney(Captain), Name, ID }));
+		return file.delete();
+	}
+
+	/**
+	 * 从队伍中移除一个玩家
+	 *
+	 * @param name 要移除的玩家名称
+	 * @return 移除是否成功
+	 */
+	public boolean undock(String name) {
+		if (!Players.containsKey(name) || isCaptain(name))
+			return false;
+		if (isAdmin(name))
+			repealAdmin(name);
+		Players.remove(name);
+		Config config = MyPlayer.getConfig(name);
+		config.set("Team", null);
+		config.save();
 		return true;
 	}
 }

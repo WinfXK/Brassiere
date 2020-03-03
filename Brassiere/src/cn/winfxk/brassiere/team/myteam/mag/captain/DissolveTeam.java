@@ -3,6 +3,7 @@ package cn.winfxk.brassiere.team.myteam.mag.captain;
 import cn.winfxk.brassiere.form.FormBase;
 import cn.winfxk.brassiere.team.MyTeam;
 import cn.winfxk.brassiere.team.Team;
+import cn.winfxk.brassiere.team.TeamForm;
 import cn.winfxk.brassiere.tool.ModalForm;
 
 import cn.nukkit.Player;
@@ -41,7 +42,8 @@ public class DissolveTeam extends FormBase {
 			player.sendMessage(msg.getSun("Team", "DissolveTeam", "CancelMessage", getK(), getD()));
 			return setForm(new MyTeam(player)).make();
 		}
-
-		return true;
+		team.dissolve();
+		player.sendMessage(ac.getMessage().getSun("Team", "DissolveTeam", "Succeed", getK(), getD()));
+		return setForm(new TeamForm(player)).make();
 	}
 }

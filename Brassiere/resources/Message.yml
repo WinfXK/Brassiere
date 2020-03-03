@@ -28,6 +28,27 @@ lang: chs-中文
 Team-Command:
    Usage: '{RandColor}组队相关命令'
 Team:
+   UndockPlayer:
+      Title: '{RandColor}{ByPlayer}'
+      Content: §4您正在将{RandColor}{ByPlayer}§4从队伍中移除！您确定这个操作有效吗？
+      Cancel: §6取消
+      Confirm: §4确定
+      Usurp: §4你怕是要上天！你特么敢开除队长？
+      UndockME: §4你脑壳有包？开除自己？你有病吧ヽ(ー_ー)ノ
+      Succeed: §4您已将{RandColor}{ByPlayer}§4移除
+   PlayersData:
+      Title: '{RandColor}{ByPlayer}'
+      Content: 玩家名称：{ByPlayer}{n}玩家权限：{Identity}{n}玩家声望：{Prestige}{n}入队时间：{n}{JoinDate}{n}
+      OK: '{RandColor}确定'
+      Undock: '{RandColor}移除该玩家'
+      UndockME: §4你脑壳有包？开除自己？你有病吧ヽ(ー_ー)ノ
+      Admin: '{RandColor}管理员设置'
+   PlayersMag:
+      Title: '{RandColor}队伍管理'
+      Content: ' '
+      NotPlayer: §4当前队伍还没有更多玩家
+      ErrorPlayer: §4无法获取对应的玩家数据
+      PlayerItem: '{RandColor}{ByPlayer}§f>§b>§d>{RandColor}{Prestige}'
    DissolveTeam:
       Dissolve: §4您的队伍{RandColor}{TeamName}§4已经被{RandColor}{Captain}§4解散！
       Title: §4警告！

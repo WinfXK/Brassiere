@@ -64,8 +64,9 @@ public class SimpleForm extends RootForm {
 	 * @param Text 按钮内容
 	 * @return
 	 */
-	public SimpleForm addButton(String Text) {
-		buttons.add(new ElementButton(Text));
+	public SimpleForm addButton(String... Texts) {
+		for (String Text : Texts)
+			buttons.add(new ElementButton(Text));
 		return this;
 	}
 
@@ -75,8 +76,9 @@ public class SimpleForm extends RootForm {
 	 *
 	 * @param data 按钮数据
 	 */
-	public void addButton(ButtonData data) {
-		addButton(data.Button, data.isLocal, data.Icon);
+	public void addButton(ButtonData... datas) {
+		for (ButtonData data : datas)
+			addButton(data.Button, data.isLocal, data.Icon);
 	}
 
 	/**
