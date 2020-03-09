@@ -28,6 +28,11 @@ lang: chs-中文
 Team-Command:
    Usage: '{RandColor}组队相关命令'
 Team:
+   TeamList:
+      Title: "{RandColor}队伍列表"
+      Content: " "
+      NotTeam: §4当前没有任何人创建队伍！
+      Item: "{RandColor}{TeamName}§f>§b>§d>{TeamCaptain}"
    UndockPlayer:
       Title: '{RandColor}{ByPlayer}'
       Content: §4您正在将{RandColor}{ByPlayer}§4从队伍中移除！您确定这个操作有效吗？

@@ -1,8 +1,5 @@
 package cn.winfxk.brassiere.team;
 
-import cn.nukkit.Player;
-import cn.nukkit.form.response.FormResponse;
-import cn.nukkit.form.response.FormResponseSimple;
 import cn.winfxk.brassiere.form.FormBase;
 import cn.winfxk.brassiere.team.myteam.QuitTeam;
 import cn.winfxk.brassiere.team.myteam.TeamDatails;
@@ -13,6 +10,10 @@ import cn.winfxk.brassiere.team.myteam.TeamPlayerList;
 import cn.winfxk.brassiere.team.myteam.TeamShop;
 import cn.winfxk.brassiere.team.myteam.TeamSign;
 import cn.winfxk.brassiere.tool.SimpleForm;
+
+import cn.nukkit.Player;
+import cn.nukkit.form.response.FormResponse;
+import cn.nukkit.form.response.FormResponseSimple;
 
 /**
  * @author Winfxk
@@ -36,9 +37,9 @@ public class MyTeam extends FormBase {
 	public boolean MakeMain() {
 		if (team == null)
 			return ac.makeForm.Tip(player, msg.getSun("Team", "MyTeam", "NotTeam", myPlayer));
-		D = new Object[] { team.getCaptain(), team.getID(), team.getName(), team.getMaxCounts(), player.getName(),
-				myPlayer.getMoney(), team.getMaxShopItem(), team.getShop().size() };
-		SimpleForm form = new SimpleForm(getID(), msg.getSun("Team", "MyTeam", "Title", K, D), team.getContent(K, D));
+		setD(team.getCaptain(), team.getID(), team.getName(), team.getMaxCounts(), player.getName(),
+				myPlayer.getMoney(), team.getMaxShopItem(), team.getShop().size());
+		SimpleForm form = new SimpleForm(getID(), msg.getSun("Team", "MyTeam", "Title", K, D), team.getContent(player));
 		if (team.isCaptain(player) || team.isAdmin(player)) {
 			form.addButton(msg.getSun("Team", "MyTeam", "MagTeam", K, D));
 			fk.add("mag");

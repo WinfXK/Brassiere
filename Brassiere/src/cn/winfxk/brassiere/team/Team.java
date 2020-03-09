@@ -216,8 +216,21 @@ public class Team {
 	 *
 	 * @return
 	 */
-	public String getContent(String[] K, Object[] D) {
-		return ac.getMessage().getText(Content, K, D);
+	public String getContent() {
+		return getContent(null);
+	}
+
+	/**
+	 * 队伍的内容介绍
+	 *
+	 * @return
+	 */
+	public String getContent(Player player) {
+		return ac.getMessage().getText(Content,
+				new String[] { "{Captain}", "{TeamID}", "{TeamName}", "{TeamSize}", "{TeamMaxCount}", "{Player}",
+						"{Money}", "{MaxShopItem}", "{ShopItem}" },
+				new Object[] { getCaptain(), getID(), getName(), getMaxCounts(), player == null ? "" : player.getName(),
+						player == null ? 0 : MyPlayer.getMoney(player.getName()), getMaxShopItem(), getShop().size() });
 	}
 
 	/**
@@ -234,8 +247,8 @@ public class Team {
 	 *
 	 * @return
 	 */
-	public String getContent() {
-		return ac.getMessage().getText(Content);
+	public String getreContent() {
+		return Content;
 	}
 
 	/**
