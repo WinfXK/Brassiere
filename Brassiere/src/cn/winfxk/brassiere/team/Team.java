@@ -805,4 +805,14 @@ public class Team {
 		config.save();
 		return true;
 	}
+
+	/**
+	 * 获取队伍的实时等级积分
+	 *
+	 * @return
+	 */
+	public double getLevel() {
+		return Players.size() + Prestige / 2 + Effects.size() * 1.5 + MaxCounts / 2 + Shop.size() * 0.2 + Money * 0.1
+				+ ApplyFor.size() * 0.1;
+	}
 }

@@ -28,6 +28,14 @@ lang: chs-中文
 Team-Command:
    Usage: '{RandColor}组队相关命令'
 Team:
+   TeamDatails:
+      Title: "{RandColor}{TeamName}"
+      Content: "§6队伍ID：{TeamID}{n}队伍名称：{TeamName}{n}队伍人数：§d{PlayerCount}/§b{MaxPlayerCount}{n}队伍评分：{Level}{n}队长：{Captain}{n}管理员：{Admins}{n}商店项目数：{ShopItems}{n}拥有加持数：{Buffs}"
+   OtherTeam: 
+      Title: "{RandColor}{TeamName}"
+      Content: "§6队长：{Captain}{n}§3成员数量：§d{PlayerCount}/§{ManPlayerCount}{n}队伍评分：{Level}"
+      OK: §6返回
+      No: §6取消
    TeamList:
       Title: "{RandColor}队伍列表"
       Content: " "

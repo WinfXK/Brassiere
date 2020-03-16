@@ -13,21 +13,29 @@ import cn.nukkit.form.response.FormResponse;
  * @author <a href="http://WinfXK.cn">Winfxk for Web</a>
  */
 public class OtherTeam extends FormBase {
-	private Team team;
+	private FormBase base;
 
-	public OtherTeam(Player player, Team team) {
+	public OtherTeam(Player player, Team team, FormBase base) {
 		super(player);
-		this.team = team;
+		setK("{Player}", "{Money}", "{TeamName}", "{TeamID}", "{PlayerCount}", "{ManPlayerCount}", "{Level}",
+				"{Captain}");
+		setD(player.getName(), myPlayer.getMoney(), team.getName(), team.getID(), team.getPlayers().size(),
+				team.getMaxCounts(), team.getLevel(), team.getCaptain());
+		this.base = base;
 	}
 
 	@Override
 	public boolean MakeMain() {
-		ModalForm form=new ModalForm(getID(), Title, Content)
+		new ModalForm(getID(), msg.getSun("Team", "OtherTeam", "Title", K, D),
+				msg.getSun("Team", "OtherTeam", "Content", K, D), msg.getSun("Team", "OtherTeam", "OK", K, D),
+				msg.getSun("Team", "OtherTeam", "No", K, D)).sendPlayer(player);
 		return true;
 	}
 
 	@Override
 	public boolean disMain(FormResponse data) {
+		if (getModal(data).getClickedButtonId() == 0)
+			return setForm(base).make();
 		return true;
 	}
 }
