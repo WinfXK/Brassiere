@@ -429,12 +429,32 @@ public class Team {
 	}
 
 	/**
+	 * 队伍中是否存在一个玩家
+	 *
+	 * @param player
+	 * @return
+	 */
+	public boolean isPlayer(Player player) {
+		return isPlayer(player.getName());
+	}
+
+	/**
+	 * 队伍中是否存在一个玩家
+	 *
+	 * @param player
+	 * @return
+	 */
+	public boolean isPlayer(String player) {
+		return Players.containsKey(player);
+	}
+
+	/**
 	 * 删除队伍里面的一个玩家的入队生亲
 	 *
 	 * @param player
 	 * @return
 	 */
-	public Team retmoveApplyFor(String player) {
+	public Team removeApplyFor(String player) {
 		if (ApplyFor.containsKey(player))
 			ApplyFor.remove(player);
 		config.set("ApplyFor", ApplyFor);
@@ -754,6 +774,38 @@ public class Team {
 		Players.put(captain, map);
 		Players.put(c, map1);
 		return config.save();
+	}
+
+	/**
+	 * 从队伍中删除一个玩家
+	 *
+	 * @param player
+	 * @return
+	 */
+	public boolean removePlayer(Player player) {
+		return removePlayer(player.getName());
+	}
+
+	/**
+	 * 从队伍中删除一个玩家
+	 *
+	 * @param player
+	 * @return
+	 */
+	public boolean removePlayer(String player) {
+		if (player == null || player.isEmpty() || !isPlayer(player) || isCaptain(player))
+			return false;
+		Players.remove(player);
+		Config config = MyPlayer.getConfig(player);
+		config.set("Team", null);
+		config.save();
+		if (isAdmin(player)) {
+			Admins.remove(player);
+			this.config.set("Admin", Admins);
+		}
+		this.config.set("Players", Players);
+		this.config.save();
+		return true;
 	}
 
 	/**

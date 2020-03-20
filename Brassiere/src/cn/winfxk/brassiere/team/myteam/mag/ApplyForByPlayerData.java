@@ -58,18 +58,18 @@ public class ApplyForByPlayerData extends FormBase {
 				return ac.makeForm.Tip(player, msg.getSun("Team", "ApplyForByPlayerData", "CountMax", getK(), getD()),
 						true);
 			if (MyPlayer.isTeam(sb)) {
-				MyPlayer.remoeApplyFor(sb, team.retmoveApplyFor(sb));
+				MyPlayer.remoeApplyFor(sb, team.removeApplyFor(sb));
 				return ac.makeForm.Tip(player, msg.getSun("Team", "ApplyForByPlayerData", "isInvalid", getK(), getD()),
 						true);
 			}
 			MyPlayer.JoinTeam(sb, team);
-			MyPlayer.remoeApplyFor(sb, team.retmoveApplyFor(sb));
+			MyPlayer.remoeApplyFor(sb, team.removeApplyFor(sb));
 			ac.makeForm.Tip(player, msg.getSun("Team", "ApplyForByPlayerData", "AcceptMsg", getK(), getD()));
 			MyPlayer.sendMessage(sb, msg.getSun("Team", "ApplyForByPlayerData", "ByAcceptMsg", getK(), getD()));
 			return true;
 		case 0:
 		default:
-			MyPlayer.remoeApplyFor(sb, team.retmoveApplyFor(sb));
+			MyPlayer.remoeApplyFor(sb, team.removeApplyFor(sb));
 			ac.makeForm.Tip(player, msg.getSun("Team", "ApplyForByPlayerData", "RefuseMsg", getK(), getD()));
 			MyPlayer.sendMessage(sb, msg.getSun("Team", "ApplyForByPlayerData", "ByRefuseMsg", getK(), getD()));
 			return true;
