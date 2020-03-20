@@ -23,7 +23,7 @@ public class TeamList extends FormBase {
 	public TeamList(Player player) {
 		super(player);
 		map = ac.getTeamMag().getTeams();
-		myteam = myPlayer.geTeam();
+		myteam = myPlayer.getTeam();
 		setK("{Player}", "{Money}", "{TeamCaptain}", "{TeamName}", "{TeamID}");
 		setD(player.getName(), myPlayer.getMoney(), myteam == null ? "" : myteam.getCaptain(),
 				myteam == null ? "" : myteam.getName(), myteam == null ? "" : myteam.getID());

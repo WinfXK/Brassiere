@@ -25,22 +25,46 @@ lang: chs-中文
 无法获取币种: §4无法获取对应的币种！请联系服务器管理员！
 金币不足: §4您的财产不足以完成此操作！
 数据处理错误: §4无法处理该操作！请联系服务器管理员{n}{Error}
+Team-Sign:
+   一级: §f{TeamName}萌新
+   二级: §d{TeamName}教官
+   三级: §a{TeamName}精英
+   四级: §6{TeamName}专家
+   五级: §4{TeamName}§5大神
+   六级: §l§n§e{TeamName}§l§n§9主宰
 Team-Command:
    Usage: '{RandColor}组队相关命令'
 Team:
+   TeamSign:
+      Title: '{RandColor}{TeamName}'
+      Content: §6您当前的声望为：{Prestige}{n}请选择想要购买的称号
+      Unenabled: §4当前队伍暂未开启队伍称号获取！
+   TeamPlayerList:
+      Title: '{RandColor}{TeamName}'
+      AdminContent: '{RandColor}队伍成员列表'
+      Content: '{RandColor}队伍成员列表'
+      CaptainContent: '{RandColor}队伍成员列表'
+      PlayerItem: §d{ByPlayer}§f>§b>§6{Permission}
+      PermissionByPlayer: 成员
+      PermissionByAdmin: 管理员
+      PermissionByCaptain: 队长
+      NotPlayers: §4当前本队伍还没有更多玩家！
+      PlayerDataError: §4无法获取对应玩家的信息！
    TeamDatails:
-      Title: "{RandColor}{TeamName}"
-      Content: "§6队伍ID：{TeamID}{n}队伍名称：{TeamName}{n}队伍人数：§d{PlayerCount}/§b{MaxPlayerCount}{n}队伍评分：{Level}{n}队长：{Captain}{n}管理员：{Admins}{n}商店项目数：{ShopItems}{n}拥有加持数：{Buffs}"
-   OtherTeam: 
-      Title: "{RandColor}{TeamName}"
-      Content: "§6队长：{Captain}{n}§3成员数量：§d{PlayerCount}/§{ManPlayerCount}{n}队伍评分：{Level}"
+      Title: '{RandColor}{TeamName}'
+      Content: §6队伍ID：{TeamID}{n}队伍名称：{TeamName}{n}队伍人数：§d{PlayerCount}/§b{MaxPlayerCount}{n}队伍评分：{Level}{n}队长：{Captain}{n}管理员：{Admins}{n}商店项目数：{ShopItems}{n}拥有加持数：{Buffs}
+      OK: §6确定
+      OpenMyTeam: §6打开队伍主页
+   OtherTeam:
+      Title: '{RandColor}{TeamName}'
+      Content: §6队长：{Captain}{n}§3成员数量：§d{PlayerCount}/§{ManPlayerCount}{n}队伍评分：{Level}
       OK: §6返回
-      No: §6取消
+      false: §6取消
    TeamList:
-      Title: "{RandColor}队伍列表"
-      Content: " "
+      Title: '{RandColor}队伍列表'
+      Content: ' '
       NotTeam: §4当前没有任何人创建队伍！
-      Item: "{RandColor}{TeamName}§f>§b>§d>{TeamCaptain}"
+      Item: '{RandColor}{TeamName}§f>§b>§d>{TeamCaptain}'
    UndockPlayer:
       Title: '{RandColor}{ByPlayer}'
       Content: §4您正在将{RandColor}{ByPlayer}§4从队伍中移除！您确定这个操作有效吗？

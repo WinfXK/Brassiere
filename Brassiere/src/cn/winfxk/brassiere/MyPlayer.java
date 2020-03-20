@@ -119,7 +119,7 @@ public class MyPlayer {
 	 *
 	 * @return
 	 */
-	public Team geTeam() {
+	public Team getTeam() {
 		String ID = getTeamID();
 		if (ID == null || ID.isEmpty())
 			return null;

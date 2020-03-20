@@ -1,8 +1,9 @@
 package cn.winfxk.brassiere.team;
 
-import cn.nukkit.utils.Config;
 import cn.winfxk.brassiere.Activate;
 import cn.winfxk.brassiere.MyPlayer;
+
+import cn.nukkit.utils.Config;
 
 /**
  * @author Winfxk
@@ -21,6 +22,25 @@ public class TeamApi {
 		TeamApi.mag = mag;
 		ac = Activate.getActivate();
 		api = this;
+	}
+
+	/**
+	 * 获取玩家所在的队伍
+	 *
+	 * @param player
+	 * @return
+	 */
+	public static Team getTeam(String player) {
+		if (ac.isPlayers(player)) {
+			MyPlayer myPlayer = ac.getPlayers(player);
+			if (myPlayer != null)
+				return myPlayer.getTeam();
+		}
+		Config config = MyPlayer.getConfig(player);
+		String teamID = config.getString("Team");
+		if (teamID == null || teamID.isEmpty() || !mag.isTeam(teamID))
+			return null;
+		return mag.getTeam(teamID);
 	}
 
 	/**

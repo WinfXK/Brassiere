@@ -51,7 +51,7 @@ public class TeamForm extends FormBase {
 			setForm(new MyTeam(player));
 			break;
 		case "td":
-			setForm(new TeamMessage(player, myPlayer.geTeam()));
+			setForm(new TeamMessage(player, myPlayer.getTeam()));
 			break;
 		default:
 			throw new TeamException("Unable to get data type, please contact Winfxk!");

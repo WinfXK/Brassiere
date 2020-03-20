@@ -304,7 +304,7 @@ public class Team {
 	 * @return
 	 */
 	public boolean isAdmin(Player player) {
-		return Admins.contains(player.getName());
+		return Admins.contains(player.getName()) || isCaptain(player);
 	}
 
 	/**
@@ -314,7 +314,7 @@ public class Team {
 	 * @return
 	 */
 	public boolean isAdmin(String player) {
-		return Admins.contains(player);
+		return Admins.contains(player) || isCaptain(player);
 	}
 
 	/**

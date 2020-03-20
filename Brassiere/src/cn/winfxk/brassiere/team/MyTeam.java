@@ -28,7 +28,7 @@ public class MyTeam extends FormBase {
 	 */
 	public MyTeam(Player player) {
 		super(player);
-		team = myPlayer.geTeam();
+		team = myPlayer.getTeam();
 		setK("{Captain}", "{TeamID}", "{TeamName}", "{TeamSize}", "{TeamMaxCount}", "{Player}", "{Money}",
 				"{MaxShopItem}", "{ShopItem}");
 	}
@@ -82,7 +82,7 @@ public class MyTeam extends FormBase {
 			setForm(new TeamEffect(player, team));
 			break;
 		case "datails":
-			setForm(new TeamDatails(player, team));
+			setForm(new TeamDatails(player));
 			break;
 		case "quit":
 			setForm(new QuitTeam(player, team));
