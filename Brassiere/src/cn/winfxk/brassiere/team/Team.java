@@ -1,6 +1,7 @@
 package cn.winfxk.brassiere.team;
 
 import java.io.File;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +29,17 @@ public class Team {
 	 * 队伍的ID
 	 */
 	private String ID;
+	/**
+	 * 队伍称号的价格 <br>
+	 * <br>
+	 * 一级称号价格: 1 <br>
+	 * 二级称号价格: 100 <br>
+	 * 三级称号价格: 5000 <br>
+	 * 五级称号价格: 10000 <br>
+	 * 六级称号价格: 10010 <br>
+	 * 七级称号价格: 10086 <br>
+	 */
+	private Map<Integer, Double> SignPrice;
 	/**
 	 * 队伍的名称
 	 */
@@ -99,7 +111,7 @@ public class Team {
 	/**
 	 * 队伍聊天信息
 	 */
-	private Map<String, Object> Message;
+	private HashMap<String, Map<String, Object>> Message;
 	/**
 	 * 入队资费
 	 */
@@ -153,6 +165,8 @@ public class Team {
 		AllowedGain = config.getBoolean("AllowedGain");
 		AllowedSign = config.getBoolean("AllowedSign");
 		Admins = config.getList("Admin");
+		obj = config.get("SignPrice");
+		SignPrice = obj != null && obj instanceof Map ? (HashMap<Integer, Double>) obj : new HashMap<>();
 		obj = config.get("Players");
 		Players = obj != null && obj instanceof Map ? (HashMap<String, Map<String, Object>>) obj : new HashMap<>();
 		obj = config.get("Effects");
@@ -168,7 +182,7 @@ public class Team {
 		obj = config.get("Shop");
 		Shop = obj != null && obj instanceof Map ? (HashMap<String, Object>) obj : new HashMap<>();
 		obj = config.get("Message");
-		Message = obj != null && obj instanceof Map ? (HashMap<String, Object>) obj : new HashMap<>();
+		Message = obj != null && obj instanceof Map ? (HashMap<String, Map<String, Object>>) obj : new HashMap<>();
 		obj = config.get("ApplyFor");
 		ApplyFor = obj != null && obj instanceof Map ? (HashMap<String, Map<String, Object>>) obj : new HashMap<>();
 		JoinTariff = config.getDouble("JoinTariff");
@@ -266,7 +280,7 @@ public class Team {
 	 * @return
 	 */
 	public boolean save() {
-		return config.save();
+		return close();
 	}
 
 	/**
@@ -457,8 +471,7 @@ public class Team {
 	public Team removeApplyFor(String player) {
 		if (ApplyFor.containsKey(player))
 			ApplyFor.remove(player);
-		config.set("ApplyFor", ApplyFor);
-		config.save();
+		close();
 		return this;
 	}
 
@@ -499,6 +512,56 @@ public class Team {
 	}
 
 	/**
+	 * 保存队伍的数据
+	 *
+	 * @return
+	 */
+	public boolean close() {
+		Map<Object, Object> map;
+		config.set("Name", Name);
+		config.set("Captain", Captain);
+		config.set("Prestige", Prestige);
+		config.set("Money", Money);
+		config.getInt("MaxCounts", MaxCounts);
+		config.set("MaxShopItem", MaxShopItem);
+		config.set("AllowedJoin", AllowedJoin);
+		config.set("AllowedChat", AllowedChat);
+		config.set("AllowedMakeShop", AllowedMakeShop);
+		config.set("AllowedShop", AllowedShop);
+		config.set("AllowedGain", AllowedGain);
+		config.set("AllowedSign", AllowedSign);
+		config.set("Admin", Admins);
+		config.set("Players", Players);
+		map = new HashMap<>();
+		for (Effect effect : Effects)
+			map.put(effect.getId(), effect.getAmplifier());
+		config.set("Effects", map);
+		config.set("Shop", Shop);
+		config.set("Message", Message);
+		config.set("ApplyFor", ApplyFor);
+		config.set("JoinTariff", JoinTariff);
+		config.set("JoinTariffEconomy", JoinTariffEconomy.getEconomyName());
+		config.set("AllowedPVP", AllowedPVP);
+		config.set("Content", Content);
+		config.set("SignPrice", SignPrice);
+		return config.save();
+	}
+
+	/**
+	 * 队伍称号的价格 <br>
+	 * <br>
+	 * 一级称号价格: <br>
+	 * 二级称号价格: <br>
+	 * 三级称号价格: <br>
+	 * 五级称号价格: <br>
+	 * 六级称号价格: <br>
+	 * 七级称号价格: <br>
+	 */
+	public Map<Integer, Double> getSignPrice() {
+		return SignPrice;
+	}
+
+	/**
 	 * 队伍商城数量上限
 	 *
 	 * @return
@@ -508,12 +571,41 @@ public class Team {
 	}
 
 	/**
-	 * 队伍聊天室
+	 * 队伍聊天室 <br>
+	 * <br>
+	 * <b> 聊天时间及玩家名： <br>
+	 * &nbsp;&nbsp;&nbsp;&nbsp;Name: 玩家名<br>
+	 * &nbsp;&nbsp;&nbsp;&nbsp;Date: 时间 <br>
+	 * &nbsp;&nbsp;&nbsp;&nbsp;Time: 时间 <br>
+	 * &nbsp;&nbsp;&nbsp;&nbsp;Msg: 发话的内容 </b>
 	 *
 	 * @return
 	 */
-	public Map<String, Object> getMessage() {
+	public HashMap<String, Map<String, Object>> getMessage() {
+		if (Message.size() > ac.getConfig().getInt("100")) {
+			List<String> list = new ArrayList<>(Message.keySet());
+			for (int i = ac.getConfig().getInt("100"); i < list.size(); i++)
+				Message.remove(list.get(i));
+		}
 		return Message;
+	}
+
+	/**
+	 * 添加队伍聊天室内容
+	 *
+	 * @param player 发消息的玩家
+	 * @param string 发消息的内容
+	 * @return
+	 */
+	public boolean addMessage(Player player, String string) {
+		Map<String, Object> map = new HashMap<>();
+		Instant Ins = Instant.now();
+		map.put("Name", player.getName());
+		map.put("Date", Tool.getDate());
+		map.put("Time", Tool.getTime());
+		map.put("Msg", string);
+		Message.put(player.getName() + " " + Ins.getEpochSecond() + Ins.getNano(), map);
+		return close();
 	}
 
 	/**
@@ -583,8 +675,7 @@ public class Team {
 		map.put("JoinDate", Tool.getDate() + " " + Tool.getTime());
 		map.put("Prestige", ac.getConfig().getInt("玩家初始声望"));
 		Players.put(player, map);
-		config.set("Players", Players);
-		config.save();
+		close();
 		return true;
 	}
 
@@ -602,8 +693,7 @@ public class Team {
 			MyPlayer.remoeApplyFor(ike, this);
 		}
 		ApplyFor.clear();
-		config.set("ApplyFor", ApplyFor);
-		config.save();
+		close();
 		return true;
 	}
 
@@ -622,8 +712,7 @@ public class Team {
 			if (MyPlayer.isTeam(getID()))
 				return false;
 			ApplyFor.remove(player);
-			config.set("ApplyFor", ApplyFor);
-			config.save();
+			close();
 			if (ac.isPlayers(player)) {
 				MyPlayer myPlayer = ac.getPlayers(player);
 				if (myPlayer != null) {
@@ -672,8 +761,7 @@ public class Team {
 	 */
 	public Team repealAdmin(String player) {
 		Admins.remove(player);
-		config.set("Admin", Admins);
-		config.save();
+		close();
 		return this;
 	}
 
@@ -687,8 +775,7 @@ public class Team {
 		if (Admins.contains(player))
 			return this;
 		Admins.add(player);
-		config.set("Admin", Admins);
-		config.save();
+		close();
 		return this;
 	}
 
@@ -745,12 +832,12 @@ public class Team {
 			return this;
 		map.put("Prestige", prestige);
 		Players.put(name, map);
-		config.set("Players", Players);
-		config.save();
+		close();
 		return this;
 	}
 
 	/**
+	 * 设置队伍的队长
 	 *
 	 * @param captain 队长名称
 	 * @return
@@ -760,7 +847,6 @@ public class Team {
 		if (!Players.containsKey(captain))
 			return false;
 		Captain = captain;
-		config.set("Captain", Captain);
 		Map<String, Object> map = Players.get(captain);
 		if (map == null)
 			return false;
@@ -773,7 +859,7 @@ public class Team {
 		map1.put("Prestige", getPrestige(c) / 2);
 		Players.put(captain, map);
 		Players.put(c, map1);
-		return config.save();
+		return close();
 	}
 
 	/**
@@ -803,9 +889,7 @@ public class Team {
 			Admins.remove(player);
 			this.config.set("Admin", Admins);
 		}
-		this.config.set("Players", Players);
-		this.config.save();
-		return true;
+		return close();
 	}
 
 	/**
@@ -855,7 +939,7 @@ public class Team {
 		Config config = MyPlayer.getConfig(name);
 		config.set("Team", null);
 		config.save();
-		return true;
+		return close();
 	}
 
 	/**

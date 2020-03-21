@@ -117,13 +117,13 @@ public class MakeTeam extends FormBase {
 		config.set("Players", players);
 		config.set("Effects", new HashMap<Integer, Object>());
 		config.set("Shop", new HashMap<String, Object>());
-		config.set("Message", new HashMap<String, Object>());
+		config.set("Message", new HashMap<String, HashMap<String, Object>>());
 		config.set("ApplyFor", new HashMap<String, Map<String, Object>>());
 		config.set("JoinTariff", JoinTariff);
 		config.set("JoinTariffEconomy", JoinTariffEconomy);
 		config.set("AllowedPVP", d.getToggleResponse(9));
 		config.set("Content", "");
-		config.set("SignPrice", map);
+		config.set("SignPrice", MakeTeam.map);
 		config.save();
 		ac.getTeamMag().reload();
 		setForm(new MyTeam(player));

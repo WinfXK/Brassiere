@@ -9,6 +9,7 @@ import cn.winfxk.brassiere.team.myteam.mag.TeamApplyFor;
 import cn.winfxk.brassiere.team.myteam.mag.TeamSetting;
 import cn.winfxk.brassiere.team.myteam.mag.captain.DissolveTeam;
 import cn.winfxk.brassiere.team.myteam.mag.captain.MOTeam;
+import cn.winfxk.brassiere.team.myteam.mag.captain.Signpricefixing;
 import cn.winfxk.brassiere.team.myteam.mag.captain.setAdmin;
 
 import cn.epicfx.winfxk.money.sn.tool.SimpleForm;
@@ -49,6 +50,8 @@ public class TeamManage extends FormBase {
 				form.addButton(msg.getSun("Team", "TeamManage", "MOTeam", K, D));
 				fk.add("mo");
 			}
+			fk.add("spf");
+			form.addButton(msg.getSun("Team", "TeamManage", "Signpricefixing", K, D));
 		}
 		form.addButton(msg.getSun("Team", "TeamManage", "ApplyFor", myPlayer));
 		fk.add("af");
@@ -86,6 +89,9 @@ public class TeamManage extends FormBase {
 			break;
 		case "p":
 			setForm(new PlayersMag(player, team));
+			break;
+		case "spf":
+			setForm(new Signpricefixing(player, team));
 			break;
 		default:
 			throw new TeamException("Unable to get data type, please contact Winfxk!");

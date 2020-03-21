@@ -17,6 +17,7 @@ import cn.nukkit.utils.Config;
 public class TeamMag {
 	private Activate ac;
 	private LinkedHashMap<String, Team> teams;
+	private Config EffectConfig;
 
 	/**
 	 * 队伍交互系统
@@ -26,6 +27,8 @@ public class TeamMag {
 	public TeamMag(Activate activate) {
 		this.ac = activate;
 		teams = new LinkedHashMap<>();
+		EffectConfig = new Config(new File(activate.getPluginBase().getDataFolder(), Activate.TeamEffectName),
+				Config.YAML);
 	}
 
 	/**
@@ -41,6 +44,15 @@ public class TeamMag {
 			return this;
 		teams.put(ID, new Team(ID, getTeamFile(ID)));
 		return this;
+	}
+
+	/**
+	 * 存储队伍队长可以购买的Buff
+	 *
+	 * @return
+	 */
+	public Config getEffectConfig() {
+		return EffectConfig;
 	}
 
 	/**
