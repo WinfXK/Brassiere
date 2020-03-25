@@ -27,23 +27,9 @@ public class TeamMag {
 	public TeamMag(Activate activate) {
 		this.ac = activate;
 		teams = new LinkedHashMap<>();
+		reload();
 		EffectConfig = new Config(new File(activate.getPluginBase().getDataFolder(), Activate.TeamEffectName),
 				Config.YAML);
-	}
-
-	/**
-	 *
-	 * @param player
-	 * @return
-	 */
-	public TeamMag isLoad(MyPlayer myPlayer) {
-		if (myPlayer == null)
-			return this;
-		String ID = myPlayer.getTeamID();
-		if (ID == null || ID.isEmpty() || !myPlayer.isTeam() || teams.containsKey(ID))
-			return this;
-		teams.put(ID, new Team(ID, getTeamFile(ID)));
-		return this;
 	}
 
 	/**
@@ -102,8 +88,26 @@ public class TeamMag {
 	 * @return
 	 */
 	public TeamMag reload() {
-		for (MyPlayer myPlayer : ac.getPlayers().values())
-			isLoad(myPlayer);
+		Config config;
+		for (File file : new File(ac.getPluginBase().getDataFolder(), Activate.TeamDirName)
+				.listFiles((File arg0, String arg1) -> new File(arg0, arg1).isFile())) {
+			config = new Config(file, Config.YAML);
+			if (config.getString("ID") != null)
+				load(config.getString("ID"));
+		}
+		return this;
+	}
+
+	/**
+	 * 加载队伍数据
+	 *
+	 * @param ID
+	 * @return
+	 */
+	public TeamMag load(String ID) {
+		if (ID == null || ID.isEmpty() || teams.containsKey(ID))
+			return this;
+		teams.put(ID, new Team(ID, getTeamFile(ID)));
 		return this;
 	}
 
@@ -114,7 +118,7 @@ public class TeamMag {
 	 * @return
 	 */
 	public Config getConfig(String ID) {
-		return new Config(getTeamFile(ID), Config.YAML);
+		return teams.containsKey(ID) ? teams.get(ID).getConfig() : new Config(getTeamFile(ID), Config.YAML);
 	}
 
 	/**
@@ -124,7 +128,8 @@ public class TeamMag {
 	 * @return
 	 */
 	public void remove(String ID) {
-		teams.remove(ID);
+		if (teams.containsKey(ID))
+			teams.remove(ID);
 	}
 
 	/**
@@ -134,6 +139,7 @@ public class TeamMag {
 	 * @return
 	 */
 	public File getTeamFile(String ID) {
-		return new File(new File(ac.getPluginBase().getDataFolder(), Activate.TeamDirName), ID + ".yml");
+		return teams.containsKey(ID) ? teams.get(ID).getFile()
+				: new File(new File(ac.getPluginBase().getDataFolder(), Activate.TeamDirName), ID + ".yml");
 	}
 }

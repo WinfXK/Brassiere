@@ -125,7 +125,7 @@ public class MakeTeam extends FormBase {
 		config.set("Content", "");
 		config.set("SignPrice", MakeTeam.map);
 		config.save();
-		ac.getTeamMag().reload();
+		ac.getTeamMag().load(ID);
 		setForm(new MyTeam(player));
 		player.sendMessage(msg.getSun("Team", "MakeTeam", "CreatingSuccessful", myPlayer));
 		return make();
