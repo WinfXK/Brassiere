@@ -7,10 +7,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cn.nukkit.Player;
-import cn.nukkit.utils.Config;
 import cn.winfxk.brassiere.money.MyEconomy;
 import cn.winfxk.brassiere.tool.Tool;
+
+import cn.nukkit.Player;
+import cn.nukkit.utils.Config;
 
 /**
  * @author Winfxk
@@ -140,6 +141,20 @@ public class Message {
 	 */
 	public String getSun(String t, String Son, String Sun, Player player) {
 		return player == null ? getSun(t, Son, Sun) : getSun(t, Son, Sun, Dk, getList(player));
+	}
+
+	/**
+	 * 从配置文件中获取三级默认文本并插入数据
+	 *
+	 * @param t    一级Key
+	 * @param Son  二级Key
+	 * @param Sun  三级Key
+	 * @param name 要初始化的玩家的名称
+	 * @return
+	 */
+	public String getSun(String t, String Son, String Sun, String player) {
+		return player == null ? getSun(t, Son, Sun) : getSun(t, Son, Sun, Dk, getList(player));
+
 	}
 
 	/**
@@ -376,9 +391,13 @@ public class Message {
 	}
 
 	private List<Object> getList(Player player) {
+		return getList(player.getName());
+	}
+
+	private List<Object> getList(String player) {
 		List<Object> list = new ArrayList<>();
-		list.add(player.getName());
-		list.add(MyPlayer.getMoney(player.getName()));
+		list.add(player);
+		list.add(MyPlayer.getMoney(player));
 		return list;
 	}
 

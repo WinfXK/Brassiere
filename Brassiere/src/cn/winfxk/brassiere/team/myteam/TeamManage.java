@@ -9,6 +9,7 @@ import cn.winfxk.brassiere.team.myteam.mag.TeamApplyFor;
 import cn.winfxk.brassiere.team.myteam.mag.TeamSetting;
 import cn.winfxk.brassiere.team.myteam.mag.captain.DissolveTeam;
 import cn.winfxk.brassiere.team.myteam.mag.captain.MOTeam;
+import cn.winfxk.brassiere.team.myteam.mag.captain.Signpricefixing;
 import cn.winfxk.brassiere.team.myteam.mag.captain.setAdmin;
 
 import cn.epicfx.winfxk.money.sn.tool.SimpleForm;
@@ -42,22 +43,24 @@ public class TeamManage extends FormBase {
 				msg.getSun("Team", "TeamManage", "Content", myPlayer));
 		if (isCaptain) {
 			form.addButton(msg.getSun("Team", "TeamManage", "setAdmin", myPlayer));
-			fk.add("sa");
+			listKey.add("sa");
 			form.addButton(msg.getSun("Team", "TeamManage", "Dissolve", K, D));
-			fk.add("d");
+			listKey.add("d");
 			if (team.size() > 1) {
 				form.addButton(msg.getSun("Team", "TeamManage", "MOTeam", K, D));
-				fk.add("mo");
+				listKey.add("mo");
 			}
+			listKey.add("spf");
+			form.addButton(msg.getSun("Team", "TeamManage", "Signpricefixing", K, D));
 		}
 		form.addButton(msg.getSun("Team", "TeamManage", "ApplyFor", myPlayer));
-		fk.add("af");
+		listKey.add("af");
 		form.addButton(msg.getSun("Team", "TeamManage", "ApplyFor", myPlayer));
-		fk.add("p");
+		listKey.add("p");
 		form.addButton(msg.getSun("Team", "TeamManage", "Setting", myPlayer));
-		fk.add("s");
+		listKey.add("s");
 		form.addButton(msg.getSun("Team", "TeamManage", "BuyEffect", myPlayer));
-		fk.add("b");
+		listKey.add("b");
 		form.sendPlayer(player);
 		return true;
 	}
@@ -65,7 +68,7 @@ public class TeamManage extends FormBase {
 	@Override
 	public boolean disMain(FormResponse data) {
 		FormResponseSimple d = getSimple(data);
-		switch (fk.get(d.getClickedButtonId())) {
+		switch (listKey.get(d.getClickedButtonId())) {
 		case "d":
 			setForm(new DissolveTeam(player, team));
 			break;
@@ -86,6 +89,9 @@ public class TeamManage extends FormBase {
 			break;
 		case "p":
 			setForm(new PlayersMag(player, team));
+			break;
+		case "spf":
+			setForm(new Signpricefixing(player, team));
 			break;
 		default:
 			throw new TeamException("Unable to get data type, please contact Winfxk!");

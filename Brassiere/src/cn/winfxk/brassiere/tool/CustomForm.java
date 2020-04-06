@@ -190,6 +190,18 @@ public class CustomForm extends RootForm {
 	}
 
 	/**
+	 * 添加一个标签
+	 *
+	 * @param Text 标签标题
+	 * @return
+	 */
+	public CustomForm addLabel(String... Texts) {
+		for (String Text : Texts)
+			list.add(new ElementLabel(Text));
+		return this;
+	}
+
+	/**
 	 * 添加一个下拉菜单
 	 *
 	 * @param Text 下拉菜单标题

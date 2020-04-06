@@ -28,7 +28,7 @@ public class MyTeam extends FormBase {
 	 */
 	public MyTeam(Player player) {
 		super(player);
-		team = myPlayer.geTeam();
+		team = myPlayer.getTeam();
 		setK("{Captain}", "{TeamID}", "{TeamName}", "{TeamSize}", "{TeamMaxCount}", "{Player}", "{Money}",
 				"{MaxShopItem}", "{ShopItem}");
 	}
@@ -42,22 +42,22 @@ public class MyTeam extends FormBase {
 		SimpleForm form = new SimpleForm(getID(), msg.getSun("Team", "MyTeam", "Title", K, D), team.getContent(player));
 		if (team.isCaptain(player) || team.isAdmin(player)) {
 			form.addButton(msg.getSun("Team", "MyTeam", "MagTeam", K, D));
-			fk.add("mag");
+			listKey.add("mag");
 		}
 		form.addButton(msg.getSun("Team", "MyTeam", "Message", K, D));
-		fk.add("msg");
+		listKey.add("msg");
 		form.addButton(msg.getSun("Team", "MyTeam", "List", K, D));
-		fk.add("list");
+		listKey.add("list");
 		form.addButton(msg.getSun("Team", "MyTeam", "Shop", K, D));
-		fk.add("shop");
+		listKey.add("shop");
 		form.addButton(msg.getSun("Team", "MyTeam", "Sign", K, D));
-		fk.add("sign");
+		listKey.add("sign");
 		form.addButton(msg.getSun("Team", "MyTeam", "Effects", K, D));
-		fk.add("effects");
+		listKey.add("effects");
 		form.addButton(msg.getSun("Team", "MyTeam", "Datails", K, D));
-		fk.add("datails");
+		listKey.add("datails");
 		form.addButton(msg.getSun("Team", "MyTeam", "QuitTeam", K, D));
-		fk.add("quit");
+		listKey.add("quit");
 		form.sendPlayer(player);
 		return true;
 	}
@@ -65,7 +65,7 @@ public class MyTeam extends FormBase {
 	@Override
 	public boolean disMain(FormResponse data) {
 		FormResponseSimple d = getSimple(data);
-		switch (fk.get(d.getClickedButtonId())) {
+		switch (listKey.get(d.getClickedButtonId())) {
 		case "msg":
 			setForm(new TeamMessage(player, team));
 			break;
@@ -82,7 +82,7 @@ public class MyTeam extends FormBase {
 			setForm(new TeamEffect(player, team));
 			break;
 		case "datails":
-			setForm(new TeamDatails(player, team));
+			setForm(new TeamDatails(player));
 			break;
 		case "quit":
 			setForm(new QuitTeam(player, team));

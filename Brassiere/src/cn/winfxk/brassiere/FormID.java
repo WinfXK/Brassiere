@@ -24,7 +24,7 @@ public class FormID {
 			return getRand();
 		if (!FormIDConfig.exists(Key))
 			examine();
-		return Tool.ObjectToInt(FormIDConfig.get(Key), getRand());
+		return Tool.ObjToInt(FormIDConfig.get(Key), getRand());
 	}
 
 	/**
@@ -49,7 +49,7 @@ public class FormID {
 		for (String s : Activate.FormIDs)
 			if (FormIDConfig.exists(s)) {
 				Object obj = FormIDConfig.get(s);
-				if (!Tool.isInteger(obj) || Tool.ObjectToInt(obj, -1) < 0)
+				if (!Tool.isInteger(obj) || Tool.ObjToInt(obj, -1) < 0)
 					FormIDConfig.set(s, Tool.getRand());
 			} else
 				FormIDConfig.set(s, getRand());

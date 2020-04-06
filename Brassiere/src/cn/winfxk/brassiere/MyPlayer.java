@@ -119,7 +119,7 @@ public class MyPlayer {
 	 *
 	 * @return
 	 */
-	public Team geTeam() {
+	public Team getTeam() {
 		String ID = getTeamID();
 		if (ID == null || ID.isEmpty())
 			return null;
@@ -255,7 +255,7 @@ public class MyPlayer {
 		map2.put("Captain", team.getCaptain());
 		map2.put("JoinDate", Tool.getDate() + " " + Tool.getTime());
 		map2.put("QuitDate", null);
-		map2.put("Count", Tool.ObjectToInt(map2.get("Count"), 0) + 1);
+		map2.put("Count", Tool.ObjToInt(map2.get("Count"), 0) + 1);
 		map.put(team.getID(), map2);
 		config.set("OnceJoined", map);
 		config.save();
@@ -290,7 +290,7 @@ public class MyPlayer {
 		map2.put("Captain", team.getCaptain());
 		map2.put("JoinDate", Tool.getDate() + " " + Tool.getTime());
 		map2.put("QuitDate", null);
-		map2.put("Count", Tool.ObjectToInt(map2.get("Count"), 0) + 1);
+		map2.put("Count", Tool.ObjToInt(map2.get("Count"), 0) + 1);
 		map.put(team.getID(), map2);
 		config.set("OnceJoined", map);
 		config.save();

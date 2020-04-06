@@ -190,7 +190,7 @@ public class Vip {
 		if (list != null && list.size() >= 1)
 			for (Object obj : list)
 				if (Tool.isInteger(obj)) {
-					effect = Effect.getEffect(Tool.ObjectToInt(obj, 1));
+					effect = Effect.getEffect(Tool.ObjToInt(obj, 1));
 					effect.setColor(Tool.getRand(0, 255), Tool.getRand(0, 255), Tool.getRand(0, 255));
 					if (!effects.contains(effect))
 						effects.add(effect);
@@ -211,8 +211,8 @@ public class Vip {
 		for (Object obj : map.values())
 			try {
 				map2 = obj != null && obj instanceof Map ? (HashMap<String, ?>) obj : new HashMap<>();
-				Item item = new Item(Tool.ObjectToInt(map2.get("ID")), Tool.ObjectToInt(map2.get("Damage")),
-						Tool.ObjectToInt(map2.get("Count")), String.valueOf(map2.get("Name")));
+				Item item = new Item(Tool.ObjToInt(map2.get("ID")), Tool.ObjToInt(map2.get("Damage")),
+						Tool.ObjToInt(map2.get("Count")), String.valueOf(map2.get("Name")));
 				item.setCompoundTag((byte[]) map2.get("Nbt"));
 				SignItem.add(item);
 			} catch (Exception e) {
@@ -223,7 +223,7 @@ public class Vip {
 		int i = 0;
 		if (list != null && list.size() >= 1)
 			for (Object obj : list) {
-				i = Tool.ObjectToInt(obj);
+				i = Tool.ObjToInt(obj);
 				if (i > 0 && i <= 3)
 					Gamemode.add(i);
 			}

@@ -218,7 +218,7 @@ public enum MyParticle {
 			if (name == null || name.isEmpty())
 				return particle;
 		} else
-			ID = Tool.ObjectToInt(object, 9);
+			ID = Tool.ObjToInt(object, 9);
 		if (name == null && ID < 0)
 			return particle;
 		for (MyParticle particle2 : list)

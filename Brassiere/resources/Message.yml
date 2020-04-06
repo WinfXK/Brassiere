@@ -25,14 +25,87 @@ lang: chs-中文
 无法获取币种: §4无法获取对应的币种！请联系服务器管理员！
 金币不足: §4您的财产不足以完成此操作！
 数据处理错误: §4无法处理该操作！请联系服务器管理员{n}{Error}
+Team-Sign:
+   一级: §f{TeamName}萌新
+   二级: §d{TeamName}教官
+   三级: §a{TeamName}精英
+   四级: §6{TeamName}专家
+   五级: §4{TeamName}§5大神
+   六级: §l§n§e{TeamName}§l§n§9主宰
 Team-Command:
    Usage: '{RandColor}组队相关命令'
 Team:
+   AdminAddTeamEffect:
+      Title: '{RandColor}队伍特效管理'
+      Content: ' '
+      ChoiceContent: ' '
+      addEffectContent: '{RandColor}请填写想要添加的队伍Buff内容'
+      InputEffectID: §6请填写药水ID
+      InputEffectLevel: §6请填写药水等级
+      InputTeamLevel: §6请填写限购队伍等级（为空不限制）
+      InputBuyMoney: §6请输入购买价格
+      SelectEconomy: §6请选择购买想要使用的经济（当这个经济不再支持时将不再显示，但不会删除）
+      EffItem: §6{EffectID}§d>§f>§a{BuyMoney}§b(§d{EconomyName}§b)§f|§i{TeamLevel}
+      NotTeamLevel: §a不限等级
+      addEffect: '{RandColor}添加药水效果'
+      removeEffect: '{RandColor}删除效果'
+      editEffect: '{RandColor}修改效果'
+      Back: '{RandColor}返回'
+      isRemove: §4确定要删除这个效果吗？{n}已被队长购买的药水将不会从队伍中删除！
+      OK: §6确定
+      Succeed: §6操作成功！
+      TeamLevelNotOK: §4队伍等级仅支持纯整数！
+      EffectIDNotOK: §4特效ID仅支持纯整数！
+      EffectLevelNotOK: §4特效等级仅支持纯整数！
+      BuyMoneyNotOK: §4购买价格仅支持大于零的纯数字！
+   TeamMessage:
+      Title: '{RandColor}{TeamName}'
+      Content: ' '
+      ContentItem: '{n}{RandColor}{ByDate} {ByTime}{Player}:{n}{Message}'
+      InputTitle: '{RandColor}您想说的内容'
+      InputHint: 请输入想要发送的内容
+      InputContent: ' '
+      Unenabled: §4当前队伍暂未启用聊天室！
+      NotInput: §4请输入想要发表的内容！
+   QuitTeam:
+      OK: §4确定
+      false: §6取消
+      Quit: §4您已成功退出队伍！
+      AdminQuit: §6{ByPlayer}§4已退出本队伍！
+      ConfirmOperation: §4请再次确认是否退出队伍！
+      Title: '{RandColor}{TeamName}'
+      Content: §4您正在执行退出队伍的操作！请确认该操作的有效！{n}§4在您退出游戏后，您在该队伍的所有数据都将会删除（包括声望等，但已获得的队伍称号不在此列）
+      TeamDataError: §4无法解析对应队伍数据或已加入队伍数据！请联系管理员！
+   TeamSign:
+      Title: '{RandColor}{TeamName}'
+      Content: §6您当前的声望为：{Prestige}{n}请选择想要购买的称号
+      Unenabled: §4当前队伍暂未开启队伍称号获取！
+   TeamPlayerList:
+      Title: '{RandColor}{TeamName}'
+      AdminContent: '{RandColor}队伍成员列表'
+      Content: '{RandColor}队伍成员列表'
+      CaptainContent: '{RandColor}队伍成员列表'
+      PlayerItem: §d{ByPlayer}§f>§b>§6{Permission}
+      PermissionByPlayer: 成员
+      PermissionByAdmin: 管理员
+      PermissionByCaptain: 队长
+      NotPlayers: §4当前本队伍还没有更多玩家！
+      PlayerDataError: §4无法获取对应玩家的信息！
+   TeamDatails:
+      Title: '{RandColor}{TeamName}'
+      Content: §6队伍ID：{TeamID}{n}队伍名称：{TeamName}{n}队伍人数：§d{PlayerCount}/§b{MaxPlayerCount}{n}队伍评分：{Level}{n}队长：{Captain}{n}管理员：{Admins}{n}商店项目数：{ShopItems}{n}拥有加持数：{Buffs}
+      OK: §6确定
+      OpenMyTeam: §6打开队伍主页
+   OtherTeam:
+      Title: '{RandColor}{TeamName}'
+      Content: §6队长：{Captain}{n}§3成员数量：§d{PlayerCount}/§{ManPlayerCount}{n}队伍评分：{Level}
+      OK: §6返回
+      false: §6取消
    TeamList:
-      Title: "{RandColor}队伍列表"
-      Content: " "
+      Title: '{RandColor}队伍列表'
+      Content: ' '
       NotTeam: §4当前没有任何人创建队伍！
-      Item: "{RandColor}{TeamName}§f>§b>§d>{TeamCaptain}"
+      Item: '{RandColor}{TeamName}§f>§b>§d>{TeamCaptain}'
    UndockPlayer:
       Title: '{RandColor}{ByPlayer}'
       Content: §4您正在将{RandColor}{ByPlayer}§4从队伍中移除！您确定这个操作有效吗？
@@ -131,6 +204,7 @@ Team:
       ApplyFor: §6查看入队申请
       Setting: §6队伍设置
       Players: §6成员管理
+      Signpricefixing: §6为队伍设置称号价格
       BuyEffect: §6为队伍购买Buff
       MOTeam: §4转让队伍
       Dissolve: §4解散队伍

@@ -3,16 +3,15 @@ package cn.winfxk.brassiere.form;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.winfxk.brassiere.Activate;
-import cn.winfxk.brassiere.FormID;
-import cn.winfxk.brassiere.Message;
-import cn.winfxk.brassiere.MyPlayer;
-
 import cn.nukkit.Player;
 import cn.nukkit.form.response.FormResponse;
 import cn.nukkit.form.response.FormResponseCustom;
 import cn.nukkit.form.response.FormResponseModal;
 import cn.nukkit.form.response.FormResponseSimple;
+import cn.winfxk.brassiere.Activate;
+import cn.winfxk.brassiere.FormID;
+import cn.winfxk.brassiere.Message;
+import cn.winfxk.brassiere.MyPlayer;
 
 /**
  * 基础UI操作类
@@ -21,14 +20,15 @@ import cn.nukkit.form.response.FormResponseSimple;
  */
 public abstract class FormBase {
 	public Player player;
-	public Message msg;
-	public FormID formID;
-	public Activate ac;
-	public MyPlayer myPlayer;
-	public List<String> fk = new ArrayList<>();
+	protected Message msg;
+	protected FormID formID;
+	protected Activate ac;
+	protected MyPlayer myPlayer;
+	protected List<String> listKey = new ArrayList<>();
 	protected Object[] D = {};
 	protected String[] K = {};
 	private FormBase make;
+	protected int ID;
 
 	/**
 	 * 界面交互基础类
@@ -41,6 +41,7 @@ public abstract class FormBase {
 		msg = ac.getMessage();
 		formID = ac.getFormID();
 		myPlayer = ac.getPlayers(player.getName());
+		ID = getID();
 	}
 
 	/**

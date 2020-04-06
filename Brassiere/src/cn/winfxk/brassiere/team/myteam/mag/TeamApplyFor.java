@@ -39,8 +39,8 @@ public class TeamApplyFor extends FormBase {
 		SimpleForm form = new SimpleForm(getID(), msg.getSun("Team", "TeamApplyFor", "Title", myPlayer),
 				msg.getSun("Team", "TeamApplyFor", "Content", myPlayer));
 		String Valid, name;
-		fk.add(RandK + "aa");
-		fk.add(RandK + "ar");
+		listKey.add(RandK + "aa");
+		listKey.add(RandK + "ar");
 		setK("{Player}", "{Date}", "{Valid}", "{Money}", "{Vip}", "{ClickPlayer}", "{ClickPlayerMoney}");
 		form.addButton(msg.getSun("Team", "TeamApplyFor", "AllAccept", myPlayer));
 		form.addButton(msg.getSun("Team", "TeamApplyFor", "AllRefuse", myPlayer));
@@ -54,7 +54,7 @@ public class TeamApplyFor extends FormBase {
 					new Object[] { name, map.get("Date"), Valid, MyPlayer.getMoney(name),
 							VipApi.isVip(name) && VipApi.getVip(name) != null ? VipApi.getVip(name).getName() : "",
 							player.getName(), myPlayer.getMoney() }));
-			fk.add(name);
+			listKey.add(name);
 		}
 		form.sendPlayer(player);
 		return true;
@@ -65,7 +65,7 @@ public class TeamApplyFor extends FormBase {
 		FormResponseSimple d = getSimple(data);
 		int ButtonID = d.getClickedButtonId();
 		int i = 0;
-		switch (fk.get(ButtonID)) {
+		switch (listKey.get(ButtonID)) {
 		case "aa":
 			for (String ike : team.getApplyFor().keySet())
 				i += team.acceptApplyFor(ike) ? 1 : 0;
@@ -77,7 +77,7 @@ public class TeamApplyFor extends FormBase {
 		case "ar":
 			return team.clearApplyFor();
 		}
-		setForm(new ApplyForByPlayerData(player, team, fk.get(ButtonID)));
+		setForm(new ApplyForByPlayerData(player, team, listKey.get(ButtonID)));
 		return make();
 	}
 }

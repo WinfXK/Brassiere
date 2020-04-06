@@ -22,15 +22,15 @@ public class TeamForm extends FormBase {
 	public boolean MakeMain() {
 		SimpleForm form = new SimpleForm(getID(), msg.getSun("Team", "Main", "Title", myPlayer),
 				msg.getSun("Team", "Main", "Content", myPlayer));
-		fk.add("tl");
+		listKey.add("tl");
 		form.addButton(msg.getSun("Team", "Main", "队伍列表", myPlayer));
 		if (myPlayer.isTeam()) {
-			fk.add("mt");
-			fk.add("td");
+			listKey.add("mt");
+			listKey.add("td");
 			form.addButton(msg.getSun("Team", "Main", "我的队伍", myPlayer));
 			form.addButton(msg.getSun("Team", "Main", "队伍社区", myPlayer));
 		} else {
-			fk.add("jt");
+			listKey.add("jt");
 			form.addButton(msg.getSun("Team", "Main", "加入队伍", myPlayer));
 		}
 		form.sendPlayer(player);
@@ -40,7 +40,7 @@ public class TeamForm extends FormBase {
 	@Override
 	public boolean disMain(FormResponse data) {
 		FormResponseSimple d = getSimple(data);
-		switch (fk.get(d.getClickedButtonId())) {
+		switch (listKey.get(d.getClickedButtonId())) {
 		case "jt":
 			setForm(new JTeam(player));
 			break;
@@ -51,7 +51,7 @@ public class TeamForm extends FormBase {
 			setForm(new MyTeam(player));
 			break;
 		case "td":
-			setForm(new TeamMessage(player, myPlayer.geTeam()));
+			setForm(new TeamMessage(player, myPlayer.getTeam()));
 			break;
 		default:
 			throw new TeamException("Unable to get data type, please contact Winfxk!");

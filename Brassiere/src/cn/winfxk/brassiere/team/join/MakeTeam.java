@@ -5,15 +5,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cn.nukkit.Player;
-import cn.nukkit.form.response.FormResponse;
-import cn.nukkit.form.response.FormResponseCustom;
-import cn.nukkit.utils.Config;
+import cn.winfxk.brassiere.Activate;
 import cn.winfxk.brassiere.form.FormBase;
 import cn.winfxk.brassiere.money.MyEconomy;
 import cn.winfxk.brassiere.team.MyTeam;
 import cn.winfxk.brassiere.tool.CustomForm;
 import cn.winfxk.brassiere.tool.Tool;
+
+import cn.nukkit.Player;
+import cn.nukkit.form.response.FormResponse;
+import cn.nukkit.form.response.FormResponseCustom;
+import cn.nukkit.utils.Config;
 
 /**
  * 玩家选择了创建队伍
@@ -24,6 +26,16 @@ public class MakeTeam extends FormBase {
 	private double Money;
 	private MyEconomy economy;
 	private List<MyEconomy> economies = new ArrayList<>();
+	public static final Map<Integer, Double> map = new HashMap<>();
+	static {
+		Config config = Activate.getActivate().getConfig();
+		map.put(1, config.getDouble("一级称号价格"));
+		map.put(2, config.getDouble("二级称号价格"));
+		map.put(3, config.getDouble("三级称号价格"));
+		map.put(4, config.getDouble("四级称号价格"));
+		map.put(5, config.getDouble("五级称号价格"));
+		map.put(6, config.getDouble("六级称号价格"));
+	}
 
 	public MakeTeam(Player player) {
 		super(player);
@@ -78,7 +90,7 @@ public class MakeTeam extends FormBase {
 		map.put("date", Tool.getDate() + " " + Tool.getTime());
 		String JoinTariffs = d.getInputResponse(7);
 		double JoinTariff = 0;
-		if (!Tool.isInteger(JoinTariffs) || (JoinTariff = Tool.ObjectToDouble(JoinTariffs, 0d)) <= 0)
+		if (!Tool.isInteger(JoinTariffs) || (JoinTariff = Tool.ObjToDouble(JoinTariffs, 0d)) <= 0)
 			JoinTariff = 0;
 		String JoinTariffEconomy;
 		int JoinTariffEconomyID = d.getDropdownResponse(8).getElementID();
@@ -105,14 +117,15 @@ public class MakeTeam extends FormBase {
 		config.set("Players", players);
 		config.set("Effects", new HashMap<Integer, Object>());
 		config.set("Shop", new HashMap<String, Object>());
-		config.set("Message", new HashMap<String, Object>());
+		config.set("Message", new HashMap<String, HashMap<String, Object>>());
 		config.set("ApplyFor", new HashMap<String, Map<String, Object>>());
 		config.set("JoinTariff", JoinTariff);
 		config.set("JoinTariffEconomy", JoinTariffEconomy);
 		config.set("AllowedPVP", d.getToggleResponse(9));
 		config.set("Content", "");
+		config.set("SignPrice", MakeTeam.map);
 		config.save();
-		ac.getTeamMag().reload();
+		ac.getTeamMag().load(ID);
 		setForm(new MyTeam(player));
 		player.sendMessage(msg.getSun("Team", "MakeTeam", "CreatingSuccessful", myPlayer));
 		return make();

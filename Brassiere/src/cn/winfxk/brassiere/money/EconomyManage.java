@@ -21,7 +21,7 @@ public class EconomyManage {
 				new File(Activate.getActivate().getPluginBase().getDataFolder(), Activate.EconomyListConfigName),
 				Config.YAML);
 	}
-
+	
 	/**
 	 * 获取一个Knickers支持的经济插件</br>
 	 * Get a Knickers supported Economy plug-in

@@ -7,7 +7,8 @@ import cn.winfxk.brassiere.team.Team;
 
 /**
  * 显示队伍的效果列表
- *
+ * 
+ * @Createdate 2020/04/06 07:14:49<br/>
  * @author Winfxk
  */
 public class TeamEffect extends FormBase {

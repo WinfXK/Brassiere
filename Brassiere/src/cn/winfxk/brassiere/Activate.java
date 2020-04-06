@@ -7,12 +7,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import cn.nukkit.Player;
-import cn.nukkit.Server;
-import cn.nukkit.plugin.Plugin;
-import cn.nukkit.plugin.PluginBase;
-import cn.nukkit.utils.Config;
-import cn.nukkit.utils.Utils;
 import cn.winfxk.brassiere.cmd.TeamCommand;
 import cn.winfxk.brassiere.form.MakeForm;
 import cn.winfxk.brassiere.money.EconomyAPI;
@@ -22,6 +16,13 @@ import cn.winfxk.brassiere.money.Snowmn;
 import cn.winfxk.brassiere.team.TeamMag;
 import cn.winfxk.brassiere.tool.Tool;
 import cn.winfxk.brassiere.vip.VipMag;
+
+import cn.nukkit.Player;
+import cn.nukkit.Server;
+import cn.nukkit.plugin.Plugin;
+import cn.nukkit.plugin.PluginBase;
+import cn.nukkit.utils.Config;
+import cn.nukkit.utils.Utils;
 
 /**
  * @author Winfxk
@@ -35,7 +36,7 @@ public class Activate {
 			CommandFileName = "Command.yml", EconomyListConfigName = "EconomyList.yml", FormIDFileName = "FormID.yml",
 			PlayerDataDirName = "Players", LanguageDirName = "language", VipFileName = "VIP/VIP.yml",
 			SVIPFileName = "VIP/SVIP.yml", RVIPFileName = "VIP/RVIP.yml", VIPDirName = "VIP",
-			SystemFileName = "System.xml", TeamDirName = "Team";
+			SystemFileName = "System.xml", TeamDirName = "Team", TeamEffectName = "TeamEffectShop.yml";
 	private Brassiere mis;
 	private MyEconomy economy;
 	private EconomyManage money;

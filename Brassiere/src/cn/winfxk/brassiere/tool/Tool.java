@@ -17,6 +17,7 @@ import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -54,6 +55,21 @@ import cn.nukkit.math.Vector3;
 public class Tool implements X509TrustManager, HostnameVerifier {
 	private static String colorKeyString = "123456789abcdef";
 	private static String randString = "-+abcdefghijklmnopqrstuvwxyz_";
+
+	/**
+	 * 数组相加
+	 * 
+	 * @param <T>    数组的类型
+	 * @param arrays 要先加的数组内容
+	 * @return
+	 */
+	public static <T> T[] Arrays(T[]... arrays) {
+		List<T> list = new ArrayList<>();
+		for (T[] t : arrays)
+			for (T t1 : t)
+				list.add(t1);
+		return (T[]) list.toArray();
+	}
 
 	/**
 	 * 自动生成一个Command对象的Help文本
@@ -464,7 +480,11 @@ public class Tool implements X509TrustManager, HostnameVerifier {
 	public static String objToString(Object obj, String string) {
 		if (obj == null)
 			return string;
-		return String.valueOf(obj);
+		try {
+			return String.valueOf(obj);
+		} catch (Exception e) {
+			return string;
+		}
 	}
 
 	/**
@@ -872,8 +892,8 @@ public class Tool implements X509TrustManager, HostnameVerifier {
 	 * @param object
 	 * @return
 	 */
-	public static int ObjectToInt(Object object) {
-		return ObjectToInt(object, 0);
+	public static int ObjToInt(Object object) {
+		return ObjToInt(object, 0);
 	}
 
 	/**
@@ -883,7 +903,7 @@ public class Tool implements X509TrustManager, HostnameVerifier {
 	 * @param i      若不是纯数字将默认转化的值
 	 * @return
 	 */
-	public static int ObjectToInt(Object object, int i) {
+	public static int ObjToInt(Object object, int i) {
 		if (object == null)
 			return i;
 		String string = String.valueOf(object);
@@ -1073,8 +1093,8 @@ public class Tool implements X509TrustManager, HostnameVerifier {
 	 * @param double1
 	 * @return
 	 */
-	public static Double ObjectToDouble(Object obj) {
-		return ObjectToDouble(obj, 0d);
+	public static Double ObjToDouble(Object obj) {
+		return ObjToDouble(obj, 0d);
 	}
 
 	/**
@@ -1084,7 +1104,7 @@ public class Tool implements X509TrustManager, HostnameVerifier {
 	 * @param double1
 	 * @return
 	 */
-	public static Double ObjectToDouble(Object obj, Double double1) {
+	public static Double ObjToDouble(Object obj, Double double1) {
 		if (obj == null)
 			return double1;
 		double d;
@@ -1102,8 +1122,8 @@ public class Tool implements X509TrustManager, HostnameVerifier {
 	/**
 	 * 将Map按数据升序排列
 	 *
-	 * @param     <K>
-	 * @param     <V>
+	 * @param <K>
+	 * @param <V>
 	 * @param map
 	 * @return
 	 */
@@ -1125,8 +1145,8 @@ public class Tool implements X509TrustManager, HostnameVerifier {
 	/**
 	 * 将Map降序排序
 	 *
-	 * @param     <K>
-	 * @param     <V>
+	 * @param <K>
+	 * @param <V>
 	 * @param map
 	 * @return
 	 */
@@ -1153,6 +1173,6 @@ public class Tool implements X509TrustManager, HostnameVerifier {
 	 * @return
 	 */
 	public static double getRand(double d, double e) {
-		return getRand(ObjectToInt(d), ObjectToInt(e));
+		return getRand(ObjToInt(d), ObjToInt(e));
 	}
 }
