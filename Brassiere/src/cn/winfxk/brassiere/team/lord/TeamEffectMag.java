@@ -49,6 +49,7 @@ public class TeamEffectMag extends FormBase {
 			BuyMoney = map2.get("BuyMoney");
 			EconomyName = map2.get("EconomyName");
 			EffectLevel = map2.get("EffectLevel");
+			listKey.add(Tool.objToString(map2.get("Key")));
 			if (EffectLevel == null || EffectID == null || BuyMoney == null || EconomyName == null
 					|| (economy = ac.getEconomyManage().getEconomy(Tool.objToString(EconomyName))) == null)
 				continue;

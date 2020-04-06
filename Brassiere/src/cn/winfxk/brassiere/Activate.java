@@ -7,6 +7,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.nukkit.Player;
+import cn.nukkit.Server;
+import cn.nukkit.plugin.Plugin;
+import cn.nukkit.plugin.PluginBase;
+import cn.nukkit.utils.Config;
+import cn.nukkit.utils.Utils;
 import cn.winfxk.brassiere.cmd.TeamCommand;
 import cn.winfxk.brassiere.form.MakeForm;
 import cn.winfxk.brassiere.money.EconomyAPI;
@@ -16,13 +22,6 @@ import cn.winfxk.brassiere.money.Snowmn;
 import cn.winfxk.brassiere.team.TeamMag;
 import cn.winfxk.brassiere.tool.Tool;
 import cn.winfxk.brassiere.vip.VipMag;
-
-import cn.nukkit.Player;
-import cn.nukkit.Server;
-import cn.nukkit.plugin.Plugin;
-import cn.nukkit.plugin.PluginBase;
-import cn.nukkit.utils.Config;
-import cn.nukkit.utils.Utils;
 
 /**
  * @author Winfxk
@@ -86,8 +85,8 @@ public class Activate {
 		teamMag = new TeamMag(this);
 		kis.getServer().getCommandMap().register(kis.getName() + "Team", new TeamCommand(this));
 		kis.getServer().getPluginManager().registerEvents(new PlayerEvent(this), kis);
-		kis.getLogger().info(message.getMessage("插件启动", new String[] { "{loadTime}" },
-				new Object[] { (float) Duration.between(mis.loadTime, Instant.now()).toMillis() + "ms" }));
+		kis.getLogger().info(message.getMessage("插件启动", "{loadTime}",
+				(float) Duration.between(mis.loadTime, Instant.now()).toMillis() + "ms"));
 	}
 
 	/**

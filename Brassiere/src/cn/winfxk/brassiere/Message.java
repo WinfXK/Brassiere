@@ -7,11 +7,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cn.winfxk.brassiere.money.MyEconomy;
-import cn.winfxk.brassiere.tool.Tool;
-
 import cn.nukkit.Player;
 import cn.nukkit.utils.Config;
+import cn.winfxk.brassiere.money.MyEconomy;
+import cn.winfxk.brassiere.tool.Tool;
 
 /**
  * @author Winfxk
@@ -21,8 +20,6 @@ public class Message {
 	private String[] Data;
 	private Config Message;
 	private static final String[] Key = { "{n}", "{ServerName}", "{PluginName}", "{MoneyName}", "{Time}", "{Date}" };
-	public static final List<String> dLk = new ArrayList<>();
-	public static final List<Object> dLd = new ArrayList<>();
 	public static final List<String> Dk = new ArrayList<>();
 	public static final String EconomyKey = "Economy}";
 	static {
@@ -50,7 +47,7 @@ public class Message {
 	 */
 	public Message(Activate ac, boolean isLog) {
 		this.ac = ac;
-		Message = new Config(getFile(), 2);
+		Message = new Config(getFile(), Config.YAML);
 		if (isLog)
 			ac.getPluginBase().getLogger().info("§6Load the language: §e" + Message.getString("lang"));
 		load();
@@ -91,7 +88,15 @@ public class Message {
 	 * @return
 	 */
 	public String getSun(String t, String Son, String Sun) {
-		return getSun(t, Son, Sun, dLk, dLd);
+		if (Message.exists(t) && Message.get(t) instanceof Map) {
+			HashMap<String, Object> map = (HashMap<String, Object>) Message.get(t);
+			if (map.containsKey(Son) && map.get(Son) instanceof Map) {
+				map = (HashMap<String, Object>) map.get(Son);
+				if (map.containsKey(Sun))
+					return getText(map.get(Sun).toString());
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -105,7 +110,8 @@ public class Message {
 	 * @return
 	 */
 	public String getSun(String t, String Son, String Sun, String[] k, Object[] d) {
-		return getSun(t, Son, Sun, Arrays.asList(k), Arrays.asList(d));
+		return k == null || k.length <= 1 || d == null || d.length <= 1 ? getSon(t, Son)
+				: getSun(t, Son, Sun, Arrays.asList(k), Arrays.asList(d));
 	}
 
 	/**
@@ -178,7 +184,12 @@ public class Message {
 	 * @return
 	 */
 	public String getSon(String t, String Son) {
-		return getSon(t, Son, new ArrayList<String>(), new ArrayList<>());
+		if (Message.exists(t) && Message.get(t) instanceof Map) {
+			HashMap<String, Object> map = (HashMap<String, Object>) Message.get(t);
+			if (map.containsKey(Son))
+				return getText(map.get(Son).toString());
+		}
+		return null;
 	}
 
 	/**
@@ -215,7 +226,8 @@ public class Message {
 	 * @return
 	 */
 	public String getSon(String t, String Son, String[] k, Object[] d) {
-		return getSon(t, Son, Arrays.asList(k), Arrays.asList(d));
+		return k == null || k.length <= 1 || d == null || d.length <= 1 ? getSon(t, Son)
+				: getSon(t, Son, Arrays.asList(k), Arrays.asList(d));
 	}
 
 	/**
@@ -243,7 +255,9 @@ public class Message {
 	 * @return
 	 */
 	public String getMessage(String t) {
-		return getMessage(t, new ArrayList<String>(), new ArrayList<>());
+		if (Message.exists(t))
+			return getText(Message.get(t));
+		return null;
 	}
 
 	/**
@@ -277,7 +291,22 @@ public class Message {
 	 * @return
 	 */
 	public String getMessage(String t, String[] k, Object[] d) {
-		return getMessage(t, Arrays.asList(k), Arrays.asList(d));
+		return k == null || k.length <= 1 || d == null || d.length <= 1 ? getMessage(t)
+				: getMessage(t, Arrays.asList(k), Arrays.asList(d));
+	}
+
+	/**
+	 * 从配置文件中获取一级默认文本并插入数据
+	 *
+	 * @param t 一级Key
+	 * @param k 要插入的对应变量
+	 * @param d 要插入的数据
+	 * @return
+	 */
+	public String getMessage(String t, String k, Object d) {
+		if (Message.exists(t))
+			return getText(Message.get(t), k, d);
+		return null;
 	}
 
 	/**
@@ -290,7 +319,7 @@ public class Message {
 	 */
 	public String getMessage(String t, List<String> k, List<Object> d) {
 		if (Message.exists(t))
-			return getText(Message.getString(t), k, d);
+			return getText(Message.get(t), k, d);
 		return null;
 	}
 
@@ -319,11 +348,80 @@ public class Message {
 	/**
 	 * 将数据插入文本中
 	 *
-	 * @param tex 要插入修改的文本
+	 * @param text 要插入修改的文本
+	 * @return
+	 */
+	public String getText(Object text, String k, Object d) {
+		if (text == null)
+			return null;
+		load();
+		String string = String.valueOf(text);
+		if (string == null || string.isEmpty())
+			return null;
+		string = string.replace(k, String.valueOf(d));
+		for (int i = 0; i < Key.length; i++)
+			if (string.contains(Key[i]))
+				string = string.replace(Key[i], Data[i]);
+		if (string.contains("{RandColor}")) {
+			String[] strings = string.split("\\{RandColor\\}");
+			string = "";
+			for (String s : strings)
+				string += Tool.getRandColor() + s;
+		}
+		if (string.contains("{RGBTextStart}") && string.contains("{RGBTextEnd}")) {
+			String rgb = "", rString, gString;
+			String[] rgbStrings = string.split("\\{RGBTextEnd\\}");
+			for (String rgbString : rgbStrings)
+				if (rgbString.contains("{RGBTextStart}")) {
+					rString = rgbString + "{RGBTextEnd}";
+					gString = Tool.cutString(rString, "{RGBTextStart}", "{RGBTextEnd}");
+					if (gString == null || gString.isEmpty())
+						gString = "";
+					rgb += rString.replace("{RGBTextStart}" + gString + "{RGBTextEnd}", Tool.getColorFont(gString));
+				} else
+					rgb += rgbString;
+			string = rgb;
+		}
+		return getEconomy(string);
+	}
+
+	/**
+	 * 将数据插入文本中
+	 *
+	 * @param text 要插入修改的文本
 	 * @return
 	 */
 	public String getText(Object text) {
-		return getText(text, new ArrayList<String>(), new ArrayList<>());
+		if (text == null)
+			return null;
+		load();
+		String string = String.valueOf(text);
+		if (string == null || string.isEmpty())
+			return null;
+		for (int i = 0; i < Key.length; i++)
+			if (string.contains(Key[i]))
+				string = string.replace(Key[i], Data[i]);
+		if (string.contains("{RandColor}")) {
+			String[] strings = string.split("\\{RandColor\\}");
+			string = "";
+			for (String s : strings)
+				string += Tool.getRandColor() + s;
+		}
+		if (string.contains("{RGBTextStart}") && string.contains("{RGBTextEnd}")) {
+			String rgb = "", rString, gString;
+			String[] rgbStrings = string.split("\\{RGBTextEnd\\}");
+			for (String rgbString : rgbStrings)
+				if (rgbString.contains("{RGBTextStart}")) {
+					rString = rgbString + "{RGBTextEnd}";
+					gString = Tool.cutString(rString, "{RGBTextStart}", "{RGBTextEnd}");
+					if (gString == null || gString.isEmpty())
+						gString = "";
+					rgb += rString.replace("{RGBTextStart}" + gString + "{RGBTextEnd}", Tool.getColorFont(gString));
+				} else
+					rgb += rgbString;
+			string = rgb;
+		}
+		return getEconomy(string);
 	}
 
 	/**
@@ -335,7 +433,7 @@ public class Message {
 	 * @return
 	 */
 	public String getText(Object tex, String[] k, Object[] d) {
-		return getText(tex, Arrays.asList(k), Arrays.asList(d));
+		return k.length <= 1 || d.length <= 1 ? getText(tex) : getText(tex, Arrays.asList(k), Arrays.asList(d));
 	}
 
 	/**

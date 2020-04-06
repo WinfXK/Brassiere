@@ -1,4 +1,5 @@
 package cn.winfxk.brassiere.vip;
+
 /**
  *@author Winfxk
  */
@@ -61,8 +62,7 @@ public class VipMag implements FilenameFilter {
 				ac.getPluginBase().getLogger().error(ac.getMessage().getMessage("无法加载特权配置",
 						new String[] { "{FileName}", "{Error}" }, new Object[] { file.getName(), e.getMessage() }));
 			}
-		ac.getPluginBase().getLogger()
-				.info(ac.getMessage().getMessage("加载特权规则", new String[] { "{Count}" }, new Object[] { VipSize() }));
+		ac.getPluginBase().getLogger().info(ac.getMessage().getMessage("加载特权规则", "{Count}", VipSize()));
 	}
 
 	/**

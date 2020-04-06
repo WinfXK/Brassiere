@@ -30,7 +30,7 @@ public class addTeamEffect extends FormBase {
 
 	@Override
 	public boolean MakeMain() {
-		CustomForm form = new CustomForm(ID, msg.getSun("Team", "AdminAddTeamEffect", "Title", K, D));
+		CustomForm form = new CustomForm(getID(), msg.getSun("Team", "AdminAddTeamEffect", "Title", K, D));
 		form.addLabel(msg.getSun("Team", "AdminAddTeamEffect", "addEffectContent", K, D));
 		form.addInput(msg.getSun("Team", "AdminAddTeamEffect", "InputEffectID", K, D), map.get("EffectID"),
 				msg.getSun("Team", "AdminAddTeamEffect", "InputEffectID", K, D));

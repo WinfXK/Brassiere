@@ -35,6 +35,11 @@ Team-Sign:
 Team-Command:
    Usage: '{RandColor}组队相关命令'
 Team:
+   TeamEffectShop:
+      Title: '{RandColor}队伍特效管理'
+      Content: ' '
+      NotTeamLevel: §a不限等级
+      EffItem: §6{EffectID}§d>§f>§a{BuyMoney}§b(§d{EconomyName}§b)§f|§i{TeamLevel}
    AdminAddTeamEffect:
       Title: '{RandColor}队伍特效管理'
       Content: ' '
