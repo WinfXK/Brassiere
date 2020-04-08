@@ -36,10 +36,19 @@ Team-Command:
    Usage: '{RandColor}组队相关命令'
 Team:
    TeamEffectShop:
+      ClickShopItemTitle: "{RandColor}{EffectID}"
+      ClickShopItemContent: "§6当前选择的Buff：{EffectID}§f>§6{EffectLevel}{n}§6价格：§4{BuyMoney}{n}§a使用货币：§1{EconomyName}"
       Title: '{RandColor}队伍特效管理'
       Content: ' '
       NotTeamLevel: §a不限等级
+      NotEconomy: §4无法获取购买该Buff需要的经济支持
       EffItem: §6{EffectID}§d>§f>§a{BuyMoney}§b(§d{EconomyName}§b)§f|§i{TeamLevel}
+      Buy: §e购买
+      Back: §4返回
+      NotMoney: §4您的§6{Currency}§4不足！
+      BuyOK: §6购买成功！
+      NotTeamLevel: §4您的队伍等级过低！无权购买该Buff！
+      Already: §4你已经拥有该Buff，无需重复购买！
    AdminAddTeamEffect:
       Title: '{RandColor}队伍特效管理'
       Content: ' '

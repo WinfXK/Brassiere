@@ -8,15 +8,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import cn.nukkit.Player;
+import cn.nukkit.potion.Effect;
+import cn.nukkit.utils.Config;
 import cn.winfxk.brassiere.Activate;
 import cn.winfxk.brassiere.MyPlayer;
 import cn.winfxk.brassiere.money.MyEconomy;
 import cn.winfxk.brassiere.tool.Effectrow;
 import cn.winfxk.brassiere.tool.Tool;
-
-import cn.nukkit.Player;
-import cn.nukkit.potion.Effect;
-import cn.nukkit.utils.Config;
 
 /**
  * 每个队伍的数据
@@ -695,6 +694,48 @@ public class Team {
 		ApplyFor.clear();
 		close();
 		return true;
+	}
+
+	/**
+	 * 往队伍Buff中添加一些Buff
+	 * 
+	 * @param effect
+	 * @return
+	 */
+	public boolean addEffect(Effect effect) {
+		if (isEffect(effect))
+			return false;
+		Effects.add(effect);
+		return save();
+	}
+
+	/**
+	 * 判断队伍是否拥有一个Buff
+	 * 
+	 * @param effect
+	 * @return
+	 */
+	public boolean isEffect(Effect effect) {
+		for (Effect effect2 : Effects)
+			if (effect.getId() == effect2.getId() && effect.getAmplifier() == effect2.getAmplifier())
+				return true;
+		return false;
+	}
+
+	/**
+	 * 从队伍Buff列表删除一个Buff
+	 *
+	 * @param effect
+	 * @return
+	 */
+	public boolean removeEffect(Effect effect) {
+		boolean isOK = false;
+		for (int i = 0; i < Effects.size(); i++)
+			if (effect.getId() == Effects.get(i).getId() && effect.getAmplifier() == Effects.get(i).getAmplifier()) {
+				Effects.remove(i);
+				isOK = true;
+			}
+		return isOK;
 	}
 
 	/**

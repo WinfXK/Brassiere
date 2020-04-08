@@ -53,9 +53,9 @@ public class TeamEffectMag extends FormBase {
 			if (EffectLevel == null || EffectID == null || BuyMoney == null || EconomyName == null
 					|| (economy = ac.getEconomyManage().getEconomy(Tool.objToString(EconomyName))) == null)
 				continue;
-			TeamLevel = map2.get("TeamLevel") == null ? msg.getSun("Team", "AdminAddTeamEffect", "Content", K, D)
+			TeamLevel = map2.get("TeamLevel") == null ? msg.getSun("Team", "AdminAddTeamEffect", "NotTeamLevel", K, D)
 					: Tool.ObjToInt(map2.get("TeamLevel"));
-			form.addButton(msg.getSun("Team", "AdminAddTeamEffect", "Content", Key,
+			form.addButton(msg.getSun("Team", "AdminAddTeamEffect", "EffItem", Key,
 					new Object[] { player.getName(), myPlayer.getMoney(), Tool.ObjToInt(EffectID),
 							Tool.ObjToDouble(BuyMoney), economy.getEconomyName(), TeamLevel, EffectLevel }));
 		}

@@ -43,4 +43,8 @@ public class EconomyAPI extends MyEconomy {
 		return getMoney(player);
 	}
 
+	@Override
+	public boolean allowArrears() {
+		return false;
+	}
 }

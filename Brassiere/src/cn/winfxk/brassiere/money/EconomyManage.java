@@ -14,14 +14,16 @@ import cn.winfxk.brassiere.Activate;
 public class EconomyManage {
 	private LinkedHashMap<String, MyEconomy> Economy;
 	private Config config;
+	protected static EconomyManage em;
 
 	public EconomyManage() {
+		em = this;
 		Economy = new LinkedHashMap<>();
 		config = new Config(
 				new File(Activate.getActivate().getPluginBase().getDataFolder(), Activate.EconomyListConfigName),
 				Config.YAML);
 	}
-	
+
 	/**
 	 * 获取一个Knickers支持的经济插件</br>
 	 * Get a Knickers supported Economy plug-in
@@ -57,7 +59,7 @@ public class EconomyManage {
 	public boolean addEconomyAPI(MyEconomy economy) {
 		if (Economy.containsKey(economy.getEconomyName()))
 			return false;
-		Economy.put(economy.getEconomyName(), economy);
+		Economy.put(economy.getEconomyName(), economy.setEnabled(true));
 		Write();
 		return true;
 	}
@@ -73,7 +75,7 @@ public class EconomyManage {
 	public boolean cancelEconomyAPI(String EconomyName) {
 		if (!Economy.containsKey(EconomyName))
 			return true;
-		Economy.remove(EconomyName);
+		Economy.remove(EconomyName).setEnabled(false);
 		Write();
 		return !Economy.containsKey(EconomyName);
 	}

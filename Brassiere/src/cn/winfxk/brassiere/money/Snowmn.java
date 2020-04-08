@@ -33,4 +33,8 @@ public class Snowmn extends MyEconomy {
 		return Money.setMoney(player, money);
 	}
 
+	@Override
+	public boolean allowArrears() {
+		return false;
+	}
 }

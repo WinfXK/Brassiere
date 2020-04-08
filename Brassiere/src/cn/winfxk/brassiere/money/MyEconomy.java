@@ -8,6 +8,8 @@ import cn.nukkit.command.CommandSender;
  */
 public abstract class MyEconomy {
 	private String EconomyName, MoneyName;
+	protected EconomyManage em;
+	private boolean isEnabled = false;
 
 	/**
 	 * 经济支持管理 </br>
@@ -22,6 +24,17 @@ public abstract class MyEconomy {
 	public MyEconomy(String EconomyName, String MoneyName) {
 		this.EconomyName = EconomyName;
 		this.MoneyName = MoneyName;
+		em = EconomyManage.em;
+	}
+
+	/**
+	 * 设置插件启用状态
+	 * 
+	 * @param isEnabled
+	 */
+	protected MyEconomy setEnabled(boolean isEnabled) {
+		this.isEnabled = isEnabled;
+		return this;
 	}
 
 	/**
@@ -209,6 +222,22 @@ public abstract class MyEconomy {
 	 *         The amount of money a player currently has
 	 */
 	public abstract double setMoney(String player, double Money);
+
+	/**
+	 * 该经济支持是否允许欠款
+	 * 
+	 * @return
+	 */
+	public abstract boolean allowArrears();
+
+	/**
+	 * 判断一个经济支持是否启用
+	 * 
+	 * @return
+	 */
+	public boolean isEnabled() {
+		return em.supportEconomy(getEconomyName()) && isEnabled;
+	}
 
 	@Override
 	public String toString() {
