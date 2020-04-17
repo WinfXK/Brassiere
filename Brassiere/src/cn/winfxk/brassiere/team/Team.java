@@ -23,6 +23,14 @@ import cn.winfxk.brassiere.tool.Tool;
  * @author Winfxk
  */
 public class Team {
+	/**
+	 * 队伍的配置文件对象
+	 */
+	private Config config;
+	/**
+	 * 队伍的文件对象
+	 */
+	private File file;
 	private Activate ac;
 	/**
 	 * 队伍的ID
@@ -51,6 +59,10 @@ public class Team {
 	 * 公会金库
 	 */
 	private double Money;
+	/**
+	 * 队伍安全口令
+	 */
+	private String Securitypd;
 	/**
 	 * 队伍可容纳人数
 	 */
@@ -88,13 +100,13 @@ public class Team {
 	 */
 	private boolean AllowedGain;
 	/**
-	 * 队伍的配置文件对象
+	 * 队伍的签到奖励<将会获得的队伍声望数量>
 	 */
-	private Config config;
+	private double SignIn;
 	/**
-	 * 队伍的文件对象
+	 * 是否启用追加声望算法
 	 */
-	private File file;
+	private boolean isSignIn;
 	/**
 	 * 队伍中有的玩家列表
 	 */
@@ -188,6 +200,187 @@ public class Team {
 		JoinTariffEconomy = ac.getEconomyManage().getEconomy(config.getString("JoinTariffEconomy"));
 		AllowedPVP = config.getBoolean("AllowedPVP");
 		Content = config.getString("Content");
+		Securitypd = config.getString("Securitypd");
+		SignIn = config.getDouble("SignIn");
+		isSignIn = config.getBoolean("isSignIn");
+	}
+
+	/**
+	 * 允许玩家使用聊天室
+	 * 
+	 * @param allowedChat
+	 * @return
+	 */
+	public boolean setAllowedChat(boolean allowedChat) {
+		AllowedChat = allowedChat;
+		return save();
+	}
+
+	/**
+	 * 允许玩家使用队伍增益
+	 * 
+	 * @param allowedGain
+	 * @return
+	 */
+	public boolean setAllowedGain(boolean allowedGain) {
+		AllowedGain = allowedGain;
+		return save();
+	}
+
+	/**
+	 * 允许玩家上架物品到队伍商城
+	 * 
+	 * @param allowedMakeShop
+	 * @return
+	 */
+	public boolean setAllowedMakeShop(boolean allowedMakeShop) {
+		AllowedMakeShop = allowedMakeShop;
+		return save();
+	}
+
+	/**
+	 * 设置是否允许使用签到增益
+	 * 
+	 * @param isSignIn
+	 * @return
+	 */
+	public boolean setSignIn(boolean isSignIn) {
+		this.isSignIn = isSignIn;
+		return save();
+	}
+
+	/**
+	 * 设置每次签到都会获得的数额
+	 * 
+	 * @param Money
+	 * @return
+	 */
+	public boolean setSignIn(double Money) {
+		SignIn = Money;
+		return save();
+	}
+
+	/**
+	 * 允许队员之间PVP
+	 * 
+	 * @param allowedPVP
+	 * @return
+	 */
+	public boolean setAllowedPVP(boolean allowedPVP) {
+		AllowedPVP = allowedPVP;
+		return save();
+	}
+
+	/**
+	 * 允许玩家使用队伍商城
+	 * 
+	 * @param allowedShop
+	 * @return
+	 */
+	public boolean setAllowedShop(boolean allowedShop) {
+		AllowedShop = allowedShop;
+		return save();
+	}
+
+	/**
+	 * 设置允许玩家加入队伍
+	 * 
+	 * @param allowedJoin
+	 * @return
+	 */
+	public boolean setAllowedJoin(boolean allowedJoin) {
+		AllowedJoin = allowedJoin;
+		return save();
+	}
+
+	/**
+	 * 设置允许玩家或许队伍称号
+	 * 
+	 * @param allowedSign
+	 * @return
+	 */
+	public boolean setAllowedSign(boolean allowedSign) {
+		AllowedSign = allowedSign;
+		return save();
+	}
+
+	/**
+	 * 获取队伍签到将会获得的声望数量
+	 * 
+	 * @return
+	 */
+	public double getSignIn() {
+		return SignIn;
+	}
+
+	/**
+	 * 是否启用连续签到将会获得奖励算法
+	 * 
+	 * @return
+	 */
+	public boolean isSignIn() {
+		return isSignIn;
+	}
+
+	/**
+	 * 设置队伍名称
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public boolean setName(String name) {
+		Name = name;
+		return save();
+	}
+
+	/**
+	 * 获取队伍安全口令
+	 * 
+	 * @return
+	 */
+	public String getSecuritypd() {
+		return Securitypd;
+	}
+
+	/**
+	 * 设置队伍内容消息
+	 * 
+	 * @param content
+	 * @return 
+	 */
+	public boolean setContent(String content) {
+		Content = content;
+		return save();
+	}
+
+	/**
+	 * 设置入队资费
+	 * 
+	 * @param joinTariff
+	 * @return
+	 */
+	public boolean setJoinTariff(double joinTariff) {
+		JoinTariff = joinTariff;
+		return save();
+	}
+
+	/**
+	 * 判断安全口令是否匹配
+	 * 
+	 * @return
+	 */
+	public boolean checkSecuritypd(String SecurityCode) {
+		return Securitypd.equals(SecurityCode);
+	}
+
+	/**
+	 * 设置队伍安全口令
+	 * 
+	 * @param securitypd
+	 */
+	public boolean setSecuritypd(String securitypd) {
+		Securitypd = securitypd;
+		return save();
 	}
 
 	/**
@@ -543,6 +736,8 @@ public class Team {
 		config.set("AllowedPVP", AllowedPVP);
 		config.set("Content", Content);
 		config.set("SignPrice", SignPrice);
+		config.set("SignIn", SignIn);
+		config.set("isSignIn", isSignIn);
 		return config.save();
 	}
 
@@ -826,12 +1021,12 @@ public class Team {
 	 * @param name
 	 * @return
 	 */
-	public int getPrestige(String name) {
+	public double getPrestige(String name) {
 		if (Players.containsKey(name)) {
 			Map<String, Object> map = Players.get(name);
 			if (map == null)
 				return 0;
-			return Tool.ObjToInt(map.get("Prestige"), 0);
+			return Tool.objToDouble(map.get("Prestige"), 0d);
 		}
 		return 0;
 	}
@@ -843,7 +1038,7 @@ public class Team {
 	 * @param prestige
 	 * @return
 	 */
-	public Team addPrestige(String name, int prestige) {
+	public Team addPrestige(String name, double prestige) {
 		return setPrestige(name, prestige + getPrestige(name));
 	}
 
@@ -854,7 +1049,7 @@ public class Team {
 	 * @param prestige
 	 * @return
 	 */
-	public Team reducePrestige(String name, int prestige) {
+	public Team reducePrestige(String name, double prestige) {
 		return setPrestige(name, getPrestige(name) - prestige);
 	}
 
@@ -865,7 +1060,7 @@ public class Team {
 	 * @param Prestige
 	 * @return
 	 */
-	public Team setPrestige(String name, int prestige) {
+	public Team setPrestige(String name, double prestige) {
 		if (!Players.containsKey(name))
 			return this;
 		Map<String, Object> map = Players.get(name);
@@ -991,5 +1186,33 @@ public class Team {
 	public double getLevel() {
 		return Players.size() + Prestige / 2 + Effects.size() * 1.5 + MaxCounts / 2 + Shop.size() * 0.2 + Money * 0.1
 				+ ApplyFor.size() * 0.1;
+	}
+
+	/**
+	 * 返回队伍管理核心
+	 * 
+	 * @return
+	 */
+	public TeamMag getTeamMag() {
+		return ac.getTeamMag();
+	}
+
+	/**
+	 * 设置称号的价格
+	 * 
+	 * @param signPrice
+	 */
+	public void setSignPrice(Map<Integer, Double> signPrice) {
+		SignPrice = signPrice;
+	}
+
+	/**
+	 * 设置称号的价格
+	 * 
+	 * @param pos   称号的等级<b>[0-5]</b>
+	 * @param Money 称号的价格
+	 */
+	public void setSignPrice(Integer pos, Double Money) {
+		SignPrice.replace(pos, Money);
 	}
 }

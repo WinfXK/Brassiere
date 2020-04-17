@@ -16,8 +16,10 @@ import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -55,6 +57,66 @@ import cn.nukkit.math.Vector3;
 public class Tool implements X509TrustManager, HostnameVerifier {
 	private static String colorKeyString = "123456789abcdef";
 	private static String randString = "-+abcdefghijklmnopqrstuvwxyz_";
+
+	/**
+	 * 计算两个日期之间相隔多少天
+	 * 
+	 * @param date1 第一个日期字符串
+	 * @param date2 第二个日期字符串
+	 * @return
+	 */
+	public static long getDay(String date1, String date2) {
+		return getDay(date1, "yyyy-MM-dd", date2, "yyyy-MM-dd");
+	}
+
+	/**
+	 * 计算两个日期之间相隔多少天
+	 * 
+	 * @param date1       第一个日期字符串
+	 * @param date1format 第一个日期字符串的格式<yyyy-MM-dd>
+	 * @param date2       第二个日期字符串
+	 * @param date2format 第二个日期字符串<yyyy-MM-dd>
+	 */
+	public static long getDay(String date1sStr, String date1format, String date2Str, String date2format) {
+		Date date1 = parseDate(date1sStr, date1format);
+		Date date2 = parseDate(date2Str, date2format);
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date1);
+		long timeInMillis1 = calendar.getTimeInMillis();
+		calendar.setTime(date2);
+		long timeInMillis2 = calendar.getTimeInMillis();
+		long betweenDays = (timeInMillis2 - timeInMillis1) / (1000L * 3600L * 24L);
+		return betweenDays;
+	}
+
+	/**
+	 * 将指定的日期字符串转换成日期
+	 * 
+	 * @param dateStr 日期字符串
+	 * @param pattern 格式
+	 * @return 日期对象
+	 */
+	public static Date parseDate(String dateStr) {
+		return parseDate(dateStr, "yyyy-MM-dd HH:mm:ss");
+	}
+
+	/**
+	 * 将指定的日期字符串转换成日期
+	 * 
+	 * @param dateStr 日期字符串
+	 * @param pattern 格式
+	 * @return 日期对象
+	 */
+	public static Date parseDate(String dateStr, String pattern) {
+		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+		Date date;
+		try {
+			date = sdf.parse(dateStr);
+		} catch (ParseException e) {
+			throw new RuntimeException("日期转化错误");
+		}
+		return date;
+	}
 
 	/**
 	 * 数组相加

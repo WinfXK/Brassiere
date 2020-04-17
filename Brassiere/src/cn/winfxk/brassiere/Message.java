@@ -18,7 +18,8 @@ import cn.winfxk.brassiere.tool.Tool;
 public class Message {
 	private Activate ac;
 	private String[] Data;
-	private Config Message;
+	private Map<String, Object> map;
+	private Config config;
 	private static final String[] Key = { "{n}", "{ServerName}", "{PluginName}", "{MoneyName}", "{Time}", "{Date}" };
 	public static final List<String> Dk = new ArrayList<>();
 	public static final String EconomyKey = "Economy}";
@@ -28,7 +29,7 @@ public class Message {
 	}
 
 	public Config getConfig() {
-		return Message;
+		return config;
 	}
 
 	/**
@@ -47,9 +48,10 @@ public class Message {
 	 */
 	public Message(Activate ac, boolean isLog) {
 		this.ac = ac;
-		Message = new Config(getFile(), Config.YAML);
+		config = new Config(getFile(), Config.YAML);
+		map = config.getAll();
 		if (isLog)
-			ac.getPluginBase().getLogger().info("§6Load the language: §e" + Message.getString("lang"));
+			ac.getPluginBase().getLogger().info("§6Load the language: §e" + config.getString("lang"));
 		load();
 	}
 
@@ -57,8 +59,8 @@ public class Message {
 	 * 重载语言数据
 	 */
 	public void reload() {
-		Message = new Config(getFile(), 2);
-		ac.getPluginBase().getLogger().info("§6Load the language: §e" + Message.getString("lang"));
+		config = new Config(getFile(), 2);
+		ac.getPluginBase().getLogger().info("§6Load the language: §e" + config.getString("lang"));
 		load();
 	}
 
@@ -88,8 +90,8 @@ public class Message {
 	 * @return
 	 */
 	public String getSun(String t, String Son, String Sun) {
-		if (Message.exists(t) && Message.get(t) instanceof Map) {
-			HashMap<String, Object> map = (HashMap<String, Object>) Message.get(t);
+		if (map.containsKey(t) && map.get(t) instanceof Map) {
+			HashMap<String, Object> map = (HashMap<String, Object>) this.map.get(t);
 			if (map.containsKey(Son) && map.get(Son) instanceof Map) {
 				map = (HashMap<String, Object>) map.get(Son);
 				if (map.containsKey(Sun))
@@ -125,8 +127,8 @@ public class Message {
 	 * @return
 	 */
 	public String getSun(String t, String Son, String Sun, List<String> k, List<Object> d) {
-		if (Message.exists(t) && Message.get(t) instanceof Map) {
-			HashMap<String, Object> map = (HashMap<String, Object>) Message.get(t);
+		if (this.map.containsKey(t) && this.map.get(t) instanceof Map) {
+			HashMap<String, Object> map = (HashMap<String, Object>) this.map.get(t);
 			if (map.containsKey(Son) && map.get(Son) instanceof Map) {
 				map = (HashMap<String, Object>) map.get(Son);
 				if (map.containsKey(Sun))
@@ -184,8 +186,8 @@ public class Message {
 	 * @return
 	 */
 	public String getSon(String t, String Son) {
-		if (Message.exists(t) && Message.get(t) instanceof Map) {
-			HashMap<String, Object> map = (HashMap<String, Object>) Message.get(t);
+		if (this.map.containsKey(t) && this.map.get(t) instanceof Map) {
+			HashMap<String, Object> map = (HashMap<String, Object>) this.map.get(t);
 			if (map.containsKey(Son))
 				return getText(map.get(Son).toString());
 		}
@@ -240,8 +242,8 @@ public class Message {
 	 * @return
 	 */
 	public String getSon(String t, String Son, List<String> k, List<Object> d) {
-		if (Message.exists(t) && Message.get(t) instanceof Map) {
-			HashMap<String, Object> map = (HashMap<String, Object>) Message.get(t);
+		if (this.map.containsKey(t) && this.map.get(t) instanceof Map) {
+			HashMap<String, Object> map = (HashMap<String, Object>) this.map.get(t);
 			if (map.containsKey(Son))
 				return getText(map.get(Son).toString(), k, d);
 		}
@@ -255,8 +257,8 @@ public class Message {
 	 * @return
 	 */
 	public String getMessage(String t) {
-		if (Message.exists(t))
-			return getText(Message.get(t));
+		if (this.map.containsKey(t))
+			return getText(this.map.get(t));
 		return null;
 	}
 
@@ -304,8 +306,8 @@ public class Message {
 	 * @return
 	 */
 	public String getMessage(String t, String k, Object d) {
-		if (Message.exists(t))
-			return getText(Message.get(t), k, d);
+		if (this.map.containsKey(t))
+			return getText(this.map.get(t), k, d);
 		return null;
 	}
 
@@ -318,8 +320,8 @@ public class Message {
 	 * @return
 	 */
 	public String getMessage(String t, List<String> k, List<Object> d) {
-		if (Message.exists(t))
-			return getText(Message.get(t), k, d);
+		if (this.map.containsKey(t))
+			return getText(this.map.get(t), k, d);
 		return null;
 	}
 

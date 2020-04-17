@@ -221,6 +221,20 @@ public enum Effectrow {
 	}
 
 	/**
+	 * 判断是否存在一个药水效果
+	 * 
+	 * @param obj 药水效果的名称或者ID
+	 * @return
+	 */
+	public static boolean isEffect(Object obj) {
+		if (Tool.isInteger(obj)) {
+			if (IDKey.containsKey(obj))
+				return true;
+		}
+		return NameKey.containsKey(obj);
+	}
+
+	/**
 	 * 获取药水效果
 	 * 
 	 * @param ID
@@ -228,5 +242,150 @@ public enum Effectrow {
 	 */
 	public static Effect getEffect(int ID) {
 		return Effect.getEffect(ID);
+	}
+
+	/**
+	 * 获取药水效果的名称
+	 * 
+	 * @param effect
+	 * @param Default
+	 * @return
+	 */
+	public static String getName(Effect effect, Object Default) {
+		return getName(effect.getDuration(), Default);
+	}
+
+	/**
+	 * 获取药水效果的名称
+	 * 
+	 * @param effect
+	 * @return
+	 */
+	public static String getName(Effect effect) {
+		return getName(effect.getId());
+	}
+
+	/**
+	 * 获取药水效果的名称
+	 * 
+	 * @param ID
+	 * @return
+	 */
+	public static String getName(int ID) {
+		return IDKey.containsKey(ID) ? IDKey.get(ID).Name : null;
+	}
+
+	/**
+	 * 获取药水效果的名称
+	 * 
+	 * @param ID
+	 * @return
+	 */
+	public static String getName(int ID, Object Default) {
+		return IDKey.containsKey(ID) ? IDKey.get(ID).Name : Tool.objToString(Default);
+	}
+
+	/**
+	 * 获取药水效果的ID
+	 * 
+	 * @param Name
+	 * @return
+	 */
+	public static int getID(String Name) {
+		return Name == null || Name.isEmpty() ? -1 : NameKey.containsKey(Name) ? NameKey.get(Name).ID : -1;
+	}
+
+	/**
+	 * 获取药水效果的ID
+	 * 
+	 * @param Name
+	 * @param Default
+	 * @return
+	 */
+	public static int getID(String Name, int Default) {
+		return Name == null || Name.isEmpty() ? Default : NameKey.containsKey(Name) ? NameKey.get(Name).ID : Default;
+	}
+
+	/**
+	 * 获取药水效果的ID
+	 * 
+	 * @param effect
+	 * @return
+	 */
+	public static int getID(Effect effect) {
+		return getID(getName(effect));
+	}
+
+	/**
+	 * 获取药水效果的ID
+	 * 
+	 * @param effect
+	 * @param Default
+	 * @return
+	 */
+	public static int getID(Effect effect, int Default) {
+		return getID(getName(effect), Default);
+	}
+
+	/**
+	 * 获取药水贴图
+	 * 
+	 * @param Name
+	 * @return
+	 */
+	public static String getPath(String Name) {
+		return Name == null || Name.isEmpty() ? null : NameKey.containsKey(Name) ? NameKey.get(Name).Path : null;
+	}
+
+	/**
+	 * 获取药水贴图
+	 * 
+	 * @param Name
+	 * @return
+	 */
+	public static String getPath(String Name, Object Default) {
+		return Name == null || Name.isEmpty() ? Tool.objToString(Default)
+				: NameKey.containsKey(Name) ? NameKey.get(Name).Path : Tool.objToString(Default);
+	}
+
+	/**
+	 * 获取药水贴图
+	 * 
+	 * @param ID
+	 * @return
+	 */
+	public static String getPath(int ID) {
+		return IDKey.containsKey(ID) ? IDKey.get(ID).Path : null;
+	}
+
+	/**
+	 * 获取药水贴图
+	 * 
+	 * @param ID
+	 * @return
+	 */
+	public static String getPath(int ID, Object Default) {
+		return IDKey.containsKey(ID) ? IDKey.get(ID).Path : Tool.objToString(Default);
+	}
+
+	/**
+	 * 获取药水贴图
+	 * 
+	 * @param effect
+	 * @return
+	 */
+	public static String getPath(Effect effect) {
+		return getPath(effect.getId());
+	}
+
+	/**
+	 * 获取药水贴图
+	 * 
+	 * @param effect
+	 * @param Default
+	 * @return
+	 */
+	public static String getPath(Effect effect, Object Default) {
+		return getPath(effect.getId(), Default);
 	}
 }

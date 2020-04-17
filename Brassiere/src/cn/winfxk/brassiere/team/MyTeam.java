@@ -1,19 +1,18 @@
 package cn.winfxk.brassiere.team;
 
-import cn.winfxk.brassiere.form.FormBase;
-import cn.winfxk.brassiere.team.myteam.QuitTeam;
-import cn.winfxk.brassiere.team.myteam.TeamDatails;
-import cn.winfxk.brassiere.team.myteam.TeamEffect;
-import cn.winfxk.brassiere.team.myteam.TeamManage;
-import cn.winfxk.brassiere.team.myteam.TeamMessage;
-import cn.winfxk.brassiere.team.myteam.TeamPlayerList;
-import cn.winfxk.brassiere.team.myteam.TeamShop;
-import cn.winfxk.brassiere.team.myteam.TeamSign;
-import cn.winfxk.brassiere.tool.SimpleForm;
-
 import cn.nukkit.Player;
 import cn.nukkit.form.response.FormResponse;
 import cn.nukkit.form.response.FormResponseSimple;
+import cn.winfxk.brassiere.form.FormBase;
+import cn.winfxk.brassiere.team.myteam.QuitTeam;
+import cn.winfxk.brassiere.team.myteam.TeamDatails;
+import cn.winfxk.brassiere.team.myteam.TeamManage;
+import cn.winfxk.brassiere.team.myteam.TeamMessage;
+import cn.winfxk.brassiere.team.myteam.TeamPlayerList;
+import cn.winfxk.brassiere.team.myteam.TeamSign;
+import cn.winfxk.brassiere.team.myteam.effect.TeamEffect;
+import cn.winfxk.brassiere.tool.SimpleForm;
+import cn.winfxk.brassiere.tool.Tool;
 
 /**
  * @author Winfxk
@@ -40,6 +39,8 @@ public class MyTeam extends FormBase {
 		setD(team.getCaptain(), team.getID(), team.getName(), team.getMaxCounts(), player.getName(),
 				myPlayer.getMoney(), team.getMaxShopItem(), team.getShop().size());
 		SimpleForm form = new SimpleForm(getID(), msg.getSun("Team", "MyTeam", "Title", K, D), team.getContent(player));
+		form.addButton(msg.getSun("Team", "MyTeam", "SignIn", K, D));
+		listKey.add("signin");
 		if (team.isCaptain(player) || team.isAdmin(player)) {
 			form.addButton(msg.getSun("Team", "MyTeam", "MagTeam", K, D));
 			listKey.add("mag");
@@ -48,10 +49,13 @@ public class MyTeam extends FormBase {
 		listKey.add("msg");
 		form.addButton(msg.getSun("Team", "MyTeam", "List", K, D));
 		listKey.add("list");
-		form.addButton(msg.getSun("Team", "MyTeam", "Shop", K, D));
-		listKey.add("shop");
-		form.addButton(msg.getSun("Team", "MyTeam", "Sign", K, D));
-		listKey.add("sign");
+		// form.addButton(msg.getSun("Team", "MyTeam", "Shop", K, D));
+		// listKey.add("shop");
+		if (myPlayer.getConfig().getString("SignIn") == null
+				|| !myPlayer.getConfig().getString("SignIn").equals(Tool.getDate())) {
+			form.addButton(msg.getSun("Team", "MyTeam", "Sign", K, D));
+			listKey.add("sign");
+		}
 		form.addButton(msg.getSun("Team", "MyTeam", "Effects", K, D));
 		listKey.add("effects");
 		form.addButton(msg.getSun("Team", "MyTeam", "Datails", K, D));
@@ -66,15 +70,17 @@ public class MyTeam extends FormBase {
 	public boolean disMain(FormResponse data) {
 		FormResponseSimple d = getSimple(data);
 		switch (listKey.get(d.getClickedButtonId())) {
+		case "signin":
+			setForm(new TeamSignIn(player, team, this));
 		case "msg":
 			setForm(new TeamMessage(player, team));
 			break;
 		case "list":
 			setForm(new TeamPlayerList(player, team));
 			break;
-		case "shop":
-			setForm(new TeamShop(player, team));
-			break;
+		/*
+		 * case "shop": setForm(new TeamShop(player, team)); break; 暂时弃用
+		 */
 		case "sign":
 			setForm(new TeamSign(player, team));
 			break;

@@ -28,6 +28,7 @@ public abstract class FormBase {
 	protected Object[] D = {};
 	protected String[] K = {};
 	private FormBase make;
+	public String Son;
 
 	/**
 	 * 界面交互基础类
@@ -40,6 +41,7 @@ public abstract class FormBase {
 		msg = ac.getMessage();
 		formID = ac.getFormID();
 		myPlayer = ac.getPlayers(player.getName());
+		Son = getClass().getSimpleName();
 	}
 
 	/**

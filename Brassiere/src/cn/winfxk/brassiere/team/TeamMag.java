@@ -1,13 +1,15 @@
 package cn.winfxk.brassiere.team;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
-
-import cn.winfxk.brassiere.Activate;
-import cn.winfxk.brassiere.MyPlayer;
+import java.util.List;
+import java.util.Map;
 
 import cn.nukkit.Player;
 import cn.nukkit.utils.Config;
+import cn.winfxk.brassiere.Activate;
+import cn.winfxk.brassiere.MyPlayer;
 
 /**
  * 这个不是界面，这儿是管理各个队伍的交互中心
@@ -141,5 +143,35 @@ public class TeamMag {
 	public File getTeamFile(String ID) {
 		return teams.containsKey(ID) ? teams.get(ID).getFile()
 				: new File(new File(ac.getPluginBase().getDataFolder(), Activate.TeamDirName), ID + ".yml");
+	}
+
+	/**
+	 * 返回默认的队伍称号列表
+	 * 
+	 * @return
+	 */
+	public List<String> getSignList() {
+		return new ArrayList<>(((Map<String, String>) ac.getMessage().getConfig().get("Team-Sign")).values());
+	}
+
+	/**
+	 * 获取已经格式化的队伍称号列表
+	 * 
+	 * @param team   队伍的对象
+	 * @param player 要格式化的玩家对象
+	 * @return
+	 */
+	public List<String> getSignList(Team team, Player player) {
+		List<String> list = getSignList();
+		List<String> list2 = new ArrayList<>();
+		for (String string : list)
+			list2.add(ac.getMessage().getText(string,
+					new String[] { "{Player}", "{Money}", "{TeamID}", "{TeamName}", "{PlayerCount}", "{MaxPlayerCount}",
+							"{Level}", "{Captain}", "{Admins}", "{ShopItems}", "{Buffs}" },
+					new Object[] { player == null ? "{Player}" : player.getName(),
+							player == null ? "{Money}" : MyPlayer.getMoney(player.getName()), team.getID(),
+							team.getName(), team.getPlayers().size(), team.getMaxCounts(), team.getLevel(),
+							team.getCaptain(), team.getAdmins(), team.getShop().size(), team.getEffects().size() }));
+		return list2;
 	}
 }

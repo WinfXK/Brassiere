@@ -5,17 +5,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.nukkit.Player;
+import cn.nukkit.form.response.FormResponse;
+import cn.nukkit.form.response.FormResponseCustom;
+import cn.nukkit.utils.Config;
 import cn.winfxk.brassiere.Activate;
 import cn.winfxk.brassiere.form.FormBase;
 import cn.winfxk.brassiere.money.MyEconomy;
 import cn.winfxk.brassiere.team.MyTeam;
 import cn.winfxk.brassiere.tool.CustomForm;
 import cn.winfxk.brassiere.tool.Tool;
-
-import cn.nukkit.Player;
-import cn.nukkit.form.response.FormResponse;
-import cn.nukkit.form.response.FormResponseCustom;
-import cn.nukkit.utils.Config;
 
 /**
  * 玩家选择了创建队伍
@@ -29,12 +28,12 @@ public class MakeTeam extends FormBase {
 	public static final Map<Integer, Double> map = new HashMap<>();
 	static {
 		Config config = Activate.getActivate().getConfig();
-		map.put(1, config.getDouble("一级称号价格"));
-		map.put(2, config.getDouble("二级称号价格"));
-		map.put(3, config.getDouble("三级称号价格"));
-		map.put(4, config.getDouble("四级称号价格"));
-		map.put(5, config.getDouble("五级称号价格"));
-		map.put(6, config.getDouble("六级称号价格"));
+		map.put(0, config.getDouble("一级称号价格"));
+		map.put(1, config.getDouble("二级称号价格"));
+		map.put(2, config.getDouble("三级称号价格"));
+		map.put(3, config.getDouble("四级称号价格"));
+		map.put(4, config.getDouble("五级称号价格"));
+		map.put(5, config.getDouble("六级称号价格"));
 	}
 
 	public MakeTeam(Player player) {
@@ -67,6 +66,12 @@ public class MakeTeam extends FormBase {
 				msg.getSun("Team", "MakeTeam", "JoinTariff", myPlayer));
 		form.addDropdown(msg.getSun("Team", "MakeTeam", "JoinTariffEconomy", myPlayer), list);
 		form.addToggle(msg.getSun("Team", "MakeTeam", "AllowedPVP", myPlayer), false);
+		form.addInput(msg.getSun("Team", "MakeTeam", "Securitypd", myPlayer), 10086,
+				msg.getSun("Team", "MakeTeam", "Securitypd", myPlayer));
+		form.addInput(msg.getSun("Team", "MakeTeam", "签到奖励", myPlayer), 1,
+				msg.getSun("Team", "MakeTeam", "签到奖励", myPlayer));
+		form.addToggle(msg.getSun("Team", "MakeTeam", "追加签到奖励", myPlayer), true);
+		// 12
 		form.sendPlayer(player);
 		return true;
 	}
@@ -99,12 +104,18 @@ public class MakeTeam extends FormBase {
 		else
 			JoinTariffEconomy = economies.get(JoinTariffEconomyID).getEconomyName();
 		players.put(player.getName(), map);
+		String Securitypd = d.getInputResponse(10);
+		double SingIn = Tool.objToDouble(d.getResponse(11), 1d);
+		boolean isSignIn = d.getToggleResponse(12);
+		Securitypd = Securitypd == null || Securitypd.isEmpty() ? "10086" : Securitypd;
 		Config config = ac.getTeamMag().getConfig(ID);
 		config.set("ID", ID);
 		config.set("Captain", player.getName());
 		config.set("Name", TeamName);
 		config.set("Prestige", 0);
 		config.set("Money", Money / 100);
+		config.set("SingIn", SingIn);
+		config.set("isSignIn", isSignIn);
 		config.set("MaxCounts", ac.getConfig().getInt("队伍初始人数上限"));
 		config.set("MaxShopItem", ac.getConfig().getInt("队伍商城数量上限"));
 		config.set("AllowedJoin", d.getToggleResponse(1));
@@ -124,6 +135,7 @@ public class MakeTeam extends FormBase {
 		config.set("AllowedPVP", d.getToggleResponse(9));
 		config.set("Content", "");
 		config.set("SignPrice", MakeTeam.map);
+		config.set("Securitypd", Securitypd);
 		config.save();
 		ac.getTeamMag().load(ID);
 		setForm(new MyTeam(player));

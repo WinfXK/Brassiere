@@ -43,13 +43,17 @@ public class PlayerEvent implements Listener {
 	public void onFormResponded(PlayerFormRespondedEvent e) {
 		Player player = e.getPlayer();
 		try {
-			FormResponse data = e.getResponse();
-			if (player == null || e.wasClosed() || data == null || !(data instanceof FormResponseCustom)
-					&& !(data instanceof FormResponseSimple) && !(data instanceof FormResponseModal))
+			if (player == null)
 				return;
 			MyPlayer myPlayer = ac.getPlayers(player.getName());
 			if (myPlayer == null)
 				return;
+			FormResponse data = e.getResponse();
+			if (e.wasClosed() || data == null || !(data instanceof FormResponseCustom)
+					&& !(data instanceof FormResponseSimple) && !(data instanceof FormResponseModal)) {
+				myPlayer.form = null;
+				return;
+			}
 			int ID = e.getFormID();
 			FormID f = ac.getFormID();
 			if ((ID == f.getID(0) || ID == f.getID(1)) && myPlayer.form != null)

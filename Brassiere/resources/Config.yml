@@ -21,3 +21,6 @@ Snowmn货币名称: 雪花
 Admin: []
 #显示是否只有插件管理员才可以更改插件属性
 astrictAdmin: false
+队长允许购买队伍称号: false
+允许队长修改玩家声望: false
+队伍签到声望: -1

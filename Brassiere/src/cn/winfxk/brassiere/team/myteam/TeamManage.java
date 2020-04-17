@@ -1,5 +1,9 @@
 package cn.winfxk.brassiere.team.myteam;
 
+import cn.epicfx.winfxk.money.sn.tool.SimpleForm;
+import cn.nukkit.Player;
+import cn.nukkit.form.response.FormResponse;
+import cn.nukkit.form.response.FormResponseSimple;
 import cn.winfxk.brassiere.form.FormBase;
 import cn.winfxk.brassiere.team.Team;
 import cn.winfxk.brassiere.team.TeamEffectShop;
@@ -11,11 +15,6 @@ import cn.winfxk.brassiere.team.myteam.mag.captain.DissolveTeam;
 import cn.winfxk.brassiere.team.myteam.mag.captain.MOTeam;
 import cn.winfxk.brassiere.team.myteam.mag.captain.Signpricefixing;
 import cn.winfxk.brassiere.team.myteam.mag.captain.setAdmin;
-
-import cn.epicfx.winfxk.money.sn.tool.SimpleForm;
-import cn.nukkit.Player;
-import cn.nukkit.form.response.FormResponse;
-import cn.nukkit.form.response.FormResponseSimple;
 
 /**
  * 队长或管理员管理自己的队伍

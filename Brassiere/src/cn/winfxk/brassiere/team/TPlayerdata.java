@@ -11,7 +11,7 @@ import cn.winfxk.brassiere.tool.Tool;
  */
 public class TPlayerdata {
 	private String name;
-	private int Prestige;
+	private double Prestige;
 	private String identity;
 	private Team team;
 	private String JoinDate;
@@ -71,7 +71,7 @@ public class TPlayerdata {
 	 *
 	 * @return
 	 */
-	public int getPrestige() {
+	public double getPrestige() {
 		return Prestige;
 	}
 

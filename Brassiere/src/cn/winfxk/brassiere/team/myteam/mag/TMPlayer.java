@@ -2,16 +2,16 @@ package cn.winfxk.brassiere.team.myteam.mag;
 
 import java.util.List;
 
+import cn.nukkit.Player;
+import cn.nukkit.form.response.FormResponse;
 import cn.winfxk.brassiere.MyPlayer;
 import cn.winfxk.brassiere.form.FormBase;
 import cn.winfxk.brassiere.team.TPlayerdata;
 import cn.winfxk.brassiere.team.myteam.mag.captain.ExitChoose;
+import cn.winfxk.brassiere.team.myteam.mag.captain.ReputationMag;
 import cn.winfxk.brassiere.team.myteam.mag.captain.isAdmin;
 import cn.winfxk.brassiere.team.myteam.mag.captain.notAdmin;
 import cn.winfxk.brassiere.tool.SimpleForm;
-
-import cn.nukkit.Player;
-import cn.nukkit.form.response.FormResponse;
 
 /**
  * 2020年3月3日 上午10:28:26
@@ -53,6 +53,10 @@ public class TMPlayer extends FormBase {
 		if (data.getTeam().isCaptain(player)) {
 			form.addButton(msg.getSun("Team", "PlayersData", "Admin", K, D));
 			list.add("a");
+			if (ac.getConfig().getBoolean("允许队长修改玩家声望")) {
+				listKey.add("rm");
+				form.addButton(msg.getSun("Team", "TeamManage", "声望管理", K, D));
+			}
 		}
 		form.sendPlayer(player);
 		return true;
@@ -70,10 +74,13 @@ public class TMPlayer extends FormBase {
 							? new isAdmin(player, this.data.getTeam(), this.data.getName())
 							: new notAdmin(player, this.data.getTeam(), this.data.getName()));
 			break;
+		case "rm":
+			setForm(new ReputationMag(player, this.data.getTeam(), this.data.getName()));
+			break;
 		case "un":
 			if (this.data.getName().equals(player.getName()))
 				return ac.makeForm.Tip(player, msg.getSun("Team", "PlayersData", "UndockME", K, D));
-			setForm(new UndockPlayer(player, this.data,this));
+			setForm(new UndockPlayer(player, this.data, this));
 			break;
 		case "ok":
 		default:

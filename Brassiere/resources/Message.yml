@@ -35,12 +35,55 @@ Team-Sign:
 Team-Command:
    Usage: '{RandColor}组队相关命令'
 Team:
+   TeamSetting:
+      Title: '{RandColor}{TeamName}§f-{RGBTextStart}Setting{RGBTextEnd}'
+      setName: §6队伍名称
+      AllowedSign: §6允许玩家获取队伍称号
+      AllowedJoin: §6允许玩家申请加入
+      AllowedChat: §6允许玩家使用聊天室
+      AllowedGain: §6允许玩家享用队伍增益(如果有)
+      isSignIn: §6允许玩家连续签到获得额外奖励
+      SignIn: §6玩家签到声望
+      JoinTariff: §6进入队伍需要的费用
+      AllowedPVP: §6允许队员PVP
+      Content: §6队伍内容介绍
+      OK: §6设置成功！
+   ReputationMag:
+      Title: '{RandColor}{TeamName}§f-{RandColor}{Player}'
+      玩家声望: §6玩家声望
+      格式错误: §4请输入正确的玩家声望数值
+      纯数字: §4玩家声望仅支持纯数字！
+      成功: §6设置成功！
+   TeamSignIn:
+      Title: '{RandColor}{TeamName}'
+      Content: §6签到成功！获得{Prestige}点声望{n}{n}{RandColor}签到时间：{RandColor}{Date} {Time}{n}{n}你已经连续签到{Continuous}天
+      Back: §6返回
+      重复: §4请勿重复签到!
+   Signpricefixing:
+      Title: '{RandColor}{TeamName}'
+      Content: ' '
+      请输入价格: §4请输入称号价格！
+      价格不合法: §4称号价格仅支持大于等于零的纯数字
+      设置成功: §6设置成功！
+   TeamEffect:
+      Title: '{RandColor}{TeamName}'
+      Content: ' '
+      EffectItem: §6{EffectID}§f<§5{EffectName}§e:§5{EffectLevel}§f>
+      UnknownName: §4UnknownName
+      NotEff: §4当前队伍还没有任何Buff，快去让管理员购买一个吧！
+      NotTeam: §4您当前还没有加入任何队伍！
+      Back: §6返回
+      Delete: §4删除
+      MagTitle: §6{EffectName}
+      MagContent: §7您想对§6{EffectID}§f<§5{EffectName}§e:§5{EffectLevel}§f>§7如何操作？
+      SecurityCode: 请输入队伍安全码
+      SecurityCodeError: §4未输入安全码或安全码错误！
+      DeleteSucceed: §4删除成功！
    TeamEffectShop:
-      ClickShopItemTitle: "{RandColor}{EffectID}"
-      ClickShopItemContent: "§6当前选择的Buff：{EffectID}§f>§6{EffectLevel}{n}§6价格：§4{BuyMoney}{n}§a使用货币：§1{EconomyName}"
+      ClickShopItemTitle: '{RandColor}{EffectID}'
+      ClickShopItemContent: §6当前选择的Buff：{EffectID}§f>§6{EffectLevel}{n}§6价格：§4{BuyMoney}{n}§a使用货币：§1{EconomyName}
       Title: '{RandColor}队伍特效管理'
       Content: ' '
-      NotTeamLevel: §a不限等级
       NotEconomy: §4无法获取购买该Buff需要的经济支持
       EffItem: §6{EffectID}§d>§f>§a{BuyMoney}§b(§d{EconomyName}§b)§f|§i{TeamLevel}
       Buy: §e购买
@@ -135,6 +178,7 @@ Team:
       Undock: '{RandColor}移除该玩家'
       UndockME: §4你脑壳有包？开除自己？你有病吧ヽ(ー_ー)ノ
       Admin: '{RandColor}管理员设置'
+      声望管理: '{RandColor}声望管理'
    PlayersMag:
       Title: '{RandColor}队伍管理'
       Content: ' '
@@ -232,6 +276,7 @@ Team:
       Sign: '{RandColor}队伍称号'
       Effects: '{RandColor}队伍Buff'
       Datails: '{RandColor}队伍详情'
+      SignIn: '{RandColor}签到'
       QuitTeam: §4退出{TeamName}
    MakeTeam:
       Title: '{RandColor}创建队伍'
@@ -244,9 +289,12 @@ Team:
       AllowedSign: §6允许玩家获取队伍称号
       AllowedPVP: §6允许玩家PVP
       JoinTariff: §6入队资费
+      Securitypd: §6请输入安全口令
       JoinTariffEconomy: §6资费类型
       JoinTariffEconomyText: '{RandColor}{EconomyName}§6>§e>{RandColor}{EconomyMoney}'
       NotName: §4请输入队伍名称！
+      签到奖励: §6签到后将会获得的队伍声望
+      追加签到奖励: §6是否追加连续签到奖励
       CreatingSuccessful: §6队伍创建成功！
    JoinTeam:
       Title: '{RandColor}加入队伍'

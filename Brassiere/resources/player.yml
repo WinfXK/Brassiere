@@ -20,3 +20,7 @@ ApplyFor: []
 Message: []
 #玩家加入过的队伍<Map>
 OnceJoined: []
+#玩家的签到时间
+SignIn: null
+#已经连续签到的天数
+SignCount: 0
