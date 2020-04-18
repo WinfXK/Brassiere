@@ -35,7 +35,8 @@ public class Activate {
 			CommandFileName = "Command.yml", EconomyListConfigName = "EconomyList.yml", FormIDFileName = "FormID.yml",
 			PlayerDataDirName = "Players", LanguageDirName = "language", VipFileName = "VIP/VIP.yml",
 			SVIPFileName = "VIP/SVIP.yml", RVIPFileName = "VIP/RVIP.yml", VIPDirName = "VIP",
-			SystemFileName = "System.xml", TeamDirName = "Team", TeamEffectName = "TeamEffectShop.yml";
+			SystemFileName = "System.xml", TeamDirName = "Team", TeamEffectName = "TeamEffectShop.yml",
+			SignShopName = "SignShop.yml";
 	private Brassiere mis;
 	private MyEconomy economy;
 	private EconomyManage money;

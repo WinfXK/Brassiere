@@ -6,14 +6,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.nukkit.Player;
+import cn.nukkit.utils.Config;
 import cn.winfxk.brassiere.form.FormBase;
 import cn.winfxk.brassiere.team.Team;
 import cn.winfxk.brassiere.team.TeamApi;
 import cn.winfxk.brassiere.tool.Tool;
 import cn.winfxk.brassiere.vip.Vip;
-
-import cn.nukkit.Player;
-import cn.nukkit.utils.Config;
 
 /**
  * @author Winfxk
@@ -40,8 +39,37 @@ public class MyPlayer {
 		config.save();
 	}
 
+	/**
+	 * 设置玩家称号
+	 * 
+	 * @param string
+	 * @return
+	 */
+	public boolean setSign(String string) {
+		config.set("useSign", string);
+		return config.save() && getSign().equals(string);
+	}
+
 	public void setPlayer(Player player) {
 		this.player = player;
+	}
+
+	/**
+	 * 获取玩家的称号列表
+	 * 
+	 * @return
+	 */
+	public List<String> getSigns() {
+		return config.getStringList("Signs");
+	}
+
+	/**
+	 * 获取玩家正在使用的称号
+	 * 
+	 * @return
+	 */
+	public String getSign() {
+		return config.getString("useSign");
 	}
 
 	/**

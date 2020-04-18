@@ -34,6 +34,24 @@ Team-Sign:
    六级: §l§n§e{TeamName}§l§n§9主宰
 Team-Command:
    Usage: '{RandColor}组队相关命令'
+Sign:
+   Signlist:
+      Title: '{RandColor}{Player}'
+      Content: §6请选择一个您想使用的称号
+      SignItem: '{SignItem}'
+      NotSign: §6你没有可用称号！
+      Back: §6返回
+      OK: §6设置成功！
+   MySign:
+      Title: '{RandColor}{Player}'
+      Content: 您当前正在使用的称号：{Sign}{n}{n}拥有称号：{Signs}
+      MySign: §6管理我的称号
+      Back: §5返回
+   Main:
+      Title: '{RandColor}{PluginName}'
+      Content: ' '
+      MySign: 我的称号
+      SignShop: 称号商店
 Team:
    TeamSetting:
       Title: '{RandColor}{TeamName}§f-{RGBTextStart}Setting{RGBTextEnd}'
