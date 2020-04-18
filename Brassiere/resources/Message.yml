@@ -35,6 +35,11 @@ Team-Sign:
 Team-Command:
    Usage: '{RandColor}组队相关命令'
 Sign:
+   addSignShop:
+      Title: "{RandColor}添加可供出售的称号"
+      Sign: §6称号内容
+      Price: §6称号价格
+      Economy: §6选择购买需要的经济种类
    Signlist:
       Title: '{RandColor}{Player}'
       Content: §6请选择一个您想使用的称号
