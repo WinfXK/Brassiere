@@ -9,8 +9,8 @@ import cn.winfxk.brassiere.team.myteam.TeamDatails;
 import cn.winfxk.brassiere.team.myteam.TeamManage;
 import cn.winfxk.brassiere.team.myteam.TeamMessage;
 import cn.winfxk.brassiere.team.myteam.TeamPlayerList;
-import cn.winfxk.brassiere.team.myteam.TeamSign;
 import cn.winfxk.brassiere.team.myteam.effect.TeamEffect;
+import cn.winfxk.brassiere.team.myteam.sign.TeamSign;
 import cn.winfxk.brassiere.tool.SimpleForm;
 import cn.winfxk.brassiere.tool.Tool;
 

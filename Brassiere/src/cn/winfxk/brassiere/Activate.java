@@ -9,16 +9,19 @@ import java.util.Map;
 
 import cn.nukkit.Player;
 import cn.nukkit.Server;
+import cn.nukkit.command.CommandSender;
 import cn.nukkit.plugin.Plugin;
 import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.utils.Config;
 import cn.nukkit.utils.Utils;
+import cn.winfxk.brassiere.chat.Chat;
 import cn.winfxk.brassiere.cmd.TeamCommand;
 import cn.winfxk.brassiere.form.MakeForm;
 import cn.winfxk.brassiere.money.EconomyAPI;
 import cn.winfxk.brassiere.money.EconomyManage;
 import cn.winfxk.brassiere.money.MyEconomy;
 import cn.winfxk.brassiere.money.Snowmn;
+import cn.winfxk.brassiere.sign.SignMag;
 import cn.winfxk.brassiere.team.TeamMag;
 import cn.winfxk.brassiere.tool.Tool;
 import cn.winfxk.brassiere.vip.VipMag;
@@ -30,7 +33,7 @@ public class Activate {
 	public Player setPlayer;
 	public MakeForm makeForm;
 	public ResCheck resCheck;
-	public final static String[] FormIDs = { /* 0 */"主页", /* 1 */"备用主页", /* 2 */"次页", /* 3 */"备用次页" };
+	public final static String[] FormIDs = { /* 0 */"主页", /* 1 */"备用主页"/* , "次页", "备用次页" */ };
 	public final static String MessageFileName = "Message.yml", ConfigFileName = "Config.yml",
 			CommandFileName = "Command.yml", EconomyListConfigName = "EconomyList.yml", FormIDFileName = "FormID.yml",
 			PlayerDataDirName = "Players", LanguageDirName = "language", VipFileName = "VIP/VIP.yml",
@@ -42,7 +45,9 @@ public class Activate {
 	private EconomyManage money;
 	private static Activate activate;
 	private LinkedHashMap<String, MyPlayer> Players;
+	protected Chat chat;
 	protected TeamMag teamMag;
+	protected SignMag signMag;
 	protected FormID FormID;
 	protected Message message;
 	protected VipMag vipMag;
@@ -84,10 +89,30 @@ public class Activate {
 		makeForm = new MakeForm(this);
 		vipMag = new VipMag(this);
 		teamMag = new TeamMag(this);
+		signMag = new SignMag(this);
+		chat = new Chat(this);
 		kis.getServer().getCommandMap().register(kis.getName() + "Team", new TeamCommand(this));
 		kis.getServer().getPluginManager().registerEvents(new PlayerEvent(this), kis);
 		kis.getLogger().info(message.getMessage("插件启动", "{loadTime}",
 				(float) Duration.between(mis.loadTime, Instant.now()).toMillis() + "ms"));
+	}
+
+	/**
+	 * 返回玩家聊天控制类
+	 * 
+	 * @return
+	 */
+	public Chat getChat() {
+		return chat;
+	}
+
+	/**
+	 * 返回称号管理器
+	 * 
+	 * @return
+	 */
+	public SignMag getSignMag() {
+		return signMag;
 	}
 
 	/**
@@ -301,5 +326,37 @@ public class Activate {
 	 */
 	public Config getConfig() {
 		return config;
+	}
+
+	/**
+	 * 判断玩家是否是管理员
+	 * 
+	 * @param player
+	 * @return
+	 */
+	public boolean isAdmin(Player player) {
+		return isAdmin(player.getName());
+	}
+
+	/**
+	 * 判断玩家是否是管理员
+	 * 
+	 * @param player
+	 * @return
+	 */
+	public boolean isAdmin(CommandSender player) {
+		return isAdmin(player.getName());
+	}
+
+	/**
+	 * 判断玩家是否是管理员
+	 * 
+	 * @param player
+	 * @return
+	 */
+	public boolean isAdmin(String player) {
+		if (config.getBoolean("astrictAdmin"))
+			return config.getStringList("Admin").contains(player);
+		return config.getStringList("Admin").contains(player) || Server.getInstance().isOp(player);
 	}
 }

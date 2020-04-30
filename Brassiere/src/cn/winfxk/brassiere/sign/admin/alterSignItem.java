@@ -10,19 +10,19 @@ import cn.winfxk.brassiere.tool.SimpleForm;
 import cn.winfxk.brassiere.tool.Tool;
 
 /**
- * 删除商店项目
+ * 玩家修改称号商店的项目用
  * 
- * @Createdate 2020/04/18 22:00:38
+ * @Createdate 2020/04/22 10:36:20
  * @author Winfxk
  */
-public class delSignItem extends FormBase {
-	protected Map<String, Object> map;
+public class alterSignItem extends FormBase {
 	private FormBase base;
+	protected Map<String, Object> map;
 
-	public delSignItem(Player player, FormBase base) {
+	public alterSignItem(Player player, FormBase base) {
 		super(player);
-		setK("{Player}", "{Money}", "{Sign}");
 		this.base = base;
+		setK("{Player}", "{Money}", "{Sign}");
 	}
 
 	@Override
@@ -61,6 +61,6 @@ public class delSignItem extends FormBase {
 
 	@Override
 	public boolean disMain(FormResponse data) {
-		return setForm(new SuredeleteSign(player, this, listKey.get(getSimple(data).getClickedButtonId()))).make();
+		return setForm(new SuremodifySign(player, listKey.get(getSimple(data).getClickedButtonId()))).make();
 	}
 }

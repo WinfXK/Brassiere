@@ -35,11 +35,47 @@ Team-Sign:
 Team-Command:
    Usage: '{RandColor}组队相关命令'
 Sign:
+   SignData:
+      Title: '{SignContent}'
+      Content: §6当前称号：{SignContent}{n}价格：{SignPrice}{n}使用货币：{EconomyName}{n}{n}您想要如何操作这个称号？
+      removeSign: §4删除称号
+      alterSign: §5修改称号
+      buySign: §6购买称号
+      Alreadyowns: §4您已经拥有这个称号！无法重复购买。
+      NotEconomy: §4无法查询支持的经济插件！请联系服务器管理员。
+      NotMoney: §4您的§6{BuyEconomyName}§4不足！
+      BuyOK: §6购买成功！您获得称号：§4{SignContent}
+      Back: §6返回
+   alterSignItem:
+      Title: '{RGBTextStart}称号商店{RGBTextEnd}'
+      SignItem: '{SignContent}§f|§4{SignPrice}§f|§4{EconomyName}'
+      NotSign: §4当前暂无任何称号！
+   delSignItem:
+      Title: '{RGBTextStart}称号商店{RGBTextEnd}'
+      Content: §4请选择一个想要删除的称号
+      SignItem: '{SignContent}§f|§4{SignPrice}§f|§4{EconomyName}'
+      NotSign: §4当前暂无任何称号！
+      SuredeleteSign: §6当前称号：{SignContent}{n}价格：{SignPrice}{n}使用货币：{EconomyName}{n}{n}您确定要删除这个称号吗？
+      OK: §4确定
+      Back: §6返回
+      delOK: §6删除成功！你永远的s失去了你可爱的称号。
+   SignShop:
+      Title: '{RGBTextStart}称号商店{RGBTextEnd}'
+      Content: ' '
+      NotSign: §4当前暂无任何称号可供出售！快去找管理员添加一个吧！
+      SignItem: '{SignContent}§f|§4{SignPrice}§f|§4{EconomyName}'
+      addSign: §6添加称号
+      removeSign: §4删除称号
+      alterSign: §5修改称号
+      NotData: §4无此称号数据
    addSignShop:
-      Title: "{RandColor}添加可供出售的称号"
+      Title: '{RandColor}添加可供出售的称号'
       Sign: §6称号内容
       Price: §6称号价格
       Economy: §6选择购买需要的经济种类
+      SignNull: §4请输入想要出售的称号
+      PriceError: §4称号价格仅支持大于零的纯数字！
+      OK: §6添加成功
    Signlist:
       Title: '{RandColor}{Player}'
       Content: §6请选择一个您想使用的称号
@@ -160,6 +196,13 @@ Team:
       Title: '{RandColor}{TeamName}'
       Content: §6您当前的声望为：{Prestige}{n}请选择想要购买的称号
       Unenabled: §4当前队伍暂未开启队伍称号获取！
+      NotTeam: §6你还没有加入一个队伍
+      BuyContent: §6当前称号：{SignContent}{n}价格：{SignPrice}
+      OK: §6确定
+      Back: §4返回
+      Alreadyowns: §4你已经拥有该称号！
+      NotMoney: §4您的声望不足！
+      BuyOK: §6购买成功！
    TeamPlayerList:
       Title: '{RandColor}{TeamName}'
       AdminContent: '{RandColor}队伍成员列表'

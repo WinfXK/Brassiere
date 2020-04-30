@@ -9,7 +9,9 @@ import java.util.Map;
 
 import cn.nukkit.Player;
 import cn.nukkit.utils.Config;
+import cn.winfxk.brassiere.chat.ChatText;
 import cn.winfxk.brassiere.money.MyEconomy;
+import cn.winfxk.brassiere.tip.Tiptext;
 import cn.winfxk.brassiere.tool.Tool;
 
 /**
@@ -388,6 +390,54 @@ public class Message {
 	}
 
 	/**
+	 * 在聊天部分的格式化程序
+	 * 
+	 * @param tex    要插入修改的文本
+	 * @param k      对应的变量
+	 * @param d      对应的数据
+	 * @param player 玩家对象
+	 * @param map    要格式化的对象
+	 * @return
+	 */
+	public String getText(Object tex, Player player, Map<String, ChatText> map, String Msg) {
+		if (tex == null)
+			return null;
+		load();
+		String text = String.valueOf(tex), sb;
+		if (text == null || text.isEmpty())
+			return null;
+		text.replace("{Msg}", Msg);
+		for (int i = 0; i < Key.length; i++)
+			if (text.contains(Key[i]))
+				text = text.replace(Key[i], Data[i]);
+		for (Map.Entry<String, ChatText> entry : map.entrySet())
+			if (entry.getValue().getString(player) != null
+					&& text.contains(sb = String.valueOf(entry.getValue().getString(player))))
+				text = text.replace(entry.getKey(), sb);
+		if (text.contains("{RandColor}")) {
+			String[] strings = text.split("\\{RandColor\\}");
+			text = "";
+			for (String s : strings)
+				text += Tool.getRandColor() + s;
+		}
+		if (text.contains("{RGBTextStart}") && text.contains("{RGBTextEnd}")) {
+			String rgb = "", rString, gString;
+			String[] rgbStrings = text.split("\\{RGBTextEnd\\}");
+			for (String rgbString : rgbStrings)
+				if (rgbString.contains("{RGBTextStart}")) {
+					rString = rgbString + "{RGBTextEnd}";
+					gString = Tool.cutString(rString, "{RGBTextStart}", "{RGBTextEnd}");
+					if (gString == null || gString.isEmpty())
+						gString = "";
+					rgb += rString.replace("{RGBTextStart}" + gString + "{RGBTextEnd}", Tool.getColorFont(gString));
+				} else
+					rgb += rgbString;
+			text = rgb;
+		}
+		return getEconomy(text);
+	}
+
+	/**
 	 * 将数据插入文本中
 	 *
 	 * @param text 要插入修改的文本
@@ -436,6 +486,49 @@ public class Message {
 	 */
 	public String getText(Object tex, String[] k, Object[] d) {
 		return k.length <= 1 || d.length <= 1 ? getText(tex) : getText(tex, Arrays.asList(k), Arrays.asList(d));
+	}
+
+	/**
+	 * 将数据插入文本中
+	 *
+	 * @param tex 要插入修改的文本
+	 * @return
+	 */
+	public String getText(Object tex, Player player, Map<String, Tiptext> map) {
+		if (tex == null)
+			return null;
+		load();
+		String text = String.valueOf(tex), sb;
+		if (text == null || text.isEmpty())
+			return null;
+		for (int i = 0; i < Key.length; i++)
+			if (text.contains(Key[i]))
+				text = text.replace(Key[i], Data[i]);
+		for (Map.Entry<String, Tiptext> entry : map.entrySet())
+			if (entry.getValue().getString(player) != null
+					&& text.contains(sb = String.valueOf(entry.getValue().getString(player))))
+				text = text.replace(entry.getKey(), sb);
+		if (text.contains("{RandColor}")) {
+			String[] strings = text.split("\\{RandColor\\}");
+			text = "";
+			for (String s : strings)
+				text += Tool.getRandColor() + s;
+		}
+		if (text.contains("{RGBTextStart}") && text.contains("{RGBTextEnd}")) {
+			String rgb = "", rString, gString;
+			String[] rgbStrings = text.split("\\{RGBTextEnd\\}");
+			for (String rgbString : rgbStrings)
+				if (rgbString.contains("{RGBTextStart}")) {
+					rString = rgbString + "{RGBTextEnd}";
+					gString = Tool.cutString(rString, "{RGBTextStart}", "{RGBTextEnd}");
+					if (gString == null || gString.isEmpty())
+						gString = "";
+					rgb += rString.replace("{RGBTextStart}" + gString + "{RGBTextEnd}", Tool.getColorFont(gString));
+				} else
+					rgb += rgbString;
+			text = rgb;
+		}
+		return getEconomy(text);
 	}
 
 	/**

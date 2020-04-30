@@ -24,3 +24,23 @@ astrictAdmin: false
 队长允许购买队伍称号: false
 允许队长修改玩家声望: false
 队伍签到声望: -1
+底部显示: true
+头部显示: true
+#单位是ms
+底部显示频率: 15
+头部显示频率: 15
+Tip: '§6时间： §a{Date} {Time}     §4{MoneyName}：§2{Money}  §d地图:§b{WorldName} {n}§8队伍: §9{TeamName}    §eVIP: §9{Vip}'
+Top: §f{Player}     §4{TeamName}     §9{Sign}
+底部顶部无解析对象: §4无
+聊天功能: true
+#聊天展现模式，当这个值为真时仅玩家可以看到消息
+聊天限制模式: false
+#当这个值小于等于零时不启用
+聊天最大长度: -1
+聊天文本: §b{WorldName}.{聊天队伍部分}{聊天VIP部分}{聊天称号部分}{Player}§f：§r{Msg}
+聊天队伍部分: '[{TeamName}]'
+聊天称号部分: '[{Sign}]'
+聊天VIP部分: '[{Vip}]'
+聊天填充: 无
+#当这个值为真时将不再显示没有值的内容（如未加入队伍，不是VIP无称号等）
+聊天缩放模式: true

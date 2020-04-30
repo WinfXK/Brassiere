@@ -346,7 +346,7 @@ public class Team {
 	 * 设置队伍内容消息
 	 * 
 	 * @param content
-	 * @return 
+	 * @return
 	 */
 	public boolean setContent(String content) {
 		Content = content;
@@ -987,7 +987,7 @@ public class Team {
 
 	@Override
 	public String toString() {
-		return getName() + "(" + getID() + ")";
+		return getID() + "-" + getName();
 	}
 
 	/**
@@ -1215,4 +1215,5 @@ public class Team {
 	public void setSignPrice(Integer pos, Double Money) {
 		SignPrice.replace(pos, Money);
 	}
+
 }

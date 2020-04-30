@@ -33,6 +33,8 @@ public class EconomyManage {
 	 * @return
 	 */
 	public MyEconomy getEconomy(String EconomyName) {
+		if (EconomyName == null)
+			return null;
 		if (!supportEconomy(EconomyName))
 			return null;
 		return Economy.get(EconomyName);

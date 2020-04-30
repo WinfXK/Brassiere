@@ -40,6 +40,31 @@ public class MyPlayer {
 	}
 
 	/**
+	 * 判断玩家是否拥有某个称号
+	 * 
+	 * @param Sign
+	 * @return
+	 */
+	public boolean isPossess(String Sign) {
+		if (Sign == null)
+			return false;
+		try {
+			return config.getStringList("Signs").contains(Sign);
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	/**
+	 * 判断玩家是否是管理员
+	 * 
+	 * @return
+	 */
+	public boolean isAdmin() {
+		return ac.isAdmin(player);
+	}
+
+	/**
 	 * 设置玩家称号
 	 * 
 	 * @param string
