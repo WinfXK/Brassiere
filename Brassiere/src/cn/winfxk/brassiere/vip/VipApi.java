@@ -34,7 +34,16 @@ public class VipApi {
 	 * 判断某个玩家是不是一个VIP
 	 *
 	 * @param player 要判断检测的玩家名称
-	 * @param ID     VIP的ID
+	 * @return
+	 */
+	public static boolean isVip(Player player) {
+		return isVip(player.getName());
+	}
+
+	/**
+	 * 判断某个玩家是不是一个VIP
+	 *
+	 * @param player 要判断检测的玩家名称
 	 * @return
 	 */
 	public static boolean isVip(String player) {
@@ -72,6 +81,16 @@ public class VipApi {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * 获取一个玩家的VIP对象
+	 *
+	 * @param player
+	 * @return
+	 */
+	public static Vip getVip(Player player) {
+		return getVip(player.getName());
 	}
 
 	/**

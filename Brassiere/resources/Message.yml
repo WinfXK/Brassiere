@@ -34,6 +34,21 @@ Team-Sign:
    六级: §l§n§e{TeamName}§l§n§9主宰
 Team-Command:
    Usage: '{RandColor}组队相关命令'
+Vip:
+   NotVip: Player
+   Close: §4关闭
+   Back: §6返回
+   ShopMain:
+      Title: '{RandColor}Vip{RandColor}商店'
+      Content: ' '
+      VipItem: §6{VipName}§f(§d{VipID}§f)§b-§9{BuyMoney}§5(§7{BuyTime}§5)
+   Main:
+      PlayerOffline: §4检测到一个不存在的玩家正在访问主页！这可能已经出现一个错误！详情联系作者发送本次操作数据。
+      Title: '{RandColor}Vip'
+      Content: ' '
+      VipSign: '{RandColor}签到'
+      MyVip: '{RandColor}我的VIP'
+      VipShop: '{RandColor}查看Vip商店'
 Sign:
    SignData:
       Title: '{SignContent}'

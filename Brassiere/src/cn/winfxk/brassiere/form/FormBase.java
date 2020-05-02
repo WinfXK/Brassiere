@@ -21,14 +21,15 @@ import cn.winfxk.brassiere.MyPlayer;
 public abstract class FormBase {
 	public Player player;
 	protected Message msg;
-	protected FormID formID;
 	protected Activate ac;
-	protected MyPlayer myPlayer;
-	protected List<String> listKey = new ArrayList<>();
+	private FormBase make;
+	protected FormID formID;
+	public String Son, Name;
 	protected Object[] D = {};
 	protected String[] K = {};
-	private FormBase make;
-	public String Son;
+	protected MyPlayer myPlayer;
+	protected List<String> listKey = new ArrayList<>();
+	protected static final String Title = "Title", Content = "Content";
 
 	/**
 	 * 界面交互基础类
@@ -42,6 +43,7 @@ public abstract class FormBase {
 		formID = ac.getFormID();
 		myPlayer = ac.getPlayers(player.getName());
 		Son = getClass().getSimpleName();
+		Name = getClass().getSimpleName();
 	}
 
 	/**
@@ -159,6 +161,24 @@ public abstract class FormBase {
 
 	@Override
 	public String toString() {
-		return "Player: " + player.getName() + "\nForm: " + getID();
+		return player.getName() + " interface(" + getID() + "," + Name + ")";
+	}
+
+	/**
+	 * 返回这个界面的名字
+	 * 
+	 * @return
+	 */
+	public String getName() {
+		return Name;
+	}
+
+	/**
+	 * 设置界面名称
+	 * 
+	 * @param name
+	 */
+	public void setName(String name) {
+		Name = name;
 	}
 }

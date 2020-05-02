@@ -10,6 +10,7 @@ import java.util.Map;
 import cn.nukkit.Player;
 import cn.nukkit.utils.Config;
 import cn.winfxk.brassiere.chat.ChatText;
+import cn.winfxk.brassiere.form.FormBase;
 import cn.winfxk.brassiere.money.MyEconomy;
 import cn.winfxk.brassiere.tip.Tiptext;
 import cn.winfxk.brassiere.tool.Tool;
@@ -121,6 +122,19 @@ public class Message {
 	/**
 	 * 从配置文件中获取三级默认文本并插入数据
 	 *
+	 * @param t    一级Key
+	 * @param Son  二级Key
+	 * @param Sun  三级Key
+	 * @param form 正在操作的界面
+	 * @return
+	 */
+	public String getSun(String t, String Son, String Sun, FormBase form) {
+		return getSun(t, Son, Sun, form.getK(), form.getD());
+	}
+
+	/**
+	 * 从配置文件中获取三级默认文本并插入数据
+	 *
 	 * @param t   一级Key
 	 * @param Son 二级Key
 	 * @param Sun 三级Key
@@ -178,6 +192,18 @@ public class Message {
 	 */
 	public String getSun(String t, String Son, String Sun, MyPlayer myPlayer) {
 		return getSun(t, Son, Sun, Dk, getList(myPlayer));
+	}
+
+	/**
+	 * 从配置文件中获取二级默认文本并插入数据
+	 *
+	 * @param t    一级Key
+	 * @param Son  二级Key
+	 * @param form 正在显示的界面
+	 * @return
+	 */
+	public String getSon(String t, String Son, FormBase form) {
+		return getSon(t, Son, form.getK(), form.getD());
 	}
 
 	/**
@@ -262,6 +288,17 @@ public class Message {
 		if (this.map.containsKey(t))
 			return getText(this.map.get(t));
 		return null;
+	}
+
+	/**
+	 * 从配置文件中获取一级默认文本并插入数据
+	 *
+	 * @param t      一级Key
+	 * @param player 默认处理的玩家数据对象
+	 * @return
+	 */
+	public String getMessage(String t, Player player, FormBase form) {
+		return getMessage(t, form.getK(), form.getD());
 	}
 
 	/**

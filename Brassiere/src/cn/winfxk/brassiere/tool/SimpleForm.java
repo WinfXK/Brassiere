@@ -14,7 +14,7 @@ import cn.nukkit.form.window.FormWindowSimple;
 public class SimpleForm extends RootForm {
 	private List<ElementButton> buttons = new ArrayList<>();
 	private String Content = "";
-	public List<String> Keys = new ArrayList<>();
+	protected List<String> Keys = new ArrayList<>();
 
 	/**
 	 *

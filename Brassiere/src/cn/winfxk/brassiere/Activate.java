@@ -39,7 +39,7 @@ public class Activate {
 			PlayerDataDirName = "Players", LanguageDirName = "language", VipFileName = "VIP/VIP.yml",
 			SVIPFileName = "VIP/SVIP.yml", RVIPFileName = "VIP/RVIP.yml", VIPDirName = "VIP",
 			SystemFileName = "System.xml", TeamDirName = "Team", TeamEffectName = "TeamEffectShop.yml",
-			SignShopName = "SignShop.yml";
+			SignShopName = "SignShop.yml", haveVipName = "vip.yml", VipShopName = "VipShop.yml";
 	private Brassiere mis;
 	private MyEconomy economy;
 	private EconomyManage money;
@@ -63,7 +63,7 @@ public class Activate {
 	/**
 	 * 只加载一次的数据
 	 */
-	protected static final String[] ForOnce = { RVIPFileName, VipFileName, SVIPFileName, ConfigFileName };
+	protected static final String[] ForOnce = { RVIPFileName, VipFileName, SVIPFileName, ConfigFileName, haveVipName };
 	protected static final String[] Mkdir = { TeamDirName, VIPDirName, PlayerDataDirName };
 
 	/**

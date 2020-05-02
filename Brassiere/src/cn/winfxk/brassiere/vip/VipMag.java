@@ -5,20 +5,82 @@ package cn.winfxk.brassiere.vip;
  */
 
 import java.io.File;
-import java.io.FilenameFilter;
 import java.util.LinkedHashMap;
 
+import cn.nukkit.Player;
+import cn.nukkit.utils.Config;
 import cn.winfxk.brassiere.Activate;
 
-public class VipMag implements FilenameFilter {
+public class VipMag {
 	public LinkedHashMap<String, Vip> Vips = new LinkedHashMap<>();
-	protected Activate ac;
+	protected final Activate ac;
 	private static VipApi vipApi;
+	private final VipThread vipThread;
+	/**
+	 * 存储已经是VIP的玩家列表
+	 */
+	private final Config VipList;
+	/**
+	 * vip商店
+	 */
+	private final Config VipShop;
 
 	public VipMag(Activate activate) {
 		this.ac = activate;
 		reload();
+		VipList = new Config(new File(activate.getPluginBase().getDataFolder(), Activate.haveVipName), Config.YAML);
+		VipShop = new Config(new File(activate.getPluginBase().getDataFolder(), Activate.VipShopName), Config.YAML);
 		vipApi = new VipApi(this);
+		(vipThread = new VipThread(this)).start();
+	}
+
+	/**
+	 * 显示VIP功能主页
+	 * 
+	 * @param player
+	 * @return
+	 */
+	public boolean makeMain(Player player) {
+		if (ac.isPlayers(player))
+			return (ac.getPlayers(player).form = new MainForm(player, null)).MakeMain();
+		ac.getPluginBase().getLogger().warning(ac.getMessage().getSun("Vip", "Main", "PlayerOffline", player));
+		return false;
+	}
+
+	/**
+	 * 返回存储VIP列表的配置文件对象
+	 * 
+	 * @return
+	 */
+	public Config getVipList() {
+		return VipList;
+	}
+
+	/**
+	 * 返回VIP商店
+	 * 
+	 * @return
+	 */
+	public Config getVipShop() {
+		return VipShop;
+	}
+
+	/**
+	 * 返回已经支持了的VIP规则
+	 * 
+	 * @return
+	 */
+	public LinkedHashMap<String, Vip> getVips() {
+		return Vips;
+	}
+
+	/**
+	 * 获取VIP线程
+	 * 
+	 * @return
+	 */
+	public VipThread getVipThread() {
+		return vipThread;
 	}
 
 	/**
@@ -51,7 +113,7 @@ public class VipMag implements FilenameFilter {
 
 	public void reload() {
 		File file = new File(ac.getPluginBase().getDataFolder(), Activate.VIPDirName);
-		String[] files = file.list(this);
+		String[] files = file.list((File, S) -> new File(File, S).isFile());
 		Vip vip;
 		for (String filename : files)
 			try {
@@ -75,10 +137,5 @@ public class VipMag implements FilenameFilter {
 		if (ID == null || ID.isEmpty())
 			return false;
 		return Vips.containsKey(ID);
-	}
-
-	@Override
-	public boolean accept(File arg0, String arg1) {
-		return new File(arg0, arg1).isFile();
 	}
 }

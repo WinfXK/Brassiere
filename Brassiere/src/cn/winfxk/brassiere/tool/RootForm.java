@@ -10,8 +10,9 @@ import cn.nukkit.form.window.FormWindow;
  * @author Winfxk
  */
 public abstract class RootForm {
-	public int ID;
-	public String Title;
+	protected int ID;
+	protected String Title;
+	protected Player[] players;
 
 	/**
 	 * @param ID 表单ID
@@ -78,6 +79,9 @@ public abstract class RootForm {
 	 * @return
 	 */
 	public int sendPlayer(List<Player> player) {
+		if (players != null)
+			for (Player p : players)
+				p.showFormWindow(getFormWindow(), ID);
 		for (Player p : player)
 			p.showFormWindow(getFormWindow(), ID);
 		return ID;
@@ -90,6 +94,9 @@ public abstract class RootForm {
 	 * @return
 	 */
 	public int sendPlayer(Player... player) {
+		if (players != null)
+			for (Player p : players)
+				p.showFormWindow(getFormWindow(), ID);
 		for (Player p : player)
 			p.showFormWindow(getFormWindow(), ID);
 		return ID;
@@ -111,5 +118,31 @@ public abstract class RootForm {
 	 */
 	public int getID() {
 		return ID;
+	}
+
+	/**
+	 * 设置将会显示界面的玩家
+	 * 
+	 * @param player
+	 * @return
+	 */
+	public RootForm setPlayer(Player... player) {
+		players = player;
+		return this;
+	}
+
+	/**
+	 * 显示界面
+	 * 
+	 * @return
+	 */
+	public boolean show() {
+		boolean isok = false;
+		if (players != null)
+			for (Player p : players) {
+				p.showFormWindow(getFormWindow(), ID);
+				isok = true;
+			}
+		return isok;
 	}
 }

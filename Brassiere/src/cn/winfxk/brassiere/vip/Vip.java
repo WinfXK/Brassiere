@@ -29,6 +29,10 @@ import cn.winfxk.brassiere.vip.joinmsg.Title;
  * @author Winfxk
  */
 public class Vip {
+	/**
+	 * 默认的VIP语言数据键 <b>{Player}, {Money}, {Vip}</b>
+	 */
+	public static final String[] Key = { "{Player}", "{Money}", "{Vip}" };
 	private Activate ac;
 	private File file;
 	/**

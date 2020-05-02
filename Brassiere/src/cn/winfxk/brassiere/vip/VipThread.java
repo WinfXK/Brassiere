@@ -11,9 +11,25 @@ import cn.winfxk.brassiere.Activate;
 public class VipThread extends Thread {
 	private Activate ac;
 	private VipMag vipMag;
+	private transient int reloadTime;
 
 	public VipThread(VipMag vipMag) {
 		this.vipMag = vipMag;
 		ac = Activate.getActivate();
+		reloadTime = Double.valueOf(ac.getConfig().getDouble("VIP刷新间隔") * 60).intValue();
+	}
+
+	@Override
+	public void run() {
+		
+	}
+
+	/**
+	 * 获取线程的刷新时间
+	 * 
+	 * @return
+	 */
+	public int getReloadTime() {
+		return reloadTime;
 	}
 }
