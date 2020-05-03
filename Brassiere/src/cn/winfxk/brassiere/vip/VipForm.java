@@ -41,7 +41,8 @@ public abstract class VipForm extends FormBase {
 	 * @return
 	 */
 	public String getString(String string) {
-		return msg.getSun(t, Son, string, this);
+		return string.equals(Back) || string.equals(Close) ? msg.getSon(t, string, this)
+				: msg.getSun(t, Son, string, this);
 	}
 
 	/**

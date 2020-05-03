@@ -37,7 +37,7 @@ Top: §f{Player}     §4{TeamName}     §9{Sign}
 聊天限制模式: false
 #当这个值小于等于零时不启用
 聊天最大长度: -1
-聊天文本: §b{WorldName}.{聊天队伍部分}{聊天VIP部分}{聊天称号部分}{Player}§f：§r{Msg}
+聊天文本: §b{WorldName}-{聊天队伍部分}{聊天VIP部分}{聊天称号部分}{Player}§f：§r{Msg}
 聊天队伍部分: '[{TeamName}]'
 聊天称号部分: '[{Sign}]'
 聊天VIP部分: '[{Vip}]'

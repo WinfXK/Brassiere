@@ -42,6 +42,64 @@ public class Chat implements Listener {
 	private boolean SimpleModel;
 	private transient LinkedHashMap<String, ChatText> map = new LinkedHashMap<>();
 
+	public Chat(Activate ac) {
+		chat = this;
+		this.ac = ac;
+		server = Server.getInstance();
+		ac.getPluginBase().getServer().getPluginManager().registerEvents(this, ac.getPluginBase());
+		isEnabled = ac.getConfig().getBoolean("聊天功能");
+		map.put("{Player}", Player -> Player.getName());
+		map.put("{Money}", Player -> MyPlayer.getMoney(Player.getName()));
+		map.put("{WorldName}", Player -> Player.getLevel().getFolderName());
+		map.put("{TeamName}",
+				Player -> TeamApi.getTeam(Player.getName()) == null ? "" : TeamApi.getTeam(Player.getName()).getName());
+		map.put("{Vip}",
+				Player -> VipApi.getVip(Player.getName()) == null ? "" : VipApi.getVip(Player.getName()).getName());
+		map.put("{Sign}",
+				Player -> SignMag.getSignMag().getSign(Player.getName()) == null
+						|| SignMag.getSignMag().getSign(Player.getName()).isEmpty() ? ""
+								: SignMag.getSignMag().getSign(Player.getName()));
+		map.put("{聊天队伍部分}", Player -> getChatByTeam(Player));
+		map.put("{聊天VIP部分}", Player -> getChatByVip(Player));
+		map.put("{聊天称号部分}", Player -> getChatBySign(Player));
+		ChatString = ac.getConfig().getString("聊天文本");
+		ChatByTeam = ac.getConfig().getString("聊天队伍部分");
+		ChatByVip = ac.getConfig().getString("聊天VIP部分");
+		ChatBySign = ac.getConfig().getString("聊天称号部分");
+		notString = ac.getConfig().getString("聊天填充");
+		SimpleModel = ac.getConfig().getBoolean("聊天缩放模式");
+		ChatMaxLength = ac.getConfig().getInt("聊天最大长度");
+		showMode = ac.getConfig().getBoolean("聊天限制模式");
+		msg = ac.getMessage();
+	}
+
+	/**
+	 * 删除一个聊天格式化规则
+	 * 
+	 * @param Key 简要删除格式化的变量
+	 * @return
+	 */
+	public boolean delChat(String Key) {
+		if (!map.containsKey(Key))
+			return false;
+		map.remove(Key);
+		return true;
+	}
+
+	/**
+	 * 添加一个聊天格式化规则
+	 * 
+	 * @param Key  将会被格式化的变量
+	 * @param text 变量处理程序
+	 * @return
+	 */
+	public boolean addChat(String Key, ChatText text) {
+		if (map.containsKey(Key))
+			return false;
+		map.put(Key, text);
+		return true;
+	}
+
 	/**
 	 * 聊天监听
 	 * 
@@ -57,35 +115,6 @@ public class Chat implements Listener {
 		} else
 			server.broadcastMessage(msg.getText(ChatString, e.getPlayer(), map, e.getMessage()));
 		e.setCancelled();
-	}
-
-	public Chat(Activate ac) {
-		chat = this;
-		this.ac = ac;
-		server = Server.getInstance();
-		ac.getPluginBase().getServer().getPluginManager().registerEvents(this, ac.getPluginBase());
-		isEnabled = ac.getConfig().getBoolean("聊天功能");
-		map.put("{Player}", Player -> Player.getName());
-		map.put("{Money}", Player -> MyPlayer.getMoney(Player.getName()));
-		map.put("{WorldName}", Player -> Player.getLevel().getFolderName());
-		map.put("{TeamName}",
-				Player -> TeamApi.getTeam(Player.getName()) == null ? "" : TeamApi.getTeam(Player.getName()).getName());
-		map.put("{Vip}",
-				Player -> VipApi.getVip(Player.getName()) == null ? "" : VipApi.getVip(Player.getName()).getName());
-		map.put("{Sign}", Player -> SignMag.getSignMag().getSign(Player.getName()) == null ? ""
-				: SignMag.getSignMag().getSign(Player.getName()));
-		map.put("{聊天队伍部分}", Player -> getChatByTeam(Player));
-		map.put("{聊天VIP部分}", Player -> getChatByVip(Player));
-		map.put("{聊天称号部分}", Player -> getChatBySign(Player));
-		ChatString = ac.getConfig().getString("聊天文本");
-		ChatByTeam = ac.getConfig().getString("聊天队伍部分");
-		ChatByVip = ac.getConfig().getString("聊天VIP部分");
-		ChatBySign = ac.getConfig().getString("聊天称号部分");
-		notString = ac.getConfig().getString("聊天填充");
-		SimpleModel = ac.getConfig().getBoolean("聊天缩放模式");
-		ChatMaxLength = ac.getConfig().getInt("聊天最大长度");
-		showMode = ac.getConfig().getBoolean("聊天限制模式");
-		msg = ac.getMessage();
 	}
 
 	/**
@@ -123,8 +152,8 @@ public class Chat implements Listener {
 	 * @return
 	 */
 	public String getChatBySign(Player player) {
-		return SignMag.getSignMag().getSign(player.getName()) != null ? getString(player, ChatBySign)
-				: SimpleModel ? "" : notString;
+		String sign = SignMag.getSignMag().getSign(player.getName());
+		return sign != null && !sign.isEmpty() ? getString(player, ChatBySign) : SimpleModel ? "" : notString;
 	}
 
 	/**
@@ -153,12 +182,11 @@ public class Chat implements Listener {
 	 * @return
 	 */
 	private String getString(Player player, String Key) {
-		return msg.getText(Key, Chat.Key,
-				new Object[] { player.getName(), MyPlayer.getMoney(player.getName()),
-						TeamApi.isJoinTeam(player.getName()) ? TeamApi.getTeam(player.getName()) : notString,
-						SignMag.getSignMag().getSign(player.getName()) == null ? notString
-								: SignMag.getSignMag().getSign(player.getName()),
-						VipApi.isVip(player.getName()) ? VipApi.getVip(player.getName()).getName() : notString });
+		return msg.getText(Key, Chat.Key, new Object[] { player.getName(), MyPlayer.getMoney(player.getName()),
+				TeamApi.isJoinTeam(player.getName()) ? TeamApi.getTeam(player.getName()) : notString,
+				SignMag.getSignMag().getSign(player.getName()) == null ? notString
+						: SignMag.getSignMag().getSign(player.getName()),
+				VipApi.getVip(player.getName()) != null ? VipApi.getVip(player.getName()).getName() : notString });
 	}
 
 	/**

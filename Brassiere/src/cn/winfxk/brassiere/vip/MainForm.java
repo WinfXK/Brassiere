@@ -27,8 +27,10 @@ public class MainForm extends VipForm {
 			listKey.add("s");
 			form.addButton(getString("VipSign"));
 		}
-		listKey.add("m");
-		form.addButton(getString("MyVip"));
+		if (myPlayer.isVip()) {
+			listKey.add("m");
+			form.addButton(getString("MyVip"));
+		}
 		listKey.add("v");
 		form.addButton(getString("VipShop"));
 		addButton(form);

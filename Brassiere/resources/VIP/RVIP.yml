@@ -15,23 +15,11 @@ LevelAlg: Hard
 #是否允许飞行
 Flight: true
 #获得特权后将会持续得到的药水效果
-Effect: 
+Effect:
 - 1
 - 10
 - 16
 - 8
-#是否允许用游戏币购买
-EconomyBuy: false
-#购买时使用的货币
-Economy: EconomyAPI
-#购买价格
-Money: 0
-#能用游戏币购买的次数，为零时不显示，小于零时无法使用游戏币购买
-BuyCount: 0
-#购买时能获得的时长，单位是小时
-BuyTime: 744
-#新购的默认等级
-DefaultLevel: 0
 #签到能获得的经验值
 SignExp: 10
 #每次签到能获得的金币
@@ -39,37 +27,37 @@ SignMoney: 1000
 #签到给钱的货币
 SignEconomy: EconomyAPI
 #每次签到会获得的物品
-SignItem: 
+SignItem:
    Item1:
       Nbt: !!binary |-
-        CgAACQQAZW5jaAoBAAAAAgMAbHZsAQACAgBpZBwAAAA=
+         CgAACQQAZW5jaAoBAAAAAgMAbHZsAQACAgBpZBwAAAA=
       ID: 265
       Count: 2
       Damage: 0
       Name: 硬邦邦的棒状物
    Item2:
       Nbt: !!binary |-
-        CgAACQQAZW5jaAoBAAAAAgMAbHZsAQACAgBpZBsAAAA=
+         CgAACQQAZW5jaAoBAAAAAgMAbHZsAQACAgBpZBsAAAA=
       ID: 266
       Count: 1
       Damage: 0
       Name: 硬邦邦的条状物
    Item3:
       Nbt: !!binary |-
-        CgAACQQAZW5jaAoBAAAAAgMAbHZsAQACAgBpZBsAAAA=
+         CgAACQQAZW5jaAoBAAAAAgMAbHZsAQACAgBpZBsAAAA=
       ID: 263
       Count: 10
       Damage: 0
       Name: 黑黑的不明物体
    Item4:
       Nbt: !!binary |-
-        CgAACQQAZW5jaAoBAAAAAgMAbHZsAQACAgBpZBsAAAA=
+         CgAACQQAZW5jaAoBAAAAAgMAbHZsAQACAgBpZBsAAAA=
       ID: 364
       Count: 1
       Damage: 0
       Name: 狗屎
 #玩家能更换的游戏模式
-gamemode: 
+gamemode:
 - 3
 #是否允许普通TP
 SimpleTP: true

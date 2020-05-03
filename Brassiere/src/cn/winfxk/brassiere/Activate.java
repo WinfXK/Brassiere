@@ -23,6 +23,7 @@ import cn.winfxk.brassiere.money.MyEconomy;
 import cn.winfxk.brassiere.money.Snowmn;
 import cn.winfxk.brassiere.sign.SignMag;
 import cn.winfxk.brassiere.team.TeamMag;
+import cn.winfxk.brassiere.tip.Tip;
 import cn.winfxk.brassiere.tool.Tool;
 import cn.winfxk.brassiere.vip.VipMag;
 
@@ -45,6 +46,7 @@ public class Activate {
 	private EconomyManage money;
 	private static Activate activate;
 	private LinkedHashMap<String, MyPlayer> Players;
+	protected Tip tip;
 	protected Chat chat;
 	protected TeamMag teamMag;
 	protected SignMag signMag;
@@ -91,6 +93,7 @@ public class Activate {
 		teamMag = new TeamMag(this);
 		signMag = new SignMag(this);
 		chat = new Chat(this);
+		tip = new Tip(this);
 		kis.getServer().getCommandMap().register(kis.getName() + "Team", new TeamCommand(this));
 		kis.getServer().getPluginManager().registerEvents(new PlayerEvent(this), kis);
 		kis.getLogger().info(message.getMessage("插件启动", "{loadTime}",
@@ -104,6 +107,15 @@ public class Activate {
 	 */
 	public Chat getChat() {
 		return chat;
+	}
+
+	/**
+	 * 底部管理器
+	 * 
+	 * @return
+	 */
+	public Tip getTip() {
+		return tip;
 	}
 
 	/**

@@ -52,7 +52,7 @@ public class TipContent {
 	public String getTipString(Player player) {
 		return msg.getText(tip.getTip(), player, Tip);
 	}
- 
+
 	/**
 	 * 获取一个玩家的顶部显示
 	 * 
@@ -79,10 +79,11 @@ public class TipContent {
 	 * @param Key
 	 * @return
 	 */
-	public TipContent delTopContent(String Key) {
-		if (Top.containsKey(Key))
-			Top.remove(Key);
-		return this;
+	public boolean delTopContent(String Key) {
+		if (!Top.containsKey(Key))
+			return false;
+		Top.remove(Key);
+		return true;
 	}
 
 	/**
@@ -92,9 +93,11 @@ public class TipContent {
 	 * @param tiptext 数据交互内容
 	 * @return
 	 */
-	public TipContent addTopContent(String Key, Tiptext tiptext) {
+	public boolean addTopContent(String Key, Tiptext tiptext) {
+		if (Top.containsKey(Key))
+			return false;
 		Top.put(Key, tiptext);
-		return this;
+		return true;
 	}
 
 	/**
@@ -104,9 +107,11 @@ public class TipContent {
 	 * @param tiptext 数据交互内容
 	 * @return
 	 */
-	public TipContent addContent(String Key, Tiptext tiptext) {
+	public boolean addContent(String Key, Tiptext tiptext) {
+		if (Tip.containsKey(Key))
+			return false;
 		Tip.put(Key, tiptext);
-		return this;
+		return true;
 	}
 
 	/**
@@ -125,9 +130,10 @@ public class TipContent {
 	 * @param Key 数据Key
 	 * @return
 	 */
-	public TipContent delContent(String Key) {
-		if (Tip.containsKey(Key))
-			Tip.remove(Key);
-		return this;
+	public boolean delContent(String Key) {
+		if (!Tip.containsKey(Key))
+			return false;
+		Tip.remove(Key);
+		return true;
 	}
 }

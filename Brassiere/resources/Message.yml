@@ -38,10 +38,45 @@ Vip:
    NotVip: Player
    Close: §4关闭
    Back: §6返回
+   BuyVip:
+      Title: '{RandColor}{VipName}'
+      Content: §6您正在购买的商品信息如下：{n}§r特权ID：{VipID}{n}特权名称：{VipName}{n}购买时长：{BuyTime}{n}购买价格：{BuyMoney}{n}需要货币：{Economy}{n}购买后增加特权经验：{BuyLevel}{n}允许重复购买：{Repeat}
+      Buy: §6购买
+      Repeat: §4该特权禁止叠加购买！
+      EconomyError: §4已无法获得购买所需的货币支持！请联系服务器管理员。
+      notMoney: §4购买失败！{BuyMoneyName}不足！
+      BuyOK: §4购买完成！您已经成为尊贵的{VipName}
+   AdminSwitch:
+      Title: '{RandColor}{VipName}'
+      Content: §6请选择您的操作
+      addShop: §6添加商店
+      delItem: §4删除项目
+      BuyItem: §5购买特权(都管理员了还购买特权...)
+   delItem:
+      Title: §4删除项目
+      Content: 'Vip: {VipName}({VipID}){n}你确定要删除该项目吗?'
+      OK: §4确定
+      delOK: §6你失去了你的宝宝
+   addShop:
+      Title: '{RandColor}添加VIP项目'
+      Vip: §6请选择想要上架的特权
+      VipItem: §f{VipName}§9(§6{VipID}§9)
+      BuyMoney: §6购买价格
+      Economy: §6购买需要使用的货币
+      BuyTime: §6购买时长（小时）
+      BuyLevel: §6购买后的经验
+      Repeat: §6允许重复购买
+      MoneyError: §6未输入购买价格或购买价格格式不支持（大于零的纯数字）！
+      BuyTimeError: §6未输入购买时长或购买时长格式不支持（大于零的纯数字）！
+      BuyLevelError: §6未输入购买附赠的等级或格式不支持（大于零的纯数字）！
+      addOK: §6添加成功！
    ShopMain:
       Title: '{RandColor}Vip{RandColor}商店'
       Content: ' '
+      alreadyVip: §4你已经拥有VIP特权了！无法重复购买！
       VipItem: §6{VipName}§f(§d{VipID}§f)§b-§9{BuyMoney}§5(§7{BuyTime}§5)
+      NotItem: §4当前没有任何一个项目可供购买！
+      addItem: §6添加商店
    Main:
       PlayerOffline: §4检测到一个不存在的玩家正在访问主页！这可能已经出现一个错误！详情联系作者发送本次操作数据。
       Title: '{RandColor}Vip'

@@ -16,18 +16,6 @@ LevelAlg: Simple
 Flight: false
 #获得特权后将会持续得到的药水效果
 Effect: []
-#是否允许用游戏币购买
-EconomyBuy: true
-#购买时使用的货币
-Economy: EconomyAPI
-#购买价格
-Money: 100000
-#能用游戏币购买的次数，为零时不显示，小于零时无法使用游戏币购买
-BuyCount: 0
-#购买时能获得的时长，单位是小时
-BuyTime: 744
-#新购的默认等级
-DefaultLevel: 0
 #签到能获得的经验值
 SignExp: 10
 #每次签到能获得的金币

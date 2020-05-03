@@ -3,7 +3,7 @@ package cn.winfxk.brassiere.sign;
 import cn.nukkit.Player;
 import cn.nukkit.form.response.FormResponse;
 import cn.winfxk.brassiere.form.FormBase;
-import cn.winfxk.brassiere.sign.mysign.MySign;
+import cn.winfxk.brassiere.sign.my.MySign;
 import cn.winfxk.brassiere.tool.SimpleForm;
 
 /**

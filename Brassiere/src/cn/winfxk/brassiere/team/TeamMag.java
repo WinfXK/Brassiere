@@ -20,6 +20,7 @@ public class TeamMag {
 	private Activate ac;
 	private LinkedHashMap<String, Team> teams;
 	private Config EffectConfig;
+	private TeamApi teamApi;
 
 	/**
 	 * 队伍交互系统
@@ -32,6 +33,16 @@ public class TeamMag {
 		reload();
 		EffectConfig = new Config(new File(activate.getPluginBase().getDataFolder(), Activate.TeamEffectName),
 				Config.YAML);
+		teamApi = new TeamApi(this);
+	}
+
+	/**
+	 * 获取外部API
+	 * 
+	 * @return
+	 */
+	public TeamApi getTeamApi() {
+		return teamApi;
 	}
 
 	/**

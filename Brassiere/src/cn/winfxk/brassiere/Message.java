@@ -440,17 +440,15 @@ public class Message {
 		if (tex == null)
 			return null;
 		load();
-		String text = String.valueOf(tex), sb;
+		String text = String.valueOf(tex);
 		if (text == null || text.isEmpty())
 			return null;
-		text.replace("{Msg}", Msg);
+		text = text.replace("{Msg}", Msg);
 		for (int i = 0; i < Key.length; i++)
 			if (text.contains(Key[i]))
 				text = text.replace(Key[i], Data[i]);
-		for (Map.Entry<String, ChatText> entry : map.entrySet())
-			if (entry.getValue().getString(player) != null
-					&& text.contains(sb = String.valueOf(entry.getValue().getString(player))))
-				text = text.replace(entry.getKey(), sb);
+		for (String Key : map.keySet())
+			text = text.replace(Key, Tool.objToString(map.get(Key).getString(player)));
 		if (text.contains("{RandColor}")) {
 			String[] strings = text.split("\\{RandColor\\}");
 			text = "";
@@ -535,16 +533,14 @@ public class Message {
 		if (tex == null)
 			return null;
 		load();
-		String text = String.valueOf(tex), sb;
+		String text = String.valueOf(tex);
 		if (text == null || text.isEmpty())
 			return null;
 		for (int i = 0; i < Key.length; i++)
 			if (text.contains(Key[i]))
 				text = text.replace(Key[i], Data[i]);
-		for (Map.Entry<String, Tiptext> entry : map.entrySet())
-			if (entry.getValue().getString(player) != null
-					&& text.contains(sb = String.valueOf(entry.getValue().getString(player))))
-				text = text.replace(entry.getKey(), sb);
+		for (String Key : map.keySet())
+			text = text.replace(Key, Tool.objToString(map.get(Key).getString(player)));
 		if (text.contains("{RandColor}")) {
 			String[] strings = text.split("\\{RandColor\\}");
 			text = "";

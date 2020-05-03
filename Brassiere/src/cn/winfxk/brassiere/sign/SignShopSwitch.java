@@ -9,7 +9,7 @@ import cn.winfxk.brassiere.form.FormBase;
 import cn.winfxk.brassiere.money.MyEconomy;
 import cn.winfxk.brassiere.sign.admin.SuredeleteSign;
 import cn.winfxk.brassiere.sign.admin.SuremodifySign;
-import cn.winfxk.brassiere.sign.mysign.Signlist;
+import cn.winfxk.brassiere.sign.my.Signlist;
 import cn.winfxk.brassiere.tool.SimpleForm;
 
 /**

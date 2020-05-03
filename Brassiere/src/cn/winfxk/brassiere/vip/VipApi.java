@@ -31,6 +31,65 @@ public class VipApi {
 	}
 
 	/**
+	 * 设置一个玩家的特权为
+	 * 
+	 * @param player 要设置特权的玩家
+	 * @param ID     特权的ID
+	 * @param Time   要给与的时长
+	 * @param Level  要给与的经验
+	 * @return
+	 */
+	public static boolean setVip(Player player, String ID, int Time, int Level) {
+		return setVip(player.getName(), ID, Time, Level);
+	}
+
+	/**
+	 * 设置一个玩家的特权为
+	 * 
+	 * @param player 要设置特权的玩家
+	 * @param ID     特权的ID
+	 * @param Time   要给与的时长
+	 * @param Level  要给与的经验
+	 * @return
+	 */
+	public static boolean setVip(String player, String ID, int Time, int Level) {
+		return setVip(player, ID, Time, Level, true);
+	}
+
+	/**
+	 * 设置一个玩家的特权为
+	 * 
+	 * @param player   要设置特权的玩家
+	 * @param ID       特权的ID
+	 * @param Time     要给与的时长
+	 * @param Level    要给与的经验
+	 * @param isRepeat 是否和之前的叠加
+	 * @return
+	 */
+	public static boolean setVip(Player player, String ID, int Time, int Level, boolean isRepeat) {
+		return setVip(player.getName(), ID, Time, Level, isRepeat);
+	}
+
+	/**
+	 * 设置一个玩家的特权为
+	 * 
+	 * @param player   要设置特权的玩家
+	 * @param ID       特权的ID
+	 * @param Time     要给与的时长
+	 * @param Level    要给与的经验
+	 * @param isRepeat 是否和之前的叠加
+	 * @return
+	 */
+	public static boolean setVip(String player, String ID, int Time, int Level, boolean isRepeat) {
+		Config config = ac.isPlayers(player) ? ac.getPlayers(player).getConfig() : MyPlayer.getConfig(player);
+		config.set("Vip", ID);
+		config.set("VipTime", isRepeat ? Time + config.getInt("VipTime") : Time);
+		config.set("VipLevel", isRepeat ? Level + config.getInt("VipLevel") : Level);
+		config.set("VipSign", null);
+		return config.save();
+	}
+
+	/**
 	 * 判断某个玩家是不是一个VIP
 	 *
 	 * @param player 要判断检测的玩家名称

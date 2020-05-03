@@ -64,29 +64,9 @@ public class Vip {
 	 */
 	private List<Effect> effects;
 	/**
-	 * 会否允许使用游戏币购买
-	 */
-	private boolean BuyEconomy;
-	/**
 	 * 能用游戏币购买的次数，为零时不显示，小于零时无法使用游戏币购买
 	 */
 	private int BuyCount;
-	/**
-	 * 购买时使用的货币
-	 */
-	private MyEconomy economy;
-	/**
-	 * 购买价格
-	 */
-	private double Money;
-	/**
-	 * 购买时能获得的时长，单位是小时
-	 */
-	private int BuyTime;
-	/**
-	 * 新购特权时的等级
-	 */
-	private int DefaultLevel;
 	/**
 	 * 签到能获得的经验值
 	 */
@@ -199,12 +179,7 @@ public class Vip {
 					if (!effects.contains(effect))
 						effects.add(effect);
 				}
-		BuyEconomy = config.getBoolean("EconomyBuy");
-		economy = ac.getEconomyManage().getEconomy(config.getString("Economy"));
-		Money = config.getDouble("Money");
 		BuyCount = config.getInt("BuyCount");
-		BuyTime = config.getInt("BuyTime");
-		DefaultLevel = config.getInt("DefaultLevel");
 		SignExp = config.getInt("SignExp");
 		SignMoney = config.getDouble("SignMoney");
 		SignEconomy = ac.getEconomyManage().getEconomy(config.getString("SignEconomy"));
@@ -491,52 +466,6 @@ public class Vip {
 	public int getSignExp() {
 		return SignExp;
 	}
-
-	/**
-	 * 新购特权时的等级
-	 *
-	 * @return
-	 */
-	public int getDefaultLevel() {
-		return DefaultLevel;
-	}
-
-	/**
-	 * 购买时能获得的时长，单位是小时
-	 *
-	 * @return
-	 */
-	public int getBuyTime() {
-		return BuyTime;
-	}
-
-	/**
-	 * 购买价格
-	 *
-	 * @return
-	 */
-	public double getMoney() {
-		return Money;
-	}
-
-	/**
-	 * 购买时使用的货币
-	 *
-	 * @return
-	 */
-	public MyEconomy getEconomy() {
-		return economy;
-	}
-
-	/**
-	 * 会否允许使用游戏币购买
-	 *
-	 * @return
-	 */
-	public boolean isEconomyBuy() {
-		return BuyEconomy && BuyCount >= 0;
-	}
-
 	/**
 	 * 药水效果列表
 	 *

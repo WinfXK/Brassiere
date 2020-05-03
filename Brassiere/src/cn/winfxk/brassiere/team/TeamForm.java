@@ -5,7 +5,7 @@ import cn.nukkit.form.response.FormResponse;
 import cn.nukkit.form.response.FormResponseSimple;
 import cn.winfxk.brassiere.form.FormBase;
 import cn.winfxk.brassiere.team.join.JTeam;
-import cn.winfxk.brassiere.team.myteam.TeamMessage;
+import cn.winfxk.brassiere.team.my.TeamMessage;
 import cn.winfxk.brassiere.tool.SimpleForm;
 
 /**

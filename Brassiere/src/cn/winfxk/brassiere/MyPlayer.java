@@ -35,6 +35,8 @@ public class MyPlayer {
 		ac = Activate.getActivate();
 		config = getConfig(getName());
 		config = ac.resCheck.Check(this);
+		if (isVip())
+			vip = ac.getVipMag().getVip(config.getString("Vip"));
 		config.set("name", player.getName());
 		config.save();
 	}
@@ -94,7 +96,7 @@ public class MyPlayer {
 	 * @return
 	 */
 	public String getSign() {
-		return config.getString("useSign");
+		return config.get("useSign") == null ? null : config.getString("useSign");
 	}
 
 	/**
@@ -103,8 +105,7 @@ public class MyPlayer {
 	 * @return
 	 */
 	public boolean isVip() {
-		String obj = config.getString("Vip");
-		return obj != null && !obj.isEmpty();
+		return vip != null;
 	}
 
 	/**
@@ -125,7 +126,7 @@ public class MyPlayer {
 	 * @return
 	 */
 	public String getVipID() {
-		return config.getString("Vip");
+		return vip == null ? null : vip.getID();
 	}
 
 	/**

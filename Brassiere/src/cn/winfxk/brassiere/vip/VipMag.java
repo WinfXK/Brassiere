@@ -5,7 +5,11 @@ package cn.winfxk.brassiere.vip;
  */
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import cn.nukkit.Player;
 import cn.nukkit.utils.Config;
@@ -61,7 +65,7 @@ public class VipMag {
 	 * 
 	 * @return
 	 */
-	public Config getVipShop() {
+	public Config getShop() {
 		return VipShop;
 	}
 
@@ -70,8 +74,17 @@ public class VipMag {
 	 * 
 	 * @return
 	 */
-	public LinkedHashMap<String, Vip> getVips() {
-		return Vips;
+	public Map<String, Vip> getVip() {
+		return new HashMap<>(Vips);
+	}
+
+	/**
+	 * 获取已经支持了的VIP列表
+	 * 
+	 * @return
+	 */
+	public List<Vip> getVips() {
+		return new ArrayList<>(Vips.values());
 	}
 
 	/**
@@ -108,6 +121,8 @@ public class VipMag {
 	 * @return
 	 */
 	public Vip getVip(String ID) {
+		if (!Vips.containsKey(ID))
+			return null;
 		return Vips.get(ID);
 	}
 

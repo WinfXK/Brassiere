@@ -1,9 +1,8 @@
 package cn.winfxk.brassiere.team;
 
+import cn.nukkit.utils.Config;
 import cn.winfxk.brassiere.Activate;
 import cn.winfxk.brassiere.MyPlayer;
-
-import cn.nukkit.utils.Config;
 
 /**
  * @author Winfxk

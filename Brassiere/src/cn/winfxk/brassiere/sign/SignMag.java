@@ -116,7 +116,9 @@ public class SignMag {
 	 */
 	public String getSign(String player) {
 		MyPlayer myPlayer = ac.getPlayers(player);
-		return myPlayer != null ? myPlayer.getSign() : MyPlayer.getConfig(player).getString("useSign");
+		return myPlayer != null ? myPlayer.getSign()
+				: MyPlayer.getConfig(player).get("useSign") == null ? null
+						: String.valueOf(MyPlayer.getConfig(player).get("useSign"));
 	}
 
 	/**

@@ -24,7 +24,7 @@ public class Tip {
 		ac = activate;
 		tip = this;
 		isTipEnabled = activate.getConfig().getBoolean("底部显示");
-		isTopEnabled = activate.getConfig().getBoolean("头部显示频率");
+		isTopEnabled = activate.getConfig().getBoolean("头部显示");
 		Tip = activate.getConfig().getString("Tip");
 		Top = activate.getConfig().getString("Top");
 		content = new TipContent(this);

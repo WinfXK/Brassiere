@@ -23,6 +23,7 @@ public class TipThread extends Thread {
 	 */
 	public TipThread(Tip tip) {
 		this.tip = tip;
+		ac = Activate.getActivate();
 		Tip = ac.getConfig().getInt("底部显示频率");
 		Top = ac.getConfig().getInt("头部显示频率");
 		server = Server.getInstance();
