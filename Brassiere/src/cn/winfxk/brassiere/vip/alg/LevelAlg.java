@@ -1,13 +1,19 @@
 package cn.winfxk.brassiere.vip.alg;
 
 import cn.winfxk.brassiere.vip.Vip;
+import cn.winfxk.brassiere.vip.VipApi;
 
 /**
+ * VIp升计算法基础类
+ * 
  * @author Winfxk
  */
 public abstract class LevelAlg {
-	public int exp;
 	public Vip vip;
+
+	public LevelAlg(Vip vip) {
+		this.vip = vip;
+	}
 
 	/**
 	 * 获取一个计算器
@@ -15,60 +21,69 @@ public abstract class LevelAlg {
 	 * @param string
 	 * @return
 	 */
-	public static LevelAlg getAlg(String string) {
+	public static LevelAlg getAlg(String string, Vip vip) {
 		string = string == null ? "" : string;
 		LevelAlg alg;
 		switch (string.toLowerCase()) {
 		case "impossib":
-			alg = new Impossib();
+			alg = new Impossib(vip);
 			break;
 		case "hard":
-			alg = new Hard();
+			alg = new Hard(vip);
 		case "general":
-			alg = new General();
+			alg = new General(vip);
 			break;
 		default:
-			alg = new Simple();
+			alg = new Simple(vip);
 			break;
 		}
 		return alg;
 	}
 
-	public LevelAlg setPlayer(int exp, Vip vip) {
-		this.exp = exp;
-		this.vip = vip;
-		return this;
+	/**
+	 * 获取一个玩家的等级
+	 * 
+	 * @param player
+	 * @return
+	 */
+	public int getLevel(String player) {
+		if (!VipApi.isVip(player) || VipApi.getVip(player).getID() != vip.getID())
+			return 0;
+		return getLevel(VipApi.getLevel(player));
 	}
 
-	public int getLevel() {
+	/**
+	 * 获取一个玩家的等级
+	 * 
+	 * @param exp 玩家的特权经验点
+	 * @return
+	 */
+	public int getLevel(int exp) {
 		for (int level = vip.getMinLevel(); level < vip.getMaxLevel(); level++)
 			if (exp >= getMaxExp(level) && exp < getMaxExp(level + 1))
 				return level + 1;
 		return vip.getMaxLevel();
 	}
 
-	public abstract int getMaxExp(int level);
+	/**
+	 * 子类记成，用于实现算法
+	 * 
+	 * @param level
+	 * @return
+	 */
+	protected abstract int getMaxExp(int level);
 
+	/**
+	 * 获取算法名称
+	 * 
+	 * @return
+	 */
 	public String getName() {
 		return getClass().getSimpleName();
 	}
 
-	public int addExp(int exp) {
-		this.exp += exp;
-		return this.exp;
+	@Override
+	public String toString() {
+		return getName() + "(" + vip.getID() + "-" + vip.getName() + ")";
 	}
-
-	public int redExp(int exp) {
-		this.exp -= exp;
-		return this.exp;
-	}
-
-	public int setExp(int exp) {
-		return this.exp = exp;
-	}
-
-	public int delExp(int exp) {
-		return redExp(exp);
-	}
-
 }

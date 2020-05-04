@@ -20,6 +20,49 @@ public class VipApi {
 	}
 
 	/**
+	 * 删除一个玩家的VIP特权
+	 * 
+	 * @param player
+	 * @return
+	 */
+	public static boolean remove(String player) {
+		if (!VipApi.isVip(player))
+			return false;
+		Config config = ac.isPlayers(player) ? ac.getPlayers(player).getConfig() : MyPlayer.getConfig(player);
+		config.set("Vip", null);
+		config.set("VipLevel", 0);
+		config.set("VipTime", 0);
+		config.set("VipSign", null);
+		return config.save();
+	}
+
+	/**
+	 * 获取玩家的剩余特权时长(小时)
+	 * 
+	 * @param player
+	 * @return
+	 */
+	public static int getTime(String player) {
+		if (!VipApi.isVip(player))
+			return 0;
+		Config config = ac.isPlayers(player) ? ac.getPlayers(player).getConfig() : MyPlayer.getConfig(player);
+		return config.getInt("VipTime");
+	}
+
+	/**
+	 * 获取一个玩家的经验点
+	 * 
+	 * @param player
+	 * @return
+	 */
+	public static int getLevel(String player) {
+		if (!isVip(player))
+			return 0;
+		Config config = ac.isPlayers(player) ? ac.getPlayers(player).getConfig() : MyPlayer.getConfig(player);
+		return config.getInt("VipLevel");
+	}
+
+	/**
 	 * 判断某个玩家是不是一个VIP
 	 *
 	 * @param player 要判断检测的玩家

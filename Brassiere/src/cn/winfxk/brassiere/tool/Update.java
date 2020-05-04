@@ -81,7 +81,8 @@ public class Update {
 			}
 			mis.getLogger().info(activate.getMessage().getSon("Update", "ErrorConnect"));
 		} catch (Exception e) {
-			mis.getLogger().info(activate.getMessage().getSon("Update", "UpdateThreadError", new String[] { "{Error}" },
+			mis.getLogger().info(activate.getMessage().getSon("Update", "UpdateThreadError",
+					new String[] { "{Error}" },
 					new Object[] { e.getMessage() }));
 			e.printStackTrace();
 		}

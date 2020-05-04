@@ -25,6 +25,7 @@ import cn.winfxk.brassiere.sign.SignMag;
 import cn.winfxk.brassiere.team.TeamMag;
 import cn.winfxk.brassiere.tip.Tip;
 import cn.winfxk.brassiere.tool.Tool;
+import cn.winfxk.brassiere.tool.Update;
 import cn.winfxk.brassiere.vip.VipMag;
 
 /**
@@ -94,6 +95,8 @@ public class Activate {
 		signMag = new SignMag(this);
 		chat = new Chat(this);
 		tip = new Tip(this);
+		if (config.getBoolean("检查更新"))
+			(new Update(kis)).start();
 		kis.getServer().getCommandMap().register(kis.getName() + "Team", new TeamCommand(this));
 		kis.getServer().getPluginManager().registerEvents(new PlayerEvent(this), kis);
 		kis.getLogger().info(message.getMessage("插件启动", "{loadTime}",

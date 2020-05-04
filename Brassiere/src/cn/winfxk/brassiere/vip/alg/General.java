@@ -1,11 +1,17 @@
 package cn.winfxk.brassiere.vip.alg;
 
+import cn.winfxk.brassiere.vip.Vip;
+
 /**
  * 一般算法，升级速度一般
  *
  * @author Winfxk
  */
 public class General extends LevelAlg {
+	public General(Vip vip) {
+		super(vip);
+	}
+
 	@Override
 	public int getMaxExp(int exp) {
 		int i = 100;

@@ -1,11 +1,17 @@
 package cn.winfxk.brassiere.vip.alg;
 
+import cn.winfxk.brassiere.vip.Vip;
+
 /**
  * 简单算法，容易升级
  *
  * @author Winfxk
  */
 public class Simple extends LevelAlg {
+	public Simple(Vip vip) {
+		super(vip);
+	}
+
 	@Override
 	public int getMaxExp(int exp) {
 		int i = 50;

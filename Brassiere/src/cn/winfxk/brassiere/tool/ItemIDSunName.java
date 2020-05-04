@@ -2533,6 +2533,18 @@ public enum ItemIDSunName {
 	}
 
 	/**
+	 * 获取一个物品名称
+	 * 
+	 * @param item
+	 * @return
+	 */
+	public static String getName(Item item) {
+		if (item.hasCustomName())
+			return item.getName();
+		return getIDByName(item.getId(), item.getDamage());
+	}
+
+	/**
 	 * 获取所有项目
 	 *
 	 * @return

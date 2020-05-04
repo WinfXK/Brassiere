@@ -4,7 +4,7 @@ name: null
 Vip: null
 #玩家的VIP的经验
 VipLevel: 0
-#玩家VIP剩余时间
+#玩家VIP剩余时间(小时)
 VipTime: 0
 #玩家VIP签到的时间
 VipSign: null
@@ -24,3 +24,5 @@ OnceJoined: []
 SignIn: null
 #已经连续签到的天数
 SignCount: 0
+#玩家的云仓库<Map<Key,ItemMap>>
+CloudStorage: []

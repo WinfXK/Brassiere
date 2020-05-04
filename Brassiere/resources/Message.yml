@@ -38,6 +38,60 @@ Vip:
    NotVip: Player
    Close: §4关闭
    Back: §6返回
+   CloudStorage:
+      Title: "{RandColor}云端仓库"
+      Content: §6作为尊贵的{VipName}，你有权自由使用您的云端仓库。
+      NotVip: §4此处平民和FFF禁止入内！
+      NotCloudStorage: §4管理员已禁止您当前的特权模式下使用云端仓库！
+      addItem: §6上传物品
+      ItemFormat: §4{ItemName}§f(§8{ItemID}§d:§8{ItemDamage}§f)§d-§5{ItemCount}§6个
+   Gamemode:
+      Title: "{RandColor}特权模式"
+      NotVip: §4此处平民和FFF禁止入内！
+      Content: §6作为尊贵的{VipName}，你有权自由切换以下模式。
+      Survival: §6生存模式
+      Create: §e创造模式
+      Adventure: §4毛线模式
+      NotGamemode: §4你没有任何模式在自由切换范围内！
+      isGamemode: §4您当前已经是{Gamemode}
+      setGamemode: §4您的游戏模式已变更为：
+   acceptTransfer:
+      Title: '{RandColor}传送请求'
+      Content: §4{ByPlayer}§6向您发送了一个传送到您当前位置的请求，您想要接受吗？
+      Accept: §6接受
+      Refuse: §4拒绝
+      AcceptRequest: §6您的传送请求已被接受!
+      RefuseRequest: §4您的传送请求已被拒绝！
+   Transfer:
+      Title: '{RandColor}我的Vip特权'
+      Content: §6当前Vip：§a{VipName}§f(§4{VipID}§f){n}§5Vip等级：§d{VipLevel}§b(§d{VipExp}§b){n}§2剩余时长：§3{VipTime}§2小时
+      NotVip: §4此处平民和FFF禁止入内！
+      PlayerItem: '{ByPlayer}'
+      NotTransfer: §4管理员已经用改特权的传送功能！
+      NotPlayer: §6没有玩家可供传送！
+      Transfer: §6您已被传送到{ByPlayer}附近！
+      TransferRequest: §6您已发送传送请求！请等待。若长时间无响应可能已被拒绝。
+   MyPrivilege:
+      Title: '{RandColor}我的Vip特权'
+      NotVip: §4此处平民和FFF禁止入内！
+      NotPrivilege: §4你什么特权都没有！真够可怜的。
+      Content: §6当前Vip：§a{VipName}§f(§4{VipID}§f){n}§5Vip等级：§d{VipLevel}§b(§d{VipExp}§b){n}§2剩余时长：§3{VipTime}§2小时
+      Gamemode: §6切换游戏模式
+      Transfer: §6传送列表
+      CloudStorage: §6云端仓库
+   ExitVip:
+      Title: '{RandColor}我的{RandColor}Vip'
+      Content: §6当前Vip：§a{VipName}§f(§4{VipID}§f){n}§5Vip等级：§d{VipLevel}§b(§d{VipExp}§b){n}§2剩余时长：§3{VipTime}§2小时{n}§4您确定要退出吗？
+      Ok: §4确定
+      exitVip: §4管理员已禁止玩家私自退出Vip！
+      ExitOK: §4退出VIP成功！
+   MyVip:
+      Title: '{RandColor}我的{RandColor}Vip'
+      notVIP: §4无特权
+      Content: §6当前Vip：§a{VipName}§f(§4{VipID}§f){n}§5Vip等级：§d{VipLevel}§b(§d{VipExp}§b){n}§2剩余时长：§3{VipTime}§2小时
+      BuyVIp: §6购买Vip
+      ExitVip: §4退出Vip
+      MyVip: §8我的特权
    BuyVip:
       Title: '{RandColor}{VipName}'
       Content: §6您正在购买的商品信息如下：{n}§r特权ID：{VipID}{n}特权名称：{VipName}{n}购买时长：{BuyTime}{n}购买价格：{BuyMoney}{n}需要货币：{Economy}{n}购买后增加特权经验：{BuyLevel}{n}允许重复购买：{Repeat}

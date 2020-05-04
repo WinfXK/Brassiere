@@ -1,8 +1,7 @@
 EconomyAPI货币名称: 金币
 Snowmn货币名称: 雪花
 默认货币: EconomyAPI
-自动更新: true
-更新间隔: 86400
+检查更新: true
 创建队伍价格: 50000
 创建队伍币种: EconomyAPI
 队伍初始人数上限: 8
@@ -44,5 +43,6 @@ Top: §f{Player}     §4{TeamName}     §9{Sign}
 聊天填充: 无
 #当这个值为真时将不再显示没有值的内容（如未加入队伍，不是VIP无称号等）
 聊天缩放模式: true
-#刷新VIP状态，单位是分钟
+#刷新VIP状态，单位是小时
 VIP刷新间隔: 10
+允许玩家退出VIP: true

@@ -109,6 +109,15 @@ public class MyPlayer {
 	}
 
 	/**
+	 * 获取玩家的Vip经验点
+	 * 
+	 * @return
+	 */
+	public int getVipExp() {
+		return isVip() ? config.getInt("VipLevel") : 0;
+	}
+
+	/**
 	 * 判断玩家是否是某个VIP用户
 	 *
 	 * @param vip
@@ -240,6 +249,15 @@ public class MyPlayer {
 	public static File getFile(String player) {
 		return new File(new File(Activate.getActivate().getPluginBase().getDataFolder(), Activate.PlayerDataDirName),
 				player + ".yml");
+	}
+
+	/**
+	 * 获取一个云端仓库内容
+	 * 
+	 * @return
+	 */
+	public Map<String, Map<String, Object>> getCloudStorage() {
+		return (Map<String, Map<String, Object>>) config.get("CloudStorage");
 	}
 
 	/**

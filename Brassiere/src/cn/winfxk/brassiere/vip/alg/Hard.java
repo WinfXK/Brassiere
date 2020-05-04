@@ -1,9 +1,17 @@
 package cn.winfxk.brassiere.vip.alg;
 
+import cn.winfxk.brassiere.vip.Vip;
+
 /**
+ * VIP升计算法，该算法是困难
+ * 
  * @author Winfxk
  */
 public class Hard extends LevelAlg {
+
+	public Hard(Vip vip) {
+		super(vip);
+	}
 
 	@Override
 	public int getMaxExp(int exp) {

@@ -1,9 +1,17 @@
 package cn.winfxk.brassiere.vip.alg;
 
+import cn.winfxk.brassiere.vip.Vip;
+
 /**
+ * Vip升级算法，这是最难得升计算法
+ * 
  * @author Winfxk
  */
 public class Impossib extends LevelAlg {
+
+	public Impossib(Vip vip) {
+		super(vip);
+	}
 
 	@Override
 	public int getMaxExp(int exp) {
@@ -13,5 +21,4 @@ public class Impossib extends LevelAlg {
 					+ j * 3000 / (Math.sqrt(j + 1) + 1) * 1.5).intValue();
 		return i;
 	}
-
 }

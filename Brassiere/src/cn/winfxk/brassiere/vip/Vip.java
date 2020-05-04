@@ -15,6 +15,7 @@ import cn.nukkit.network.protocol.PlaySoundPacket;
 import cn.nukkit.potion.Effect;
 import cn.nukkit.utils.Config;
 import cn.winfxk.brassiere.Activate;
+import cn.winfxk.brassiere.MyPlayer;
 import cn.winfxk.brassiere.money.MyEconomy;
 import cn.winfxk.brassiere.tool.MyParticle;
 import cn.winfxk.brassiere.tool.Tool;
@@ -63,10 +64,6 @@ public class Vip {
 	 * 药水效果列表
 	 */
 	private List<Effect> effects;
-	/**
-	 * 能用游戏币购买的次数，为零时不显示，小于零时无法使用游戏币购买
-	 */
-	private int BuyCount;
 	/**
 	 * 签到能获得的经验值
 	 */
@@ -166,7 +163,7 @@ public class Vip {
 		MaxLevel = config.getInt("MaxLevel");
 		MaxLevel = MaxLevel <= 1 ? 1 : MaxLevel;
 		MaxLevel = MaxLevel <= MinLevel ? MinLevel + 9 : MaxLevel;
-		alg = LevelAlg.getAlg(config.getString("LevelAlg"));
+		alg = LevelAlg.getAlg(config.getString("LevelAlg"), this);
 		Flight = config.getBoolean("Flight");
 		list = config.getList("Effect");
 		effects = new ArrayList<>();
@@ -179,7 +176,6 @@ public class Vip {
 					if (!effects.contains(effect))
 						effects.add(effect);
 				}
-		BuyCount = config.getInt("BuyCount");
 		SignExp = config.getInt("SignExp");
 		SignMoney = config.getDouble("SignMoney");
 		SignEconomy = ac.getEconomyManage().getEconomy(config.getString("SignEconomy"));
@@ -238,6 +234,32 @@ public class Vip {
 		JoinSoundName = config.getString("JoinSoundName");
 		isParticle = config.getBoolean("Particle");
 		ParticleType = MyParticle.Unknown(config.get("ParticleType"));
+	}
+
+	/**
+	 * 获取玩家的剩余特权时长(小时)
+	 * 
+	 * @param player
+	 * @return
+	 */
+	public int getTime(String player) {
+		if (!VipApi.isVip(player))
+			return 0;
+		Config config = ac.isPlayers(player) ? ac.getPlayers(player).getConfig() : MyPlayer.getConfig(player);
+		return config.getInt("VipTime");
+	}
+
+	/**
+	 * 获取一个玩家的VIP经验点
+	 * 
+	 * @param player
+	 * @return
+	 */
+	public int getLevel(String player) {
+		if (!VipApi.isVip(player))
+			return 0;
+		Config config = ac.isPlayers(player) ? ac.getPlayers(player).getConfig() : MyPlayer.getConfig(player);
+		return config.getInt("VipLevel");
 	}
 
 	/**
@@ -432,6 +454,15 @@ public class Vip {
 	}
 
 	/**
+	 * 是否能使用某个游戏模式
+	 * 
+	 * @return
+	 */
+	public boolean isGamemode(int mode) {
+		return Gamemode.contains(mode);
+	}
+
+	/**
 	 * 玩家是否能更换游戏模式
 	 *
 	 * @return
@@ -466,6 +497,7 @@ public class Vip {
 	public int getSignExp() {
 		return SignExp;
 	}
+
 	/**
 	 * 药水效果列表
 	 *
@@ -527,15 +559,6 @@ public class Vip {
 	 */
 	public int getMaxLevel() {
 		return MaxLevel;
-	}
-
-	/**
-	 * 能用游戏币购买的次数，为零时不显示，小于零时无法使用游戏币购买
-	 *
-	 * @return
-	 */
-	public int getBuyCount() {
-		return BuyCount;
 	}
 
 	/**
