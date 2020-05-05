@@ -12,7 +12,7 @@ import cn.winfxk.brassiere.tool.Tool;
 import cn.winfxk.brassiere.vip.VipApi;
 import cn.winfxk.brassiere.vip.VipForm;
 import cn.winfxk.brassiere.vip.my.privilege.cs.SwitchItem;
-import cn.winfxk.brassiere.vip.my.privilege.cs.upItem;
+import cn.winfxk.brassiere.vip.my.privilege.cs.SwitchUpItem;
 
 /**
  * 玩家的云端仓库选择页
@@ -64,7 +64,7 @@ public class CloudStorage extends VipForm {
 	public boolean disMain(FormResponse data) {
 		int ID = getSimple(data).getClickedButtonId();
 		if (ID == listKey.size())
-			return setForm(new upItem(player, this)).make();
+			return setForm(new SwitchUpItem(player, this)).make();
 		if (ID == listKey.size() + 1)
 			return upForm == null ? true : setForm(upForm).make();
 		return setForm(new SwitchItem(player, this, listKey.get(ID))).make();

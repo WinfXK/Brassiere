@@ -45,6 +45,8 @@ public class acceptTransfer extends VipForm {
 		if (getSimple(data).getClickedButtonId() == 0) {
 			p.sendMessage(getString("AcceptRequest"));
 			p.teleport(player);
+			vip.sendTPSoundName(p);
+			vip.sendTPSoundName(player);
 			return true;
 		}
 		p.sendMessage(getString("RefuseRequest"));

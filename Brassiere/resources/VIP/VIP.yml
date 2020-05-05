@@ -61,3 +61,5 @@ JoinSoundName: null
 Particle: false
 #粒子类型，包含：LAVA、WATER
 ParticleType: null
+#死亡是否不掉落
+keepInventory: false

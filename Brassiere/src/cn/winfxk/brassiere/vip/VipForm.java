@@ -12,10 +12,10 @@ import cn.winfxk.brassiere.tool.SimpleForm;
  */
 public abstract class VipForm extends FormBase {
 	protected VipMag vm;
-	protected static final String t = "Vip", Close = "Close", Back = "Back";
 	protected FormBase upForm;
 	protected String notVip;
 	protected Vip vip;
+	protected static final String t = "Main";
 
 	/**
 	 * @param player 要显示界面的玩家对象
@@ -25,7 +25,7 @@ public abstract class VipForm extends FormBase {
 		super(player);
 		vm = ac.getVipMag();
 		this.upForm = upForm;
-		notVip = msg.getSun(t, Son, "notVip", player);
+		notVip = msg.getSon(t, "NotVip", player);
 		vip = myPlayer.vip;
 	}
 

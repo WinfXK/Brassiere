@@ -1,5 +1,6 @@
 package cn.winfxk.brassiere.vip;
 
+import cn.nukkit.AdventureSettings.Type;
 import cn.nukkit.Player;
 import cn.nukkit.utils.Config;
 import cn.winfxk.brassiere.Activate;
@@ -28,7 +29,14 @@ public class VipApi {
 	public static boolean remove(String player) {
 		if (!VipApi.isVip(player))
 			return false;
-		Config config = ac.isPlayers(player) ? ac.getPlayers(player).getConfig() : MyPlayer.getConfig(player);
+		Config config;
+		if (ac.isPlayers(player)) {
+			MyPlayer myPlayer = ac.getPlayers(player);
+			myPlayer.getPlayer().getAdventureSettings().set(Type.ALLOW_FLIGHT, false);
+			myPlayer.getPlayer().getAdventureSettings().update();
+			config = myPlayer.getConfig();
+		} else
+			config = MyPlayer.getConfig(player);
 		config.set("Vip", null);
 		config.set("VipLevel", 0);
 		config.set("VipTime", 0);

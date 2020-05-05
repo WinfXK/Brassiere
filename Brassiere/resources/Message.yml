@@ -25,6 +25,7 @@ lang: chs-中文
 无法获取币种: §4无法获取对应的币种！请联系服务器管理员！
 金币不足: §4您的财产不足以完成此操作！
 数据处理错误: §4无法处理该操作！请联系服务器管理员{n}{Error}
+NotPlayer: §4请在游戏内执行此命令
 Team-Sign:
    一级: §f{TeamName}萌新
    二级: §d{TeamName}教官
@@ -32,21 +33,74 @@ Team-Sign:
    四级: §6{TeamName}专家
    五级: §4{TeamName}§5大神
    六级: §l§n§e{TeamName}§l§n§9主宰
-Team-Command:
-   Usage: '{RandColor}组队相关命令'
+Command:
+   Team:
+      Main: "{PluginName}组队主命令"
+   VIP:
+      Main: "{PluginName}Vip主命令"
+   Main:
+      Main: "{PluginName}主命令"
+Main:
+   notTeam: §4未加入
+   notVip: §4无特权
+   Close: §4关闭
+   Back: §6返回
+   Main: 
+      Title: "{RGBTextStart}{PluginName}{RGBTextEnd}"
+      Content: "{RGBTextStart}欢迎使用由冰月（2508543202）开发的{PluginName}{RGBTextEnd}"
+      Team: §6队伍功能
+      Vip: §6Vip功能
+      Setting: §5管理员设置
 Vip:
    NotVip: Player
    Close: §4关闭
    Back: §6返回
+   VipSign:
+      Title: '{RandColor}{ItemName}'
+      isSign: §4您今天已经签到，无需重新签到
+      Content: §6签到成功！您当前为{VipLevel}({VipExp}){n}剩余VIP时间：{VipTime}
+   SwitchItem:
+      Title: '{RandColor}{ItemName}'
+      Content: '您当前查看的物品：{ItemName}({ItemID}:{ItemDamage}){n}当前存储量:{ItemCount}'
+      Delete: §4删除物品
+      Down: §6下载物品
+      UpItem: §5上传物品
+   deleteItem:
+      Title: '{RandColor}{ItemName}'
+      Content: '您当前正准备删除的物品：{ItemName}({ItemID}:{ItemDamage}){n}当前存储量:{ItemCount}{n}请选择想要删除的量'
+      SelectCount: §4请选择想要删除的物品数量
+      NotItem: §4你根本没有这个物品！
+      ConfirmDeletion: §4您确定要删除这个物品吗？
+      ItemDelOK: §6物品删除完成！ 
+      OK: §4确定  
+   downItem:
+      Title: '{RandColor}{ItemName}'
+      Content: '您当前正准备下载物品：{ItemName}({ItemID}:{ItemDamage}){n}当前存储量:{ItemCount}'
+      SelectCount: §4请选择想要下载的物品数量
+      NotItem: §4你根本没有这个物品！
+      ItemDownOK: §6物品领取完成！
+      InventoryFull: §4您的背包已满！
+   UpItem:
+      notItem: §4您当前没有任何一个物品可以用来上传
+      ItemCountInsufficient: §4您的物品({ItemName})数量不足
+      UpItemOK: §6物品({ItemName})保存成功！
+   SwitchUpItem:
+      Title: '{RandColor}上传物品'
+      Content: ' '
+      SelectItem: §6请选择一个想要上传的物品
+      ItemFormat: §4{ItemName}§f(§8{ItemID}§d:§8{ItemDamage}§f)§d-§5{ItemCount}§6个
+      notItem: §4您当前没有任何一个物品可以用来上传
+      ItemCount: §4请选择想要上传的物品的数量
+      ItemCountError: §4物品数量格式不合法！请输入一个大于零且小于该物品总数量的纯数字！
    CloudStorage:
-      Title: "{RandColor}云端仓库"
+      Title: '{RandColor}云端仓库'
       Content: §6作为尊贵的{VipName}，你有权自由使用您的云端仓库。
       NotVip: §4此处平民和FFF禁止入内！
       NotCloudStorage: §4管理员已禁止您当前的特权模式下使用云端仓库！
       addItem: §6上传物品
       ItemFormat: §4{ItemName}§f(§8{ItemID}§d:§8{ItemDamage}§f)§d-§5{ItemCount}§6个
    Gamemode:
-      Title: "{RandColor}特权模式"
+      Title: '{RandColor}特权模式'
       NotVip: §4此处平民和FFF禁止入内！
       Content: §6作为尊贵的{VipName}，你有权自由切换以下模式。
       Survival: §6生存模式
@@ -491,6 +545,7 @@ Team:
       我的队伍: '{RandColor}我的队伍'
       加入队伍: '{RandColor}加入队伍'
       队伍社区: '{RandColor}队伍聊天室'
+      管理功能: '{RandColor}管理设置'
 Update:
    Start: §6检查更新中！若不想使用该功能或出现问题，请关闭该功能.
    Update: §6已检测到更新！{Msg} §4相关数据以储存到§5{ConfigName}

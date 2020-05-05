@@ -2539,6 +2539,8 @@ public enum ItemIDSunName {
 	 * @return
 	 */
 	public static String getName(Item item) {
+		if (item == null)
+			return null;
 		if (item.hasCustomName())
 			return item.getName();
 		return getIDByName(item.getId(), item.getDamage());

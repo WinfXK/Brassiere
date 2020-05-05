@@ -140,6 +140,10 @@ public class Vip {
 	 * 传送音效名称，具体参考Nukkit
 	 */
 	private String TPSoundName;
+	/**
+	 * 是否是死亡不掉落
+	 */
+	private boolean keepInventory;
 
 	public Vip(Activate activate, File file) throws Exception {
 		this.file = file;
@@ -234,6 +238,16 @@ public class Vip {
 		JoinSoundName = config.getString("JoinSoundName");
 		isParticle = config.getBoolean("Particle");
 		ParticleType = MyParticle.Unknown(config.get("ParticleType"));
+		keepInventory = config.getBoolean("keepInventory");
+	}
+
+	/**
+	 * 该Vip是否死亡不掉落
+	 * 
+	 * @return
+	 */
+	public boolean isKeepInventory() {
+		return keepInventory;
 	}
 
 	/**

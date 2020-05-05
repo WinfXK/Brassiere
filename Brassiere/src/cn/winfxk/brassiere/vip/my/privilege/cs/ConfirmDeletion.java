@@ -4,26 +4,24 @@ import cn.nukkit.Player;
 import cn.nukkit.form.response.FormResponse;
 import cn.nukkit.item.Item;
 import cn.winfxk.brassiere.form.FormBase;
-import cn.winfxk.brassiere.tool.CustomForm;
 import cn.winfxk.brassiere.tool.ItemIDSunName;
-import cn.winfxk.brassiere.tool.Tool;
+import cn.winfxk.brassiere.tool.SimpleForm;
 import cn.winfxk.brassiere.vip.VipApi;
 import cn.winfxk.brassiere.vip.VipForm;
 
 /**
- * 删除一个云端物品
+ * 删除云端物品的确认页
  * 
- * @Createdate 2020/05/04 10:42:28
+ * @Createdate 2020/05/05 20:32:48
  * @author Winfxk
  */
-public class deleteItem extends VipForm {
-	private String Key;
+public class ConfirmDeletion extends VipForm {
 	private Item item;
 
-	public deleteItem(Player player, FormBase upForm, String Key) {
+	public ConfirmDeletion(Player player, FormBase upForm, Item item) {
 		super(player, upForm);
-		this.Key = Key;
-		item = Tool.loadItem(myPlayer.getCloudStorage() != null ? myPlayer.getCloudStorage().get(Key) : null);
+		this.item = item;
+		Son = "deleteItem";
 		item = item == null ? new Item(0) : item;
 		setK("{Player}", "{Money}", "{VipName}", "{VipID}", "{VipLevel}", "{VipExp}", "{VipTime}", "{ItemName}",
 				"{ItemID}", "{ItemCount}", "{ItemDamage}");
@@ -36,20 +34,24 @@ public class deleteItem extends VipForm {
 				myPlayer.isVip() ? myPlayer.vip.getAlg().getLevel(player.getName()) : notVip,
 				VipApi.getLevel(player.getName()), VipApi.getTime(player.getName()), ItemIDSunName.getName(item),
 				item.getId(), item.getCount(), item.getDamage());
-		if (Key == null || item.getId() == 0) {
+		if (item.getId() == 0) {
 			player.sendMessage(getString("NotItem"));
 			return upForm == null ? true : setForm(upForm).make();
 		}
-		CustomForm form = new CustomForm(getID(), getString(Title));
-		form.addLabel(getString(Content));
-		form.addSlider(getString("SelectCount"), 1, item.getCount(), 1, item.getCount());
+		SimpleForm form = new SimpleForm(getID(), getString(Title), getString("ConfirmDeletion"));
+		form.addButton(getString("OK"));
+		form.addButton(getString(upForm == null ? Close : Back));
 		form.sendPlayer(player);
 		return true;
 	}
 
 	@Override
 	public boolean disMain(FormResponse data) {
-		item.setCount(Tool.ObjToInt(getCustom(data).getSliderResponse(1)));
-		return setForm(new ConfirmDeletion(player, this, item)).make();
+		if (getSimple(data).getClickedButtonId() == 0) {
+			myPlayer.removeCloudStorage(item);
+			player.sendMessage(getString("ItemDelOK"));
+		}
+		return upForm == null ? true : setForm(upForm).make();
 	}
+
 }

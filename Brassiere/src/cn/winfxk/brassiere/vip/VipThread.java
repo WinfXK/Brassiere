@@ -1,6 +1,10 @@
 package cn.winfxk.brassiere.vip;
 
+import cn.nukkit.Player;
+import cn.nukkit.Server;
+import cn.nukkit.potion.Effect;
 import cn.winfxk.brassiere.Activate;
+import cn.winfxk.brassiere.MyPlayer;
 
 /**
  * Vip的异步线程,用来刷新VIP状态
@@ -10,18 +14,53 @@ import cn.winfxk.brassiere.Activate;
  */
 public class VipThread extends Thread {
 	private Activate ac;
-	private VipMag vipMag;
-	private transient int reloadTime;
+	private transient int reloadTime = 7200;
+	private transient int GiveEffectTime = 560;
 
-	public VipThread(VipMag vipMag) {
-		this.vipMag = vipMag;
+	public VipThread() {
 		ac = Activate.getActivate();
-		reloadTime = Double.valueOf(ac.getConfig().getDouble("VIP刷新间隔") * 60).intValue();
 	}
 
 	@Override
 	public void run() {
-		
+		MyPlayer myPlayer;
+		while (true) {
+			try {
+				sleep(500);
+				if (reloadTime-- <= 0) {
+					reloadTime = 7200;
+					for (Player player : Server.getInstance().getOnlinePlayers().values()) {
+						myPlayer = ac.getPlayers(player);
+						if (!myPlayer.isVip())
+							continue;
+						myPlayer.getConfig().set("VipTime", myPlayer.getConfig().getInt("VipTime") - 1);
+						if (myPlayer.getConfig().getInt("VipTime") <= 0)
+							VipApi.remove(player.getName());
+						myPlayer.config.save();
+					}
+				}
+				if (GiveEffectTime-- <= 0) {
+					GiveEffectTime = 560;
+					for (Player player : Server.getInstance().getOnlinePlayers().values()) {
+						myPlayer = ac.getPlayers(player);
+						if (!myPlayer.isVip())
+							continue;
+						for (Effect effect : myPlayer.vip.getEffects())
+							player.addEffect(effect.setDuration(400));
+					}
+				}
+				for (Player player : Server.getInstance().getOnlinePlayers().values()) {
+					myPlayer = ac.getPlayers(player);
+					if (!myPlayer.isVip())
+						continue;
+					myPlayer.getPlayer().getLevel().addParticle(myPlayer.vip.getParticleType(), player);
+				}
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+				ac.getPluginBase().getLogger().error("VIP thread has stopped!");
+				break;
+			}
+		}
 	}
 
 	/**

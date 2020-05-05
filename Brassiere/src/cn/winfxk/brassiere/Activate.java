@@ -15,7 +15,7 @@ import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.utils.Config;
 import cn.nukkit.utils.Utils;
 import cn.winfxk.brassiere.chat.Chat;
-import cn.winfxk.brassiere.cmd.TeamCommand;
+import cn.winfxk.brassiere.cmd.MyCommand;
 import cn.winfxk.brassiere.form.MakeForm;
 import cn.winfxk.brassiere.money.EconomyAPI;
 import cn.winfxk.brassiere.money.EconomyManage;
@@ -97,11 +97,11 @@ public class Activate {
 		tip = new Tip(this);
 		if (config.getBoolean("检查更新"))
 			(new Update(kis)).start();
-		kis.getServer().getCommandMap().register(kis.getName() + "Team", new TeamCommand(this));
+		kis.getServer().getCommandMap().register(kis.getName() + "Team", new MyCommand(this));
 		kis.getServer().getPluginManager().registerEvents(new PlayerEvent(this), kis);
 		kis.getLogger().info(message.getMessage("插件启动", "{loadTime}",
 				(float) Duration.between(mis.loadTime, Instant.now()).toMillis() + "ms"));
-	}
+	} 
 
 	/**
 	 * 返回玩家聊天控制类
@@ -222,8 +222,12 @@ public class Activate {
 	 * @param player
 	 */
 	public void removePlayers(String player) {
-		if (Players.containsKey(player))
+		if (Players.containsKey(player)) {
+			Config config = Players.get(player).getConfig();
+			config.set("QuitTime", Tool.getDate() + " " + Tool.getTime());
+			config.save();
 			Players.remove(player);
+		}
 	}
 
 	/**

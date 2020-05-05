@@ -26,3 +26,5 @@ SignIn: null
 SignCount: 0
 #玩家的云仓库<Map<Key,ItemMap>>
 CloudStorage: []
+#退出时间，用于计算VIP剩余时间
+QuitTime: null

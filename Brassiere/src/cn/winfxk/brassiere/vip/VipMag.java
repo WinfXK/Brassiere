@@ -35,7 +35,7 @@ public class VipMag {
 		VipList = new Config(new File(activate.getPluginBase().getDataFolder(), Activate.haveVipName), Config.YAML);
 		VipShop = new Config(new File(activate.getPluginBase().getDataFolder(), Activate.VipShopName), Config.YAML);
 		vipApi = new VipApi(this);
-		(vipThread = new VipThread(this)).start();
+		(vipThread = new VipThread()).start();
 	}
 
 	/**

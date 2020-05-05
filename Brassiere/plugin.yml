@@ -11,8 +11,11 @@ loadbefore:
 - Snowmn
 permissions:
    Brassiere.Command.main:
-      description: Brassiere-Player
+      description: Brassiere-Main
       default: true
-   Brassiere.Command.Admin:
-      description: Brassiere-Admin
-      default: op
+   Brassiere.Command.Team:
+      description: Brassiere-Team
+      default: true
+   Brassiere.Command.Vip:
+      description: Brassiere-Vip
+      default: true

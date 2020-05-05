@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import cn.nukkit.Player;
+import cn.nukkit.item.Item;
 import cn.nukkit.utils.Config;
 import cn.winfxk.brassiere.form.FormBase;
 import cn.winfxk.brassiere.team.Team;
@@ -18,7 +20,7 @@ import cn.winfxk.brassiere.vip.Vip;
  * @author Winfxk
  */
 public class MyPlayer {
-	private Activate ac;
+	private static Activate ac = Activate.getActivate();
 	public Config config;
 	private Player player;
 	public FormBase form;
@@ -32,7 +34,6 @@ public class MyPlayer {
 	 */
 	public MyPlayer(Player player) {
 		this.player = player;
-		ac = Activate.getActivate();
 		config = getConfig(getName());
 		config = ac.resCheck.Check(this);
 		if (isVip())
@@ -97,6 +98,30 @@ public class MyPlayer {
 	 */
 	public String getSign() {
 		return config.get("useSign") == null ? null : config.getString("useSign");
+	}
+
+	/**
+	 * 给一个VIP用户增加VIP经验
+	 * 
+	 * @param player
+	 * @param Exp
+	 * @return
+	 */
+	public static boolean addVipExp(String player, int Exp) {
+		Config config = ac.isPlayers(player) ? ac.getPlayers(player).getConfig() : MyPlayer.getConfig(player);
+		config.set("VipLevel", config.getInt("VipLevel") + Exp);
+		return config.save();
+	}
+
+	/**
+	 * 给一个VIP用户增加VIP经验
+	 * 
+	 * @param Exp
+	 * @return
+	 */
+	public boolean addVipExp(int Exp) {
+		config.set("VipLevel", config.getInt("VipLevel") + Exp);
+		return config.save();
 	}
 
 	/**
@@ -258,6 +283,157 @@ public class MyPlayer {
 	 */
 	public Map<String, Map<String, Object>> getCloudStorage() {
 		return (Map<String, Map<String, Object>>) config.get("CloudStorage");
+	}
+
+	/**
+	 * 获取一个云端仓库内容
+	 * 
+	 * @param player
+	 * @return
+	 */
+	public static Map<String, Map<String, Object>> getCloudStorage(String player) {
+		return (Map<String, Map<String, Object>>) (ac.isPlayers(player) ? ac.getPlayers(player).getConfig()
+				: getConfig(player)).get("CloudStorage");
+	}
+
+	/**
+	 * 删除一个云端的物品
+	 * 
+	 * @param item
+	 * @return
+	 */
+	public static boolean removeCloudStorage(String player, Item item) {
+		Map<String, Map<String, Object>> map = getCloudStorage(player);
+		Item i;
+		int Count = item.getCount();
+		Set<String> Keys = map.keySet();
+		for (String Key : Keys) {
+			i = Tool.loadItem(map.get(Key));
+			if (i == null || i.getId() == 0) {
+				map.remove(Key);
+				continue;
+			}
+			if (item.equals(i, true, true))
+				if (i.getCount() > Count) {
+					i.setCount(i.getCount() - Count);
+					map.put(Key, Tool.saveItem(i));
+					Count = 0;
+				} else {
+					Count -= i.getCount();
+					map.remove(Key);
+				}
+			if (Count <= 0)
+				break;
+		}
+		Config config = ac.isPlayers(player) ? ac.getPlayers(player).getConfig() : getConfig(player);
+		config.set("CloudStorage", map);
+		return config.save() && Count == 0;
+	}
+
+	/**
+	 * 删除一个云端的物品
+	 * 
+	 * @param item
+	 * @return
+	 */
+	public int removeCloudStorage(Item item) {
+		Map<String, Map<String, Object>> map = getCloudStorage();
+		Item i;
+		int Count = item.getCount();
+		Set<String> Keys = map.keySet();
+		for (String Key : Keys) {
+			i = Tool.loadItem(map.get(Key));
+			if (i == null || i.getId() == 0) {
+				map.remove(Key);
+				continue;
+			}
+			if (item.equals(i, true, true))
+				if (i.getCount() > Count) {
+					i.setCount(i.getCount() - Count);
+					map.put(Key, Tool.saveItem(i));
+					Count = 0;
+				} else {
+					Count -= i.getCount();
+					map.remove(Key);
+				}
+			if (Count <= 0)
+				break;
+		}
+		config.set("CloudStorage", map);
+		return item.getCount() - Count;
+	}
+
+	/**
+	 * 添加一个物品到云端仓库
+	 * 
+	 * @param item 要上传的物品
+	 */
+	public boolean addCloudStorage(Item item) {
+		Map<String, Map<String, Object>> map = getCloudStorage();
+		Item i;
+		int Count = 0;
+		Set<String> Keys = map.keySet();
+		for (String Key : Keys) {
+			i = Tool.loadItem(map.get(Key));
+			if (i == null || i.getId() == 0) {
+				map.remove(Key);
+				continue;
+			}
+			if (i.equals(item, true, true)) {
+				Count += i.getCount();
+				map.remove(Key);
+			}
+		}
+		item.setCount(Count + item.getCount());
+		map.put(getCloudStorageKey(map, 1), Tool.saveItem(item));
+		config.set("CloudStorage", map);
+		return config.save();
+	}
+
+	/**
+	 * 添加一个物品到云端仓库
+	 * 
+	 * @param player 要上传物品的玩家名
+	 * @param item   要上传的物品
+	 * @return
+	 */
+	public static boolean addCloudStorage(String player, Item item) {
+		Map<String, Map<String, Object>> map = getCloudStorage(player);
+		Item i;
+		int Count = 0;
+		Set<String> Keys = map.keySet();
+		for (String Key : Keys) {
+			i = Tool.loadItem(map.get(Key));
+			if (i == null || i.getId() == 0) {
+				map.remove(Key);
+				continue;
+			}
+			if (i.equals(item, true, true)) {
+				Count += i.getCount();
+				map.remove(Key);
+			}
+		}
+		item.setCount(Count + item.getCount());
+		map.put(getCloudStorageKey(map, 1), Tool.saveItem(item));
+		Config config = ac.isPlayers(player) ? ac.getPlayers(player).getConfig() : getConfig(player);
+		config.set("CloudStorage", map);
+		return config.save();
+	}
+
+	/**
+	 * 返回一个云端物品的储存Key，这个Key将不会重复
+	 * 
+	 * @param map      云端仓库的内容
+	 * @param JJLength
+	 * @return
+	 */
+	private static String getCloudStorageKey(Map<String, Map<String, Object>> map, int JJLength) {
+		String string = "";
+		for (int i = 0; i < JJLength; i++)
+			string += Tool.getRandString();
+		if (map.containsKey(string))
+			return getCloudStorageKey(map, JJLength++);
+		return string;
 	}
 
 	/**

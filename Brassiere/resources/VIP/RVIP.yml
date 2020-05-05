@@ -87,3 +87,5 @@ JoinSoundName: mob.cat.meow
 Particle: true
 #粒子类型，包含：LAVA、WATER
 ParticleType: TYPE_LAVA
+#死亡是否不掉落
+keepInventory: true

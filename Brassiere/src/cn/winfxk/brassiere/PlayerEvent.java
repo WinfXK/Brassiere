@@ -1,5 +1,10 @@
 package cn.winfxk.brassiere;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
+import cn.nukkit.AdventureSettings.Type;
 import cn.nukkit.Player;
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
@@ -16,6 +21,9 @@ import cn.nukkit.form.response.FormResponse;
 import cn.nukkit.form.response.FormResponseCustom;
 import cn.nukkit.form.response.FormResponseModal;
 import cn.nukkit.form.response.FormResponseSimple;
+import cn.nukkit.item.Item;
+import cn.winfxk.brassiere.tool.Tool;
+import cn.winfxk.brassiere.vip.VipApi;
 
 /**
  * @author Winfxk
@@ -76,7 +84,36 @@ public class PlayerEvent implements Listener {
 		if (!ac.getPluginBase().isEnabled())
 			return;
 		Player player = e.getPlayer();
-		ac.setPlayers(player, new MyPlayer(player));
+		MyPlayer myPlayer = new MyPlayer(player);
+		String notTeam = msg.getSon("Main", "notTeam", player);
+		String notVip = msg.getSon("Main", "notVip", player);
+		ac.setPlayers(player, myPlayer);
+		if (myPlayer.isVip()) {
+			if (myPlayer.vip.isJoinTip())
+				myPlayer.vip.getJoinMsgType().send(msg.getText(myPlayer.vip.getJoinMsg(),
+						new String[] { "{Player}", "{Money}", "{TeamID}", "{TeamName}", "{Player}", "{Money}",
+								"{VipName}", "{VipID}", "{VipLevel}", "{VipExp}", "{VipTime}" },
+						new Object[] { player.getName(), myPlayer.getMoney(),
+								myPlayer.isTeam() ? notTeam : myPlayer.getTeam().getID(),
+								myPlayer.isTeam() ? notTeam : myPlayer.getTeam().getName(),
+								myPlayer.isVip() ? myPlayer.vip.getName() : notVip,
+								myPlayer.isVip() ? myPlayer.vip.getID() : notVip,
+								myPlayer.isVip() ? myPlayer.vip.getAlg().getLevel(player.getName()) : notVip }));
+			if (myPlayer.vip.isJoinSound())
+				myPlayer.vip.sendJoinSoundName(player);
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(Tool.parseDate(myPlayer.getConfig().getString("QuitTime")));
+			long timeInMillis1 = calendar.getTimeInMillis();
+			calendar.setTime(Tool.parseDate(Tool.getDate() + " " + Tool.getTime()));
+			long timeInMillis2 = calendar.getTimeInMillis();
+			player.getAdventureSettings().set(Type.ALLOW_FLIGHT, myPlayer.vip.isFlight());
+			player.getAdventureSettings().update();
+			myPlayer.getConfig().set("VipTime",
+					myPlayer.getConfig().getInt("VipTime") - ((timeInMillis2 - timeInMillis1) / (1000 * 3600)));
+			if (myPlayer.getConfig().getInt("VipTime") <= 0)
+				VipApi.remove(player.getName());
+			myPlayer.config.save();
+		}
 	}
 
 	/**
@@ -113,6 +150,10 @@ public class PlayerEvent implements Listener {
 	public void onDeath(PlayerDeathEvent e) {
 		if (!ac.getPluginBase().isEnabled())
 			return;
+		Player player = e.getEntity();
+		MyPlayer myPlayer = ac.getPlayers(player);
+		if (myPlayer.isVip())
+			e.setKeepInventory(myPlayer.vip.isKeepInventory());
 	}
 
 	/**
@@ -124,6 +165,12 @@ public class PlayerEvent implements Listener {
 	public void onDamage(EntityDamageEvent e) {
 		if (!ac.getPluginBase().isEnabled())
 			return;
+		if (!(e.getEntity() instanceof Player))
+			return;
+		Player player = (Player) e.getEntity();
+		MyPlayer myPlayer = ac.getPlayers(player);
+		if (myPlayer.isTeam() && !myPlayer.getTeam().isAllowedPVP())
+			e.setCancelled();
 	}
 
 	/**
@@ -157,5 +204,15 @@ public class PlayerEvent implements Listener {
 	public void onBreak(BlockBreakEvent e) {
 		if (!ac.getPluginBase().isEnabled())
 			return;
+		Player player = e.getPlayer();
+		MyPlayer myPlayer = ac.getPlayers(player);
+		if (myPlayer.isVip() && myPlayer.vip.isExcavateIncrease()) {
+			List<Item> list = new ArrayList<>();
+			for (Item item : e.getDrops()) {
+				item.setCount(item.count * (2 * (Tool.getRand(1, myPlayer.vip.getIncreases()) / 10)));
+				list.add(item);
+			}
+			e.setDrops((Item[]) list.toArray());
+		}
 	}
 }

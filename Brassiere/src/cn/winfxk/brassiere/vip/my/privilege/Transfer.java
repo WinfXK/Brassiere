@@ -64,6 +64,8 @@ public class Transfer extends VipForm {
 		Player p = list.get(ID);
 		if (vip.isTP()) {
 			player.teleport(p);
+			vip.sendTPSoundName(p);
+			vip.sendTPSoundName(player);
 			player.sendMessage(msg.getText(getString("Transfer"), "{ByPlayer}", p.getName()));
 			return true;
 		}

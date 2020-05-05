@@ -1,23 +1,11 @@
-PlayerCommand:
+Command:
+   Main:
+   - bra
    VIP:
-   - dmvip
-   - dv
+   - vip
    Sign:
-   - dms
-   - ds
+   - sign
    Team:
-   - dmt
-   - dt
+   - team
    Tip:
-   - dmtip
-   - dtip
-   - dp
-AdminCommand:
-   VIP:
-   - dva
-   Sign:
-   - dsa
-   Team:
-   - dta
-   Tip:
-   - dpa
+   - tip

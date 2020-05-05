@@ -29,7 +29,7 @@ public abstract class FormBase {
 	protected String[] K = {};
 	protected MyPlayer myPlayer;
 	protected List<String> listKey = new ArrayList<>();
-	protected static final String Title = "Title", Content = "Content";
+	protected static final String Title = "Title", Content = "Content", Close = "Close", Back = "Back";
 
 	/**
 	 * 界面交互基础类
@@ -73,7 +73,6 @@ public abstract class FormBase {
 	public String[] getK() {
 		return K;
 	}
-
 	/**
 	 * 页面主页
 	 *
