@@ -2,6 +2,7 @@ package cn.winfxk.brassiere.form;
 
 import cn.nukkit.Player;
 import cn.nukkit.form.response.FormResponse;
+import cn.winfxk.brassiere.sign.SignMain;
 import cn.winfxk.brassiere.team.TeamForm;
 import cn.winfxk.brassiere.tool.SimpleForm;
 import cn.winfxk.brassiere.vip.MainForm;
@@ -25,12 +26,19 @@ public class FormMain extends MainBase {
 
 	@Override
 	public boolean MakeMain() {
-		reloadD();
+		if (player == null)
+			System.out.println("null");
+		setD(player.getName(), myPlayer.getMoney(), myPlayer.isTeam() ? myPlayer.getTeam().getID() : notTeam,
+				myPlayer.isTeam() ? myPlayer.getTeam().getName() : notTeam,
+				myPlayer.isVip() ? myPlayer.vip.getName() : notVip, myPlayer.isVip() ? myPlayer.vip.getID() : notVip,
+				myPlayer.isVip() ? myPlayer.vip.getAlg().getLevel(player.getName()) : notVip);
 		SimpleForm form = new SimpleForm(getID(), getString(Title), getString(Content));
 		listKey.add("t");
 		form.addButton(getString("Team"));
 		listKey.add("v");
 		form.addButton(getString("Vip"));
+		listKey.add("s");
+		form.addButton(getString("Sign"));
 		if (myPlayer.isAdmin()) {
 			listKey.add("a");
 			form.addButton(getString("Setting"));
@@ -50,6 +58,9 @@ public class FormMain extends MainBase {
 			break;
 		case "a":
 			setForm(new Setting(player, this));
+			break;
+		case "s":
+			setForm(new SignMain(player));
 			break;
 		}
 		return make();

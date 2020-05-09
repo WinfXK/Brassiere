@@ -55,7 +55,7 @@ public class SimpleForm extends RootForm {
 
 	@Override
 	public FormWindow getFormWindow() {
-		return new FormWindowSimple(Title, Content, buttons);
+		return new FormWindowSimple(Title == null ? "null" : Title, Content == null ? "null" : Content, buttons);
 	}
 
 	/**
@@ -66,7 +66,7 @@ public class SimpleForm extends RootForm {
 	 */
 	public SimpleForm addButton(String... Texts) {
 		for (String Text : Texts)
-			buttons.add(new ElementButton(Text));
+			buttons.add(new ElementButton(Text == null ? "null" : Text));
 		return this;
 	}
 
@@ -78,7 +78,7 @@ public class SimpleForm extends RootForm {
 	 */
 	public void addButton(ButtonData... datas) {
 		for (ButtonData data : datas)
-			addButton(data.Button, data.isLocal, data.Icon);
+			addButton(data.Button == null ? "null" : data.Button, data.isLocal, data.Icon);
 	}
 
 	/**
@@ -92,7 +92,7 @@ public class SimpleForm extends RootForm {
 	public SimpleForm addButton(String Text, boolean isLocal, String Path) {
 		if (Path == null || Path.isEmpty())
 			return addButton(Text);
-		buttons.add(new ElementButton(Text, new ElementButtonImageData(
+		buttons.add(new ElementButton(Text == null ? "null" : Text, new ElementButtonImageData(
 				isLocal ? ElementButtonImageData.IMAGE_DATA_TYPE_PATH : ElementButtonImageData.IMAGE_DATA_TYPE_URL,
 				Path)));
 		return this;

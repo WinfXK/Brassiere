@@ -31,7 +31,7 @@ public class Team {
 	 * 队伍的文件对象
 	 */
 	private File file;
-	private Activate ac;
+	private static Activate ac = Activate.getActivate();
 	/**
 	 * 队伍的ID
 	 */

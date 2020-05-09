@@ -139,6 +139,8 @@ public class MakeTeam extends FormBase {
 		config.save();
 		ac.getTeamMag().load(ID);
 		setForm(new MyTeam(player));
+		myPlayer.getConfig().set("Team", ID);
+		myPlayer.getConfig().save();
 		player.sendMessage(msg.getSun("Team", "MakeTeam", "CreatingSuccessful", myPlayer));
 		return make();
 	}

@@ -25,17 +25,6 @@ public abstract class MainBase extends FormBase {
 		upForm = form;
 		notTeam = msg.getSon(t, "notTeam", player);
 		notVip = msg.getSon(t, "notVip", player);
-		reloadD();
-	}
-
-	/**
-	 * 刷新数据
-	 */
-	public void reloadD() {
-		setD(player.getName(), myPlayer.getMoney(), myPlayer.isTeam() ? notTeam : myPlayer.getTeam().getID(),
-				myPlayer.isTeam() ? notTeam : myPlayer.getTeam().getName(),
-				myPlayer.isVip() ? myPlayer.vip.getName() : notVip, myPlayer.isVip() ? myPlayer.vip.getID() : notVip,
-				myPlayer.isVip() ? myPlayer.vip.getAlg().getLevel(player.getName()) : notVip);
 	}
 
 	/**

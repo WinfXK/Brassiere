@@ -35,6 +35,8 @@ public class VipSign extends VipForm {
 			player.sendMessage(getString("isSign"));
 			return upForm == null ? true : setForm(upForm).make();
 		}
+		myPlayer.getConfig().set("VipSign", Tool.getDate());
+		myPlayer.getConfig().save();
 		myPlayer.addVipExp(vip.getSignExp());
 		if (vip.getSignEconomy() != null)
 			vip.getSignEconomy().addMoney(player, vip.getSignMoney());

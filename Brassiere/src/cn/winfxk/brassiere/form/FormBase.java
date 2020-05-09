@@ -18,13 +18,14 @@ import cn.winfxk.brassiere.MyPlayer;
  *
  * @author Winfxk
  */
-public abstract class FormBase {
+public abstract class FormBase implements Cloneable {
 	public Player player;
 	protected Message msg;
 	protected Activate ac;
 	private FormBase make;
 	protected FormID formID;
 	public String Son, Name;
+	protected FormBase upForm;
 	protected Object[] D = {};
 	protected String[] K = {};
 	protected MyPlayer myPlayer;
@@ -53,7 +54,20 @@ public abstract class FormBase {
 	 * @return 不重复的ID
 	 */
 	public int getID() {
-		return formID.getID(myPlayer.ID = myPlayer.ID == 0 ? 1 : 0);
+		int i = 0;
+		switch (myPlayer.ID) {
+		case 0:
+			i = 1;
+			break;
+		case 1:
+			i = 2;
+			break;
+		case 2:
+			i = 0;
+			break;
+		}
+		myPlayer.ID = i;
+		return formID.getID(myPlayer.ID);
 	}
 
 	/**
@@ -73,6 +87,7 @@ public abstract class FormBase {
 	public String[] getK() {
 		return K;
 	}
+
 	/**
 	 * 页面主页
 	 *
@@ -179,5 +194,14 @@ public abstract class FormBase {
 	 */
 	public void setName(String name) {
 		Name = name;
+	}
+
+	@Override
+	public FormBase clone() throws CloneNotSupportedException {
+		FormBase base = (FormBase) super.clone();
+		if (upForm != null)
+			base.upForm = upForm.clone();
+		base.listKey = new ArrayList<>();
+		return base;
 	}
 }

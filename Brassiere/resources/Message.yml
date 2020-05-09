@@ -50,29 +50,33 @@ Main:
       Content: "{RGBTextStart}欢迎使用由冰月（2508543202）开发的{PluginName}{RGBTextEnd}"
       Team: §6队伍功能
       Vip: §6Vip功能
+      Sign: §6称号功能
       Setting: §5管理员设置
 Vip:
    NotVip: Player
    Close: §4关闭
    Back: §6返回
    VipSign:
-      Title: '{RandColor}{ItemName}'
+      Title: '{RandColor}{VipName}'
       isSign: §4您今天已经签到，无需重新签到
-      Content: §6签到成功！您当前为{VipLevel}({VipExp}){n}剩余VIP时间：{VipTime}
+      NotVip: §4此处平民和FFF禁止入内！
+      Content: §6签到成功！您当前为：{VipName}({VipID}){n}Vip等级：{VipLevel}({VipExp}){n}剩余VIP时间：{VipTime}
    SwitchItem:
       Title: '{RandColor}{ItemName}'
       Content: '您当前查看的物品：{ItemName}({ItemID}:{ItemDamage}){n}当前存储量:{ItemCount}'
       Delete: §4删除物品
       Down: §6下载物品
       UpItem: §5上传物品
+      NotVip: §4此处平民和FFF禁止入内！
    deleteItem:
       Title: '{RandColor}{ItemName}'
       Content: '您当前正准备删除的物品：{ItemName}({ItemID}:{ItemDamage}){n}当前存储量:{ItemCount}{n}请选择想要删除的量'
       SelectCount: §4请选择想要删除的物品数量
       NotItem: §4你根本没有这个物品！
       ConfirmDeletion: §4您确定要删除这个物品吗？
-      ItemDelOK: §6物品删除完成！ 
-      OK: §4确定  
+      ItemDelOK: §6物品删除完成！
+      NotVip: §4此处平民和FFF禁止入内！ 
+      OK: §4确定  
    downItem:
       Title: '{RandColor}{ItemName}'
       Content: '您当前正准备下载物品：{ItemName}({ItemID}:{ItemDamage}){n}当前存储量:{ItemCount}'
@@ -80,10 +84,12 @@ Vip:
       NotItem: §4你根本没有这个物品！
       ItemDownOK: §6物品领取完成！
       InventoryFull: §4您的背包已满！
+      NotVip: §4此处平民和FFF禁止入内！
    UpItem:
       notItem: §4您当前没有任何一个物品可以用来上传
       ItemCountInsufficient: §4您的物品({ItemName})数量不足
       UpItemOK: §6物品({ItemName})保存成功！
+      NotVip: §4此处平民和FFF禁止入内！
    SwitchUpItem:
       Title: '{RandColor}上传物品'
       Content: ' '
@@ -91,6 +97,7 @@ Vip:
       ItemFormat: §4{ItemName}§f(§8{ItemID}§d:§8{ItemDamage}§f)§d-§5{ItemCount}§6个
       notItem: §4您当前没有任何一个物品可以用来上传
       ItemCount: §4请选择想要上传的物品的数量
+      NotVip: Player
       ItemCountError: §4物品数量格式不合法！请输入一个大于零且小于该物品总数量的纯数字！
    CloudStorage:
       Title: '{RandColor}云端仓库'
@@ -114,6 +121,7 @@ Vip:
       Content: §4{ByPlayer}§6向您发送了一个传送到您当前位置的请求，您想要接受吗？
       Accept: §6接受
       Refuse: §4拒绝
+      NotVip: §4此处平民和FFF禁止入内！
       AcceptRequest: §6您的传送请求已被接受!
       RefuseRequest: §4您的传送请求已被拒绝！
    Transfer:
@@ -137,6 +145,7 @@ Vip:
       Title: '{RandColor}我的{RandColor}Vip'
       Content: §6当前Vip：§a{VipName}§f(§4{VipID}§f){n}§5Vip等级：§d{VipLevel}§b(§d{VipExp}§b){n}§2剩余时长：§3{VipTime}§2小时{n}§4您确定要退出吗？
       Ok: §4确定
+      NotVip: §4此处平民和FFF禁止入内！
       exitVip: §4管理员已禁止玩家私自退出Vip！
       ExitOK: §4退出VIP成功！
    MyVip:
@@ -150,6 +159,7 @@ Vip:
       Title: '{RandColor}{VipName}'
       Content: §6您正在购买的商品信息如下：{n}§r特权ID：{VipID}{n}特权名称：{VipName}{n}购买时长：{BuyTime}{n}购买价格：{BuyMoney}{n}需要货币：{Economy}{n}购买后增加特权经验：{BuyLevel}{n}允许重复购买：{Repeat}
       Buy: §6购买
+      NotVip: §4此处平民和FFF禁止入内！
       Repeat: §4该特权禁止叠加购买！
       EconomyError: §4已无法获得购买所需的货币支持！请联系服务器管理员。
       notMoney: §4购买失败！{BuyMoneyName}不足！
@@ -159,11 +169,13 @@ Vip:
       Content: §6请选择您的操作
       addShop: §6添加商店
       delItem: §4删除项目
+      NotVip: §4此处平民和FFF禁止入内！
       BuyItem: §5购买特权(都管理员了还购买特权...)
    delItem:
       Title: §4删除项目
       Content: 'Vip: {VipName}({VipID}){n}你确定要删除该项目吗?'
       OK: §4确定
+      NotVip: §4此处平民和FFF禁止入内！
       delOK: §6你失去了你的宝宝
    addShop:
       Title: '{RandColor}添加VIP项目'
@@ -174,6 +186,7 @@ Vip:
       BuyTime: §6购买时长（小时）
       BuyLevel: §6购买后的经验
       Repeat: §6允许重复购买
+      NotVip: §4此处平民和FFF禁止入内！
       MoneyError: §6未输入购买价格或购买价格格式不支持（大于零的纯数字）！
       BuyTimeError: §6未输入购买时长或购买时长格式不支持（大于零的纯数字）！
       BuyLevelError: §6未输入购买附赠的等级或格式不支持（大于零的纯数字）！
@@ -185,10 +198,12 @@ Vip:
       VipItem: §6{VipName}§f(§d{VipID}§f)§b-§9{BuyMoney}§5(§7{BuyTime}§5)
       NotItem: §4当前没有任何一个项目可供购买！
       addItem: §6添加商店
+      NotVip: §4此处平民和FFF禁止入内！
    Main:
       PlayerOffline: §4检测到一个不存在的玩家正在访问主页！这可能已经出现一个错误！详情联系作者发送本次操作数据。
       Title: '{RandColor}Vip'
       Content: ' '
+      NotVip: §4此处平民和FFF禁止入内！
       VipSign: '{RandColor}签到'
       MyVip: '{RandColor}我的VIP'
       VipShop: '{RandColor}查看Vip商店'

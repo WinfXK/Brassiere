@@ -41,7 +41,7 @@ public class CloudStorage extends VipForm {
 			return upForm == null ? true : setForm(upForm).make();
 		}
 		Item item;
-		if (vip.isCloudStorage()) {
+		if (!vip.isCloudStorage()) {
 			player.sendMessage(getString("NotCloudStorage"));
 			return upForm == null ? true : setForm(upForm).make();
 		}

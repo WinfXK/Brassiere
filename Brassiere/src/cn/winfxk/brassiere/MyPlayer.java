@@ -36,8 +36,7 @@ public class MyPlayer {
 		this.player = player;
 		config = getConfig(getName());
 		config = ac.resCheck.Check(this);
-		if (isVip())
-			vip = ac.getVipMag().getVip(config.getString("Vip"));
+		vip = config.get("Vip") != null ? ac.getVipMag().getVip(config.getString("Vip")) : null;
 		config.set("name", player.getName());
 		config.save();
 	}
@@ -282,7 +281,9 @@ public class MyPlayer {
 	 * @return
 	 */
 	public Map<String, Map<String, Object>> getCloudStorage() {
-		return (Map<String, Map<String, Object>>) config.get("CloudStorage");
+		return config.get("CloudStorage") instanceof Map && config.get("CloudStorage") != null
+				? (HashMap<String, Map<String, Object>>) config.get("CloudStorage")
+				: new HashMap<>();
 	}
 
 	/**
@@ -292,8 +293,10 @@ public class MyPlayer {
 	 * @return
 	 */
 	public static Map<String, Map<String, Object>> getCloudStorage(String player) {
-		return (Map<String, Map<String, Object>>) (ac.isPlayers(player) ? ac.getPlayers(player).getConfig()
-				: getConfig(player)).get("CloudStorage");
+		Object object = (ac.isPlayers(player) ? ac.getPlayers(player).getConfig() : getConfig(player))
+				.get("CloudStorage");
+		return object != null && object instanceof Map ? (HashMap<String, Map<String, Object>>) object
+				: new HashMap<>();
 	}
 
 	/**

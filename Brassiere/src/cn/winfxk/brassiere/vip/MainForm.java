@@ -1,10 +1,11 @@
 package cn.winfxk.brassiere.vip;
 
-import cn.epicfx.winfxk.money.sn.tool.Tool;
 import cn.nukkit.Player;
 import cn.nukkit.form.response.FormResponse;
 import cn.winfxk.brassiere.form.FormBase;
 import cn.winfxk.brassiere.tool.SimpleForm;
+import cn.winfxk.brassiere.tool.Tool;
+import cn.winfxk.brassiere.vip.shop.ShopMain;
 
 /**
  * 构建显示VIP主页
@@ -33,7 +34,8 @@ public class MainForm extends VipForm {
 		}
 		listKey.add("v");
 		form.addButton(getString("VipShop"));
-		addButton(form);
+		listKey.add(upForm == null ? "c" : "b");
+		form.addButton(msg.getSon(t, upForm == null ? Close : Back, this));
 		form.sendPlayer(player);
 		return true;
 	}
@@ -45,7 +47,7 @@ public class MainForm extends VipForm {
 			setForm(new VipSign(player, this));
 			break;
 		case "v":
-			setForm(new VipSign(player, this));
+			setForm(new ShopMain(player, this));
 			break;
 		case "b":
 			setForm(upForm == null ? this : upForm);

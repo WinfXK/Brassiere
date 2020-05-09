@@ -51,10 +51,11 @@ public class BuyVip extends VipForm {
 			player.sendMessage(getString("EconomyError"));
 			return setForm(upForm).make();
 		}
-		if (!Tool.ObjToBool(map.get("Repeat")) || !myPlayer.getVipID().equals(vip.getID())) {
-			player.sendMessage(getString("Repeat"));
-			return setForm(upForm).make();
-		}
+		if (!Tool.ObjToBool(map.get("Repeat")))
+			if (myPlayer.getVipID() != null && !myPlayer.getVipID().equals(vip.getID())) {
+				player.sendMessage(getString("Repeat"));
+				return setForm(upForm).make();
+			}
 		SimpleForm form = new SimpleForm(getID(), getString(Title), getString(Content));
 		form.addButton(getString("Buy"));
 		form.addButton(getString(upForm != null ? Back : Close));

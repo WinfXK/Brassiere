@@ -2,7 +2,6 @@ package cn.winfxk.brassiere.vip;
 
 import cn.nukkit.Player;
 import cn.winfxk.brassiere.form.FormBase;
-import cn.winfxk.brassiere.tool.SimpleForm;
 
 /**
  * VIP的界面基础类
@@ -12,10 +11,9 @@ import cn.winfxk.brassiere.tool.SimpleForm;
  */
 public abstract class VipForm extends FormBase {
 	protected VipMag vm;
-	protected FormBase upForm;
 	protected String notVip;
 	protected Vip vip;
-	protected static final String t = "Main";
+	protected static final String t = "Vip";
 
 	/**
 	 * @param player 要显示界面的玩家对象
@@ -24,7 +22,11 @@ public abstract class VipForm extends FormBase {
 	public VipForm(Player player, FormBase upForm) {
 		super(player);
 		vm = ac.getVipMag();
-		this.upForm = upForm;
+		try {
+			this.upForm = upForm.clone();
+		} catch (CloneNotSupportedException e) {
+			this.upForm = upForm;
+		}
 		notVip = msg.getSon(t, "NotVip", player);
 		vip = myPlayer.vip;
 	}
@@ -47,17 +49,5 @@ public abstract class VipForm extends FormBase {
 	public String getString(String string) {
 		return string.equals(Back) || string.equals(Close) ? msg.getSon(t, string, this)
 				: msg.getSun(t, Son, string, this);
-	}
-
-	/**
-	 * 添加返回或关闭按钮
-	 * 
-	 * @param form
-	 * @return
-	 */
-	public SimpleForm addButton(SimpleForm form) {
-		listKey.add(upForm == null ? "c" : "b");
-		form.addButton(msg.getSon(t, upForm == null ? Close : Back, this));
-		return form;
 	}
 }

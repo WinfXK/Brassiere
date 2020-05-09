@@ -35,7 +35,7 @@ public class Activate {
 	public Player setPlayer;
 	public MakeForm makeForm;
 	public ResCheck resCheck;
-	public final static String[] FormIDs = { /* 0 */"主页", /* 1 */"备用主页"/* , "次页", "备用次页" */ };
+	public final static String[] FormIDs = { /* 0 */"主页", /* 1 */"备用主页", /* 2 */ "备用页" };
 	public final static String MessageFileName = "Message.yml", ConfigFileName = "Config.yml",
 			CommandFileName = "Command.yml", EconomyListConfigName = "EconomyList.yml", FormIDFileName = "FormID.yml",
 			PlayerDataDirName = "Players", LanguageDirName = "language", VipFileName = "VIP/VIP.yml",
@@ -100,8 +100,8 @@ public class Activate {
 		kis.getServer().getCommandMap().register(kis.getName() + "Team", new MyCommand(this));
 		kis.getServer().getPluginManager().registerEvents(new PlayerEvent(this), kis);
 		kis.getLogger().info(message.getMessage("插件启动", "{loadTime}",
-				(float) Duration.between(mis.loadTime, Instant.now()).toMillis() + "ms"));
-	} 
+				(float) Duration.between(mis.loadTime, Instant.now()).toMillis() + "ms")+"-Alpha");
+	}
 
 	/**
 	 * 返回玩家聊天控制类

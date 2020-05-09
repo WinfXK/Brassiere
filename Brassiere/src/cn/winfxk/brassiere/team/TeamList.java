@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import cn.winfxk.brassiere.form.FormBase;
-import cn.winfxk.brassiere.tool.SimpleForm;
-
 import cn.nukkit.Player;
 import cn.nukkit.form.response.FormResponse;
+import cn.winfxk.brassiere.form.FormBase;
+import cn.winfxk.brassiere.tool.SimpleForm;
 
 /**
  * 用于显示当前服务器已经有了的队伍列表

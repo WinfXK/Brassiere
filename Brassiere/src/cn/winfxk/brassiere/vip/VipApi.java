@@ -132,7 +132,13 @@ public class VipApi {
 	 * @return
 	 */
 	public static boolean setVip(String player, String ID, int Time, int Level, boolean isRepeat) {
-		Config config = ac.isPlayers(player) ? ac.getPlayers(player).getConfig() : MyPlayer.getConfig(player);
+		Config config;
+		if (ac.isPlayers(player)) {
+			MyPlayer myPlayer = ac.getPlayers(player);
+			config = myPlayer.getConfig();
+			myPlayer.vip = vip.getVip(ID);
+		} else
+			config = MyPlayer.getConfig(player);
 		config.set("Vip", ID);
 		config.set("VipTime", isRepeat ? Time + config.getInt("VipTime") : Time);
 		config.set("VipLevel", isRepeat ? Level + config.getInt("VipLevel") : Level);

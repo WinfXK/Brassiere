@@ -33,8 +33,10 @@ public class ShopMain extends VipForm {
 	@Override
 	public boolean MakeMain() {
 		setD(player.getName(), myPlayer.getMoney(), getVip());
-		if (all.size() <= 0)
-			return ac.makeForm.Tip(player, getString("NotItem"));
+		if (!myPlayer.isAdmin() && all.size() <= 0) {
+			player.sendMessage(getString("NotItem"));
+			return upForm == null ? true : setForm(upForm).make();
+		}
 		SimpleForm form = new SimpleForm(getID(), getString(Title), getString(Content));
 		Map<String, Object> map;
 		Vip vip;
@@ -53,8 +55,10 @@ public class ShopMain extends VipForm {
 							map.get("Repeat") }));
 			listKey.add(entry.getKey());
 		}
-		if (form.getButtonSize() <= 0)
-			return ac.makeForm.Tip(player, getString("NotItem"));
+		if (!myPlayer.isAdmin() && form.getButtonSize() <= 0) {
+			player.sendMessage(getString("NotItem"));
+			return upForm == null ? true : setForm(upForm).make();
+		}
 		form.addButton(getString(upForm == null ? Close : Back));
 		if (myPlayer.isAdmin())
 			form.addButton(getString("addItem"));

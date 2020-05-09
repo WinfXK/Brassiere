@@ -64,7 +64,7 @@ public class PlayerEvent implements Listener {
 			}
 			int ID = e.getFormID();
 			FormID f = ac.getFormID();
-			if ((ID == f.getID(0) || ID == f.getID(1)) && myPlayer.form != null)
+			if ((ID == f.getID(0) || ID == f.getID(1) || ID == f.getID(2)) && myPlayer.form != null)
 				myPlayer.form.disMain(data);
 		} catch (Exception e2) {
 			e2.printStackTrace();
@@ -212,7 +212,8 @@ public class PlayerEvent implements Listener {
 				item.setCount(item.count * (2 * (Tool.getRand(1, myPlayer.vip.getIncreases()) / 10)));
 				list.add(item);
 			}
-			e.setDrops((Item[]) list.toArray());
+			if (list.size() > 0)
+				e.setDrops(list.toArray(new Item[] {}));
 		}
 	}
 }

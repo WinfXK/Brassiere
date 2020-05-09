@@ -31,7 +31,7 @@ public class VipThread extends Thread {
 					reloadTime = 7200;
 					for (Player player : Server.getInstance().getOnlinePlayers().values()) {
 						myPlayer = ac.getPlayers(player);
-						if (!myPlayer.isVip())
+						if (myPlayer == null || !myPlayer.isVip())
 							continue;
 						myPlayer.getConfig().set("VipTime", myPlayer.getConfig().getInt("VipTime") - 1);
 						if (myPlayer.getConfig().getInt("VipTime") <= 0)
@@ -43,7 +43,7 @@ public class VipThread extends Thread {
 					GiveEffectTime = 560;
 					for (Player player : Server.getInstance().getOnlinePlayers().values()) {
 						myPlayer = ac.getPlayers(player);
-						if (!myPlayer.isVip())
+						if (myPlayer == null || !myPlayer.isVip())
 							continue;
 						for (Effect effect : myPlayer.vip.getEffects())
 							player.addEffect(effect.setDuration(400));
@@ -51,7 +51,7 @@ public class VipThread extends Thread {
 				}
 				for (Player player : Server.getInstance().getOnlinePlayers().values()) {
 					myPlayer = ac.getPlayers(player);
-					if (!myPlayer.isVip())
+					if (myPlayer == null || !myPlayer.isVip())
 						continue;
 					myPlayer.getPlayer().getLevel().addParticle(myPlayer.vip.getParticleType(), player);
 				}
